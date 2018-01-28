@@ -1,6 +1,7 @@
 import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
+import Main from './views/Main.vue'
 
 import role from './views/nav1/role.vue'
 import Permiss from './views/nav1/Permiss.vue'
@@ -84,11 +85,12 @@ let routes = [
     },
     //{ path: '/main', component: Main },
     {
-        path: '/permisss',
+        path: '/',
         component: Home,
         name: '系统管理',
-        iconCls: 'el-icon-message',//图标样式class
+        iconCls: 'fa fa-cog',//图标样式class
         children: [
+            { path: '/main', component: Main, name: '主页', hidden: true },
             { path: '/permiss', component: Permiss, name: '权限管理' },
             { path: '/role', component: role, name: '角色管理' },
             { path: '/user', component: user, name: '用户管理' },
@@ -102,7 +104,7 @@ let routes = [
         iconCls: 'fa fa-id-card-o',
         children: [
             { path: '/goodsBill', component: goodsBill, name: '新增商品单据' },
-            { path: '/goods', component: goods, name: '商品管理' }
+            { path: '/goods', component: goods, name: '商品管理列表' }
         ]
     },
     {
@@ -113,14 +115,14 @@ let routes = [
         // leaf: true,//只有一个节点
         children: [
             { path: '/supplierAudit', component: supplierAudit, name: '新增供应商' },
-            { path: '/supplier', component: supplier, name: '供应商管理' }
+            { path: '/supplier', component: supplier, name: '供应商管理列表' }
         ]
     },
     {
         path: '/merchantBillAudits',
         component: Home,
         name: '商户管理管理',
-        iconCls: 'fa fa-address-card',
+        iconCls: 'fa fa-address-book-o',
         // leaf: true,//只有一个节点
         children: [
             { path: '/merchantBillAudit', component: merchantBillAudit, name: '新增商户单据' },
@@ -131,7 +133,7 @@ let routes = [
         path: '/customerAudits',
         component: Home,
         name: '客户管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-address-book',
         children: [
             { path: '/customerAudit', component: customerAudit, name: '新增客户单据' },
             { path: '/customer', component: customer, name: '客户查询' },
@@ -146,9 +148,9 @@ let routes = [
         path: '/operateAreas',
         component: Home,
         name: '运营区管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-home',
         children: [
-            { path: '/operateArea', component: operateArea, name: '运营区管理' },
+            { path: '/operateArea', component: operateArea, name: '运营区管理列表' },
             { path: '/operateClassify', component: operateClassify, name: '运营区展示分类管理' },
             { path: '/salesAreaBill', component: salesAreaBill, name: '销售范围指定' },
             { path: '/salesArea', component: salesArea, name: '销售范围查询' },
@@ -166,9 +168,9 @@ let routes = [
         path: '/appOrders',
         component: Home,
         name: '订单管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-calendar-check-o',
         children: [
-            { path: '/appOrder', component: appOrder, name: '订单管理' },
+            { path: '/appOrder', component: appOrder, name: '订单管理列表' },
             { path: '/saleInfo', component: saleInfo, name: '订单拆单查询' },
             { path: '/finance', component: finance, name: '财务订单报表' },
             { path: '/financeGather', component: financeGather, name: '财务汇总报表' },
@@ -180,7 +182,7 @@ let routes = [
         path: '/purchaseAudits',
         component: Home,
         name: '采购管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-shopping-basket',
         children: [
             { path: '/purchaseAudit', component: purchaseAudit, name: '新增采购单据' },
             { path: '/purchase', component: purchase, name: '采购查询' },
@@ -190,7 +192,7 @@ let routes = [
         path: '/purchasePriceAudits',
         component: Home,
         name: '库存管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-building',
         children: [
             { path: '/purchasePriceAudit', component: purchasePriceAudit, name: '新增库存' },
             { path: '/purchasePrice', component: purchasePrice, name: '库存查询' },
@@ -200,16 +202,16 @@ let routes = [
         path: '/goodsShelvesAudits',
         component: Home,
         name: '商品上下架管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-cart-arrow-down',
         children: [
-            { path: '/goodsShelvesAudit', component: goodsShelvesAudit, name: '商品上下架管理' },
+            { path: '/goodsShelvesAudit', component: goodsShelvesAudit, name: '商品上下架管理列表' },
         ]
     },
     {
         path: '/goodsBacks',
         component: Home,
         name: '退货管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-exchange',
         children: [
             { path: '/goodsBack', component: goodsBack, name: '退货单据管理' },
             { path: '/goodsBackDelivery', component: goodsBackDelivery, name: '退货出库查询' },
@@ -219,7 +221,7 @@ let routes = [
         path: '/pushManAudits',
         component: Home,
         name: '地推管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-fax',
         children: [
             { path: '/pushManAudit', component: pushManAudit, name: '新增地推' },
             { path: '/pushManTbl', component: pushManTbl, name: '地推查询' },
@@ -229,7 +231,7 @@ let routes = [
         path: '/headliness',
         component: Home,
         name: 'APP管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-desktop',
         children: [
             { path: '/headlines', component: headlines, name: '万全头条' },
             { path: '/meetingCarousel', component: meetingCarousel, name: '会场轮播管理' },
@@ -238,8 +240,8 @@ let routes = [
     {
         path: '/smss',
         component: Home,
-        name: '短信发送列表',
-        iconCls: 'fa fa-bar-chart',
+        name: '短信发送',
+        iconCls: 'fa fa-rss',
         children: [
             { path: '/sms', component: sms, name: '短信发送列表' },
         ]
@@ -248,7 +250,7 @@ let routes = [
         path: '/operateWmsAudits',
         component: Home,
         name: '运营区仓库管理',
-        iconCls: 'fa fa-bar-chart',
+        iconCls: 'fa fa-industry',
         children: [
             { path: '/operateWmsAudit', component: operateWmsAudit, name: '新增运营区仓库' },
             { path: '/operateWms', component: operateWms, name: '运营区仓库查询' },
