@@ -23,13 +23,8 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
-<<<<<<< .mine
-				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
-					 unique-opened router v-show="!collapsed" style="width:230px;">
-=======
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :class="collapsed ? 'el-menu--collapse' : ''" @open="handleopen" @close="handleclose" @select="handleselect"
 					 unique-opened router v-show="!collapsed" data-scrollWidth="320">
->>>>>>> .theirs
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
