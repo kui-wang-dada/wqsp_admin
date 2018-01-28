@@ -133,7 +133,7 @@ let routes = [
         iconCls: 'fa fa-bar-chart',
         children: [
             { path: '/operateArea', component: operateArea, name: '运营区管理' },
-            { path: '/custoperateClassifyomer', component: custoperateClassifyomer, name: '运营区展示分类管理' },
+            { path: '/operateClassify', component: operateClassify, name: '运营区展示分类管理' },
             { path: '/salesAreaBill', component: salesAreaBill, name: '销售范围指定' },
             { path: '/salesArea', component: salesArea, name: '销售范围查询' },
             { path: '/salesAreaPriceBill', component: salesAreaPriceBill, name: '售价管理' },
@@ -179,7 +179,7 @@ let routes = [
             { path: '/echarts', component: echarts, name: 'echarts' }
         ]
     },
-    
+
     {
         path: '*',
         hidden: true,
