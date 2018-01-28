@@ -23,8 +23,13 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
+<<<<<<< .mine
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
 					 unique-opened router v-show="!collapsed" style="width:230px;">
+=======
+				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :class="collapsed ? 'el-menu--collapse' : ''" @open="handleopen" @close="handleclose" @select="handleselect"
+					 unique-opened router v-show="!collapsed" data-scrollWidth="320">
+>>>>>>> .theirs
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
@@ -38,7 +43,7 @@
 					<li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
 						<template v-if="!item.leaf">
 							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
-							<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"> 
+							<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
 								<li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
 							</ul>
 						</template>
@@ -96,10 +101,10 @@
 				console.log('submit!');
 			},
 			handleopen() {
-				//console.log('handleopen');
+				console.log('handleopen');
 			},
 			handleclose() {
-				//console.log('handleclose');
+				console.log('handleclose');
 			},
 			handleselect: function (a, b) {
 			},
@@ -140,7 +145,7 @@
 
 <style scoped lang="scss">
 	@import '~scss_vars';
-	
+
 	.container {
 		position: absolute;
 		top: 0px;
