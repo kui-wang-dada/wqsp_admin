@@ -42,7 +42,6 @@ let routes = [
         name: '导航二',
         iconCls: 'fa fa-id-card-o',
         children: [
-        	{ path: '/page3', component: Page3, name: '页面3' },
             { path: '/page4', component: Page4, name: '页面4' },
             { path: '/page5', component: Page5, name: '页面5' }
         ]

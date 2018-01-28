@@ -1,6 +1,6 @@
 {
-  "name": "vueadmin",
-  "version": "1.0.5",
+  "name": "wqsp_admin",
+  "version": "1.0.0",
   "description": "vue admin project",
   "author": "taylor <709161610@qq.com>",
   "license": "MIT",
@@ -70,5 +70,10 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://116.62.123.101:8099/root/wqsp_admin.git"
+  }
 }
