@@ -1,7 +1,6 @@
 import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
 import Home from './views/Home.vue'
-import Main from './views/Main.vue'
 
 import role from './views/nav1/role.vue'
 import Permiss from './views/nav1/Permiss.vue'
@@ -51,9 +50,23 @@ import purchase from './views/nav8/purchase.vue'
 import purchasePriceAudit from './views/nav9/purchasePriceAudit.vue'
 import purchasePrice from './views/nav9/purchasePrice.vue'
 
-// import supplier from './views/nav3/supplier.vue'
-// import supplier from './views/nav3/supplier.vue'
-// import supplier from './views/nav3/supplier.vue'
+import goodsShelvesAudit from './views/nav10/goodsShelvesAudit.vue'
+
+import goodsBack from './views/nav11/goodsBack.vue'
+import goodsBackDelivery from './views/nav11/goodsBackDelivery.vue'
+
+import pushManAudit from './views/nav12/pushManAudit.vue'
+import pushManTbl from './views/nav12/pushManTbl.vue'
+
+import headlines from './views/nav13/headlines.vue'
+import meetingCarousel from './views/nav13/meetingCarousel.vue'
+
+import operateWmsAudit from './views/nav14/operateWmsAudit.vue'
+import operateWms from './views/nav14/operateWms.vue'
+import wmsDept from './views/nav14/wmsDept.vue'
+
+import sms from './views/nav15/sms.vue'
+
 import echarts from './views/charts/echarts.vue'
 
 let routes = [
@@ -71,12 +84,11 @@ let routes = [
     },
     //{ path: '/main', component: Main },
     {
-        path: '/main',
+        path: '/permisss',
         component: Home,
         name: '系统管理',
         iconCls: 'el-icon-message',//图标样式class
         children: [
-            { path: '/main', component: Main, name: '权限管理', hidden: true },
             { path: '/permiss', component: Permiss, name: '权限管理' },
             { path: '/role', component: role, name: '角色管理' },
             { path: '/user', component: user, name: '用户管理' },
@@ -84,7 +96,7 @@ let routes = [
         ]
     },
     {
-        path: '/goodsBill',
+        path: '/goodsBills',
         component: Home,
         name: '商品管理',
         iconCls: 'fa fa-id-card-o',
@@ -94,7 +106,7 @@ let routes = [
         ]
     },
     {
-        path: '/supplierAudit',
+        path: '/supplierAudits',
         component: Home,
         name: '供应商管理',
         iconCls: 'fa fa-address-card',
@@ -105,7 +117,7 @@ let routes = [
         ]
     },
     {
-        path: '/merchantBillAudit',
+        path: '/merchantBillAudits',
         component: Home,
         name: '商户管理管理',
         iconCls: 'fa fa-address-card',
@@ -116,7 +128,7 @@ let routes = [
         ]
     },
     {
-        path: '/customerAudit',
+        path: '/customerAudits',
         component: Home,
         name: '客户管理',
         iconCls: 'fa fa-bar-chart',
@@ -131,7 +143,7 @@ let routes = [
         ]
     },
     {
-        path: '/operateArea',
+        path: '/operateAreas',
         component: Home,
         name: '运营区管理',
         iconCls: 'fa fa-bar-chart',
@@ -151,7 +163,7 @@ let routes = [
         ]
     },
     {
-        path: '/appOrder',
+        path: '/appOrders',
         component: Home,
         name: '订单管理',
         iconCls: 'fa fa-bar-chart',
@@ -165,7 +177,7 @@ let routes = [
         ]
     },
     {
-        path: '/purchaseAudit',
+        path: '/purchaseAudits',
         component: Home,
         name: '采购管理',
         iconCls: 'fa fa-bar-chart',
@@ -175,7 +187,7 @@ let routes = [
         ]
     },
     {
-        path: '/purchasePriceAudit',
+        path: '/purchasePriceAudits',
         component: Home,
         name: '库存管理',
         iconCls: 'fa fa-bar-chart',
@@ -185,15 +197,73 @@ let routes = [
         ]
     },
     {
-        path: '/echarts',
+        path: '/goodsShelvesAudits',
         component: Home,
-        name: 'Charts',
+        name: '商品上下架管理',
         iconCls: 'fa fa-bar-chart',
         children: [
-            { path: '/echarts', component: echarts, name: 'echarts' }
+            { path: '/goodsShelvesAudit', component: goodsShelvesAudit, name: '商品上下架管理' },
         ]
     },
-
+    {
+        path: '/goodsBacks',
+        component: Home,
+        name: '退货管理',
+        iconCls: 'fa fa-bar-chart',
+        children: [
+            { path: '/goodsBack', component: goodsBack, name: '退货单据管理' },
+            { path: '/goodsBackDelivery', component: goodsBackDelivery, name: '退货出库查询' },
+        ]
+    },
+    {
+        path: '/pushManAudits',
+        component: Home,
+        name: '地推管理',
+        iconCls: 'fa fa-bar-chart',
+        children: [
+            { path: '/pushManAudit', component: pushManAudit, name: '新增地推' },
+            { path: '/pushManTbl', component: pushManTbl, name: '地推查询' },
+        ]
+    },
+    {
+        path: '/headliness',
+        component: Home,
+        name: 'APP管理',
+        iconCls: 'fa fa-bar-chart',
+        children: [
+            { path: '/headlines', component: headlines, name: '万全头条' },
+            { path: '/meetingCarousel', component: meetingCarousel, name: '会场轮播管理' },
+        ]
+    },
+    {
+        path: '/smss',
+        component: Home,
+        name: '短信发送列表',
+        iconCls: 'fa fa-bar-chart',
+        children: [
+            { path: '/sms', component: sms, name: '短信发送列表' },
+        ]
+    },
+    {
+        path: '/operateWmsAudits',
+        component: Home,
+        name: '运营区仓库管理',
+        iconCls: 'fa fa-bar-chart',
+        children: [
+            { path: '/operateWmsAudit', component: operateWmsAudit, name: '新增运营区仓库' },
+            { path: '/operateWms', component: operateWms, name: '运营区仓库查询' },
+            { path: '/wmsDept', component: wmsDept, name: '仓库管理' },
+        ]
+    },
+    // {
+    //     path: '/echarts',
+    //     component: Home,
+    //     name: 'Charts',
+    //     iconCls: 'fa fa-bar-chart',
+    //     children: [
+    //         { path: '/echarts', component: echarts, name: 'echarts' }
+    //     ]
+    // },
     {
         path: '*',
         hidden: true,
