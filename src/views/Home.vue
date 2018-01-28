@@ -23,8 +23,8 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
-				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
-					 unique-opened router v-show="!collapsed" :style="menuOpen">
+				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :class="collapsed ? 'el-menu--collapse' : ''" @open="handleopen" @close="handleclose" @select="handleselect"
+					 unique-opened router v-show="!collapsed" data-scrollWidth="320">
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
@@ -88,8 +88,7 @@
 					type: [],
 					resource: '',
 					desc: ''
-				},
-				menuOpen: ''
+				}
 			}
 		},
 		methods: {
@@ -97,10 +96,10 @@
 				console.log('submit!');
 			},
 			handleopen() {
-				//console.log('handleopen');
+				console.log('handleopen');
 			},
 			handleclose() {
-				//console.log('handleclose');
+				console.log('handleclose');
 			},
 			handleselect: function (a, b) {
 			},
