@@ -47,6 +47,10 @@ import goodsSale from './views/nav7/goodsSale.vue'
 
 import purchaseAudit from './views/nav8/purchaseAudit.vue'
 import purchase from './views/nav8/purchase.vue'
+
+import purchasePriceAudit from './views/nav9/purchasePriceAudit.vue'
+import purchasePrice from './views/nav9/purchasePrice.vue'
+
 // import supplier from './views/nav3/supplier.vue'
 // import supplier from './views/nav3/supplier.vue'
 // import supplier from './views/nav3/supplier.vue'
@@ -67,7 +71,7 @@ let routes = [
     },
     //{ path: '/main', component: Main },
     {
-        path: '/',
+        path: '/main',
         component: Home,
         name: '系统管理',
         iconCls: 'el-icon-message',//图标样式class
@@ -80,7 +84,7 @@ let routes = [
         ]
     },
     {
-        path: '/',
+        path: '/goodsBill',
         component: Home,
         name: '商品管理',
         iconCls: 'fa fa-id-card-o',
@@ -90,7 +94,7 @@ let routes = [
         ]
     },
     {
-        path: '/',
+        path: '/supplierAudit',
         component: Home,
         name: '供应商管理',
         iconCls: 'fa fa-address-card',
@@ -101,7 +105,7 @@ let routes = [
         ]
     },
     {
-        path: '/',
+        path: '/merchantBillAudit',
         component: Home,
         name: '商户管理管理',
         iconCls: 'fa fa-address-card',
@@ -112,7 +116,7 @@ let routes = [
         ]
     },
     {
-        path: '/',
+        path: '/customerAudit',
         component: Home,
         name: '客户管理',
         iconCls: 'fa fa-bar-chart',
@@ -127,7 +131,7 @@ let routes = [
         ]
     },
     {
-        path: '/',
+        path: '/operateArea',
         component: Home,
         name: '运营区管理',
         iconCls: 'fa fa-bar-chart',
@@ -147,7 +151,7 @@ let routes = [
         ]
     },
     {
-        path: '/',
+        path: '/appOrder',
         component: Home,
         name: '订单管理',
         iconCls: 'fa fa-bar-chart',
@@ -161,7 +165,7 @@ let routes = [
         ]
     },
     {
-        path: '/',
+        path: '/purchaseAudit',
         component: Home,
         name: '采购管理',
         iconCls: 'fa fa-bar-chart',
@@ -171,7 +175,17 @@ let routes = [
         ]
     },
     {
-        path: '/',
+        path: '/purchasePriceAudit',
+        component: Home,
+        name: '库存管理',
+        iconCls: 'fa fa-bar-chart',
+        children: [
+            { path: '/purchasePriceAudit', component: purchasePriceAudit, name: '新增库存' },
+            { path: '/purchasePrice', component: purchasePrice, name: '库存查询' },
+        ]
+    },
+    {
+        path: '/echarts',
         component: Home,
         name: 'Charts',
         iconCls: 'fa fa-bar-chart',
