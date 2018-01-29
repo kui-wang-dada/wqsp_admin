@@ -2,12 +2,15 @@
 	<el-row class="container">
 		<el-col :span="24" class="header">
 			<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-				{{collapsed?'':sysName}}
+				<div :class="collapsed?'logo-not':'logo-have'">
+					<div class="hiddener">{{sysName}}</div>
+					<div class="tools" @click.prevent="collapse">
+						<i class="fa fa-align-justify"></i>
+					</div>
+				</div>
 			</el-col>
 			<el-col :span="10">
-				<div class="tools" @click.prevent="collapse">
-					<i class="fa fa-align-justify"></i>
-				</div>
+				<span>速配平台</span>
 			</el-col>
 			<el-col :span="4" class="userinfo">
 				<el-dropdown trigger="hover">
@@ -214,17 +217,41 @@
 			}
 			.logo-width{
 				width:230px;
+				.logo-have{
+					.hiddener{
+						display:inline-block;
+					}
+					.tools{
+						display:inline-block;
+						width:14px;
+						height: 60px;
+						line-height: 60px;
+						cursor: pointer;
+						margin-left:79px;
+					}
+				}
 			}
 			.logo-collapse-width{
-				width:60px
+				width:60px;
+				.logo-not{
+					.hiddener{
+						display:none;
+					}
+					.tools{
+						width:14px;
+						height: 60px;
+						line-height: 60px;
+						cursor: pointer;
+						margin-left:-4px;
+					}
+				}
 			}
-			.tools{
-				padding: 0px 23px;
-				width:14px;
-				height: 60px;
-				line-height: 60px;
-				cursor: pointer;
+			span{
+				font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+				font-size:20px;
+				padding-left:20px;
 			}
+			
 		}
 		.main {
 			display: flex;
