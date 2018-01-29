@@ -77,12 +77,6 @@ let routes = [
         name: '',
         hidden: true
     },
-    {
-        path: '/404',
-        component: NotFound,
-        name: '',
-        hidden: true
-    },
     //{ path: '/main', component: Main },
     {
         path: '/',
@@ -238,15 +232,6 @@ let routes = [
         ]
     },
     {
-        path: '/smss',
-        component: Home,
-        name: '短信发送',
-        iconCls: 'fa fa-rss',
-        children: [
-            { path: '/sms', component: sms, name: '短信发送列表' },
-        ]
-    },
-    {
         path: '/operateWmsAudits',
         component: Home,
         name: '运营区仓库管理',
@@ -257,6 +242,16 @@ let routes = [
             { path: '/wmsDept', component: wmsDept, name: '仓库管理' },
         ]
     },
+    {
+        path: '/smss',
+        component: Home,
+        name: '短信发送',
+        iconCls: 'fa fa-rss',
+        children: [
+            { path: '/sms', component: sms, name: '短信发送列表' },
+        ]
+    },
+    
     // {
     //     path: '/echarts',
     //     component: Home,
@@ -266,6 +261,12 @@ let routes = [
     //         { path: '/echarts', component: echarts, name: 'echarts' }
     //     ]
     // },
+    {
+        path: '/404',
+        component: NotFound,
+        name: '',
+        hidden: true
+    },
     {
         path: '*',
         hidden: true,
