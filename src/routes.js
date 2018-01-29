@@ -85,7 +85,7 @@ let routes = [
         iconCls: 'fa fa-cog',//图标样式class
         children: [
             { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/permiss.json', component: Permiss, name: '权限管理' },
+            { path: '/permiss', component: Permiss, name: '权限管理' },
             { path: '/role', component: role, name: '角色管理' },
             { path: '/user', component: user, name: '用户管理' },
             { path: '/datadict', component: datadict, name: '数据字典' },
@@ -124,21 +124,6 @@ let routes = [
         ]
     },
     {
-        path: '/customerAudits',
-        component: Home,
-        name: '客户管理',
-        iconCls: 'fa fa-address-book',
-        children: [
-            { path: '/customerAudit', component: customerAudit, name: '新增客户单据' },
-            { path: '/customer', component: customer, name: '客户查询' },
-            { path: '/deliveryAddressAudit', component: deliveryAddressAudit, name: '收货地址审核' },
-            { path: '/voucherGrant', component: voucherGrant, name: '代金券管理' },
-            { path: '/deliveryAddress', component: deliveryAddress, name: '客户地址查询' },
-            { path: '/voucher', component: voucher, name: '代金券发放' },
-            { path: '/customerPushMan', component: customerPushMan, name: '修改客户地推人员' }
-        ]
-    },
-    {
         path: '/operateAreas',
         component: Home,
         name: '运营区管理',
@@ -156,6 +141,21 @@ let routes = [
             { path: '/limitBuy', component: limitBuy, name: '限购' },
             { path: '/tempadjust', component: tempadjust, name: '限购数量临时调整' },
             { path: '/promotionGroup', component: promotionGroup, name: '促销组管理' },
+        ]
+    },
+    {
+        path: '/customerAudits',
+        component: Home,
+        name: '客户管理',
+        iconCls: 'fa fa-address-book',
+        children: [
+            { path: '/customerAudit', component: customerAudit, name: '新增客户单据' },
+            { path: '/customer', component: customer, name: '客户查询' },
+            { path: '/deliveryAddressAudit', component: deliveryAddressAudit, name: '收货地址审核' },
+            { path: '/voucherGrant', component: voucherGrant, name: '代金券管理' },
+            { path: '/deliveryAddress', component: deliveryAddress, name: '客户地址查询' },
+            { path: '/voucher', component: voucher, name: '代金券发放' },
+            { path: '/customerPushMan', component: customerPushMan, name: '修改客户地推人员' }
         ]
     },
     {
@@ -213,6 +213,17 @@ let routes = [
         ]
     },
     {
+        path: '/operateWmsAudits',
+        component: Home,
+        name: '运营区仓库管理',
+        iconCls: 'fa fa-industry',
+        children: [
+            { path: '/operateWmsAudit', component: operateWmsAudit, name: '新增运营区仓库' },
+            { path: '/operateWms', component: operateWms, name: '运营区仓库查询' },
+            { path: '/wmsDept', component: wmsDept, name: '仓库管理' },
+        ]
+    },
+    {
         path: '/pushManAudits',
         component: Home,
         name: '地推管理',
@@ -233,17 +244,6 @@ let routes = [
         ]
     },
     {
-        path: '/operateWmsAudits',
-        component: Home,
-        name: '运营区仓库管理',
-        iconCls: 'fa fa-industry',
-        children: [
-            { path: '/operateWmsAudit', component: operateWmsAudit, name: '新增运营区仓库' },
-            { path: '/operateWms', component: operateWms, name: '运营区仓库查询' },
-            { path: '/wmsDept', component: wmsDept, name: '仓库管理' },
-        ]
-    },
-    {
         path: '/smss',
         component: Home,
         name: '短信发送',
@@ -253,9 +253,8 @@ let routes = [
             { path: '/sms', component: sms, name: '短信发送列表' },
         ]
     },
-    
     // {
-    //     path: '/echarts',
+    //     path: '/echart',
     //     component: Home,
     //     name: 'Charts',
     //     iconCls: 'fa fa-bar-chart',
