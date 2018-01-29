@@ -132,10 +132,7 @@
 					sessionStorage.removeItem('user');
 					_this.$router.push('/login');
 				}).catch(() => {
-
 				});
-
-
 			},
 			//折叠导航栏
 			collapse:function(){
@@ -155,7 +152,6 @@
 
 		}
 	}
-
 </script>
 
 <style scoped lang="scss">
