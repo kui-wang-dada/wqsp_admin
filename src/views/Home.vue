@@ -223,12 +223,11 @@
 					}
 					.tools{
 						display:inline-block;
-						padding: 0px 23px;
 						width:14px;
 						height: 60px;
 						line-height: 60px;
 						cursor: pointer;
-						margin-left:35px;
+						margin-left:79px;
 					}
 				}
 			}
@@ -239,12 +238,11 @@
 						display:none;
 					}
 					.tools{
-						padding: 0px 23px;
 						width:14px;
 						height: 60px;
 						line-height: 60px;
 						cursor: pointer;
-						margin-left:-28px;
+						margin-left:-4px;
 					}
 				}
 			}
