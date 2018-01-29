@@ -85,7 +85,7 @@ let routes = [
         iconCls: 'fa fa-cog',//图标样式class
         children: [
             { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/permiss', component: Permiss, name: '权限管理' },
+            { path: '/permiss.json', component: Permiss, name: '权限管理' },
             { path: '/role', component: role, name: '角色管理' },
             { path: '/user', component: user, name: '用户管理' },
             { path: '/datadict', component: datadict, name: '数据字典' },
