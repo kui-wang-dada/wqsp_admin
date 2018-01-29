@@ -4,28 +4,35 @@
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+					<el-input v-model="filters.name" placeholder="字典名称"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUser">查询</el-button>
+				</el-form-item>
+				<el-form-item>
+					<el-button type="primary">新增</el-button>
 				</el-form-item>
 			</el-form>
 		</el-col>
 
 		<!--列表-->
 		<template>
-			<el-table :data="users" highlight-current-row v-loading="loading" style="width: 100%;">
-				<el-table-column type="index" width="60">
+			<el-table :data="users" highlight-current-row v-loading="loading" border stripe style="width: 100%;">
+				<el-table-column type="selection" min-width="50">
 				</el-table-column>
-				<el-table-column prop="name" label="姓名" width="120" sortable>
+				<el-table-column prop="name" label="名称" min-width="120" sortable>
 				</el-table-column>
-				<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+				<el-table-column prop="code" label="代码" min-width="100"  sortable>
 				</el-table-column>
-				<el-table-column prop="age" label="年龄" width="100" sortable>
+				<el-table-column prop="descript" label="说明" min-width="200" sortable>
 				</el-table-column>
-				<el-table-column prop="birth" label="生日" width="120" sortable>
+				<el-table-column prop="value" label="值域" min-width="200" sortable>
 				</el-table-column>
-				<el-table-column prop="addr" label="地址" min-width="180" sortable>
+				<el-table-column label="操作" min-width="150">
+					<template slot-scope="scope">
+						<el-button size="small" type="primary" icon="edit" >编辑</el-button>
+						<el-button type="danger" icon="delete" size="small">删除</el-button>
+					</template>
 				</el-table-column>
 			</el-table>
 		</template>
@@ -34,6 +41,8 @@
 </template>
 <script>
 	import { getUserList } from '../../api/api';
+
+		var datadict=require("../../mock/falseData/systemAdmin_1/datadict")
 	//import NProgress from 'nprogress'
 	export default {
 		data() {
@@ -42,8 +51,7 @@
 					name: ''
 				},
 				loading: false,
-				users: [
-				]
+				users: datadict.data
 			}
 		},
 		methods: {
@@ -65,9 +73,7 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUser();
-		}
+		
 	};
 
 </script>

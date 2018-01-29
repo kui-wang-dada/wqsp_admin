@@ -4,7 +4,33 @@
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+					<el-input v-model="filters.id" placeholder="审核单号"></el-input>
+				</el-form-item>
+				<el-select v-model="value" placeholder="审核状态">
+					<el-option
+							v-for="item in filters.options"
+							:key="item.value"
+							:label="item.label"
+							:value="item.value">
+					</el-option>
+				</el-select>
+				<el-form-item>
+					<el-input v-model="filters.goodsName" placeholder="商品名称"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.goodsCode" placeholder="商品编码"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.createPerson" placeholder="创建人"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.checkPerson" placeholder="审核人"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.startTime" placeholder="开始时间"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.endTime" placeholder="结束时间"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -14,22 +40,25 @@
 				</el-form-item>
 			</el-form>
 		</el-col>
-
+		
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe
+		          style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<el-table-column prop="billNo" label="审核单号" width="200" sortable>
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="merNum" label="数量" width="100" sortable>
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="createName" label="创建人" width="100" sortable>
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="updateName" label="审核人" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="checkStatus==2?'haha':'were'" label="审核状态" min-width="180" sortable>
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="createDate" label="创建时间" min-width="180" sortable>
+			</el-table-column>
+			<el-table-column prop="opType" label="操作类型" min-width="180" sortable>
 			</el-table-column>
 			<el-table-column label="操作" width="150">
 				<template slot-scope="scope">
@@ -38,14 +67,15 @@
 				</template>
 			</el-table-column>
 		</el-table>
-
+		
 		<!--工具条-->
 		<el-col :span="24" class="toolbar">
 			<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="10"
+			               :total="total" style="float:right;">
 			</el-pagination>
 		</el-col>
-
+		
 		<!--编辑界面-->
 		<el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
 			<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
@@ -73,7 +103,7 @@
 				<el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
 			</div>
 		</el-dialog>
-
+		
 		<!--新增界面-->
 		<el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false">
 			<el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
@@ -107,16 +137,39 @@
 <script>
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
-	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
+	import {getUserListPage, removeUser, batchRemoveUser, editUser, addUser} from '../../api/api';
 
+	var addGoods = require("../../mock/falseData/goodsAdmin_2/addGoodsAdmin")
 	export default {
 		data() {
 			return {
 				filters: {
-					name: ''
+					id: '',
+					options: [
+						{
+							value: "选项1",
+							label: "待审核"
+						},
+						{
+							value: "选项2",
+							label: "审核通过"
+						},
+						{
+							value: "选项3",
+							label: "退回"
+						}
+					],
+					goodsName: "",
+					goodsCode: "",
+					createPerson: '',
+					checkPerson: '',
+					startTime: '',
+					endTime: ''
+
+
 				},
-				users: [],
-				total: 0,
+				users: addGoods.data,
+				total: 88,
 				page: 1,
 				listLoading: false,
 				sels: [],//列表选中列
@@ -125,7 +178,7 @@
 				editLoading: false,
 				editFormRules: {
 					name: [
-						{ required: true, message: '请输入姓名', trigger: 'blur' }
+						{required: true, message: '请输入姓名', trigger: 'blur'}
 					]
 				},
 				//编辑界面数据
@@ -142,7 +195,7 @@
 				addLoading: false,
 				addFormRules: {
 					name: [
-						{ required: true, message: '请输入姓名', trigger: 'blur' }
+						{required: true, message: '请输入姓名', trigger: 'blur'}
 					]
 				},
 				//新增界面数据
@@ -187,7 +240,7 @@
 				}).then(() => {
 					this.listLoading = true;
 					//NProgress.start();
-					let para = { id: row.id };
+					let para = {id: row.id};
 					removeUser(para).then((res) => {
 						this.listLoading = false;
 						//NProgress.done();
@@ -276,7 +329,7 @@
 				}).then(() => {
 					this.listLoading = true;
 					//NProgress.start();
-					let para = { ids: ids };
+					let para = {ids: ids};
 					batchRemoveUser(para).then((res) => {
 						this.listLoading = false;
 						//NProgress.done();
@@ -291,9 +344,6 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
 	}
 
 </script>
