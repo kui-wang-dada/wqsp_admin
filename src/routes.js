@@ -109,7 +109,7 @@ let routes = [
         // leaf: true,//只有一个节点
         children: [
             { path: '/supplierAudit', component: supplierAudit, name: '新增供应商' },
-            { path: '/supplier', component: supplier, name: '供应商管理列表' }
+            { path: '/supplier_3', component: supplier, name: '供应商管理列表' }
         ]
     },
     {
