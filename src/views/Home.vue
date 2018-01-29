@@ -23,38 +23,29 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
-				<template>
-					<div class="scroll-container" ref="scrollContainer" @wheel.prevent="handleScroll" >
-						<div class="scroll-wrapper" ref="scrollWrapper" :style="{top: top + 'px'}">
-							<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :class="collapsed ? 'el-menu--collapse' : ''" @open="handleopen" @close="handleclose" @select="handleselect"
-								unique-opened router v-show="!collapsed" style="width:230px !important;">
-								<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-									<el-submenu :index="index+''" v-if="!item.leaf">
-										<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-										<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
-									</el-submenu>
-									<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
-								</template>
-							</el-menu>
-							<!--导航菜单-折叠后-->
-							<ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed" >
-								<li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
-									<template v-if="!item.leaf">
-										<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
-										<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-											<li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
-										</ul>
-									</template>
-									<template v-else>
-										<li class="el-submenu">
-											<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)"><i :class="item.iconCls"></i></div>
-										</li>
-									</template>
-								</li>
-							</ul>
-						</div>
+				<div class="scroll-container" ref="scrollContainer" @wheel.prevent="handleScroll" >
+					<div class="scroll-wrapper" ref="scrollWrapper" :style="{top: top + 'px'}">
+						<el-menu :default-active="$route.path" class="el-menu-vertical-demo" :class="collapsed ? 'el-menu--collapse' : ''" @open="handleopen" @close="handleclose" @select="handleselect"
+							unique-opened router v-show="!collapsed" style="width:230px !important;">
+							<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
+								<el-submenu :index="index+''" v-if="!item.leaf">
+									<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
+									<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
+								</el-submenu>
+								<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
+							</template>
+						</el-menu>
+						<!--导航菜单-折叠后-->
+						<ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed" >
+							<li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
+								<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
+								<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
+									<li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
-				</template>
+				</div>
 			</aside>
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
@@ -169,19 +160,7 @@
 
 <style scoped lang="scss">
 	@import '~scss_vars';
-	// $blue:#324157;
-	// $light-blue:#3A71A8;
-	// $red:#C03639;
-	// $pink: #E65D6E;
-	// $green: #30B08F;
-	// $tiffany: #4AB7BD;
-	// $yellow:#FEC171;
-	// $panGreen: #30B08F;
-
-	// //sidebar
-	$menuBg:#304156;
-	// $subMenuBg:#1f2d3d;
-	// $menuHover:#001528;
+	$menuBg:#EEF1F6;
 	.scroll-container {
 		position: relative;
 		width: 100%;
@@ -192,7 +171,6 @@
 			width: 100%!important;
 		}
 	}
-
 
 	.container {
 		position: absolute;

@@ -197,6 +197,7 @@ let routes = [
         component: Home,
         name: '商品上下架管理',
         iconCls: 'fa fa-cart-arrow-down',
+        leaf: true,
         children: [
             { path: '/goodsShelvesAudit', component: goodsShelvesAudit, name: '商品上下架管理列表' },
         ]
@@ -247,6 +248,7 @@ let routes = [
         component: Home,
         name: '短信发送',
         iconCls: 'fa fa-rss',
+        leaf: true,
         children: [
             { path: '/sms', component: sms, name: '短信发送列表' },
         ]
