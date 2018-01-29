@@ -4,8 +4,22 @@
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+					<el-input v-model="filters.name" placeholder="批次号"></el-input>
 				</el-form-item>
+				<el-select v-model="filters.value1" placeholder="请选择">
+					<el-option
+							v-for="item in filters.options1"
+							:label="item.label"
+							:value="item.value">
+					</el-option>
+				</el-select>
+				<el-select v-model="filters.value2" placeholder="请选择">
+					<el-option
+							v-for="item in filters.options2"
+							:label="item.label"
+							:value="item.value">
+					</el-option>
+				</el-select>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
 				</el-form-item>
@@ -16,25 +30,31 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<el-table-column prop="batchNo" label="批次号" width="180" >
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="createDateStr" label="创建时间" width="200"  >
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="createUser" label="创建人" width="100" >
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="auditDateStr" label="审核时间" width="200" >
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="auditUser" label="审核人" min-width="100" >
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column  label="审核状态" :formatter="getStatus" min-width="100" >
+				<template scope="scope">
+					<span v-if="scope.row.status===2" style="color:green">审核通过</span>
+					<span v-else style="color:red">退回</span>
+				</template>
+			</el-table-column>
+			<el-table-column prop="dataType" label="操作类型" :formatter="getDataType" min-width="100" >
 			</el-table-column>
 			<el-table-column label="操作" width="150">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" type="primary" icon="circle-check"  @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+					
 				</template>
 			</el-table-column>
 		</el-table>
@@ -109,13 +129,46 @@
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
+	var supplierAudit = require("../../mock/falseData/supplier/supplierAudit")
+	
 	export default {
 		data() {
 			return {
 				filters: {
-					name: ''
+					name: '',
+					value1:'',
+					value2:'',
+					options1: [
+						{
+							value: "选项1",
+							label: "新增"
+						},
+						{
+							value: "选项2",
+							label: "修改"
+						},
+					],
+					options2: [
+						{
+							value: "选项1",
+							label: "未发起审核"
+						},
+						{
+							value: "选项2",
+							label: "等待审核"
+						},
+						{
+							value: "选项3",
+							label: "审核通过"
+						},
+						{
+							value: "选项4",
+							label: "审核失败"
+						},
+					],
 				},
-				users: [],
+				status:'',
+				users: supplierAudit.data,
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -158,8 +211,11 @@
 		},
 		methods: {
 			//性别显示转换
-			formatSex: function (row, column) {
-				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+			getStatus: function (row, column) {
+				return row.status == 2 ? '审核通过' : row.status == 3 ? '退回' : '未知';
+			},
+			getDataType: function (row, column) {
+				return row.dataType == 0 ? '新增' : row.dataType == 1 ? '修改' : '未知';
 			},
 			handleCurrentChange(val) {
 				this.page = val;
@@ -291,13 +347,16 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+		
 	}
 
 </script>
 
 <style scoped>
-
+.success{
+	color:green;
+}
+	.fail{
+		color:red;
+	}
 </style>

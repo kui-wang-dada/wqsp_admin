@@ -2,12 +2,42 @@
 	<section>
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-			<el-form :inline="true" :model="filters">
-				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+			<el-form :inline="true" :model="filters" label-width="100px" size="medium">
+				<el-form-item label="id" >
+					<el-input v-model="filters.id" placeholder="id"></el-input>
 				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" v-on:click="getUsers">查询</el-button>
+				<el-form-item label="供应商名称">
+					<el-input v-model="filters.name" placeholder="供应商名称"></el-input>
+				</el-form-item>
+				<el-form-item label="联系电话">
+					<el-input v-model="filters.name" placeholder="联系电话"></el-input>
+				</el-form-item>
+				<el-form-item label="采购类型">
+					<el-select v-model="filters.value1" placeholder="请选择">
+						<el-option
+								v-for="item in filters.options1"
+								:label="item.label"
+								:value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="支付方式">
+					<el-select v-model="filters.value2" placeholder="请选择">
+						<el-option
+								v-for="item in filters.options2"
+								:label="item.label"
+								:value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="状态">
+					<el-select v-model="filters.value3" placeholder="请选择">
+						<el-option
+								v-for="item in filters.options3"
+								:label="item.label"
+								:value="item.value">
+						</el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="handleAdd">新增</el-button>
@@ -16,21 +46,32 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<el-table-column prop="id" label="供应商编码" width="80" >
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="supplierName" label="供应商名称" width="120"  >
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="phone" label="联系电话" width="130" >
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="linkMan" label="联系人" width="80" >
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="createUser" label="创建人" min-width="80" >
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="createDateStr" label="创建时间" min-width="150" >
 			</el-table-column>
+			<el-table-column prop="auditUser" label="最后修改人" min-width="80" >
+			</el-table-column>
+			<el-table-column prop="auditDateStr" label="最后修改时间" min-width="150" >
+			</el-table-column>
+			<el-table-column prop="buyType" label="采购类型" :formatter="buyType" min-width="100" >
+			</el-table-column>
+			<el-table-column prop="payType" label="支付类型" :formatter="payType"  min-width="90" >
+			</el-table-column>
+			<el-table-column prop="status" label="状态" :formatter="dataType"  min-width="60" >
+			</el-table-column>
+			
 			<el-table-column label="操作" width="150">
 				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -109,13 +150,55 @@
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
+	var supplier = require("../../mock/falseData/supplier/supplier")
 	export default {
 		data() {
 			return {
 				filters: {
-					name: ''
+					name: '',
+					value1:'',
+					options1: [
+						{
+							value: "选项1",
+							label: "统一采购"
+						},
+						{
+							value: "选项2",
+							label: "地方采购"
+						}
+					],
+					value2:'',
+					options2: [
+						{
+							value: "选项1",
+							label: "周结"
+						},
+						{
+							value: "选项2",
+							label: "月结"
+						},
+						{
+							value: "选项3",
+							label: "批结"
+						},
+						{
+							value: "选项4",
+							label: "到付"
+						}
+					],
+					value3:'',
+					options3: [
+						{
+							value: "选项1",
+							label: "禁用"
+						},
+						{
+							value: "选项2",
+							label: "启用"
+						}
+					],
 				},
-				users: [],
+				users: supplier.data,
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -158,8 +241,14 @@
 		},
 		methods: {
 			//性别显示转换
-			formatSex: function (row, column) {
-				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+			buyType: function (row, column) {
+				return row.buyType == 0 ? '统一采购' : row.buyType == 1 ? '地方采购' : '未知';
+			},
+			payType: function (row, column) {
+				return row.payType == 0 ? '周结' : row.payType == 2 ? '批结' : '未知';
+			},
+			status: function (row, column) {
+				return row.status == 1 ? '启用' : '禁用';
 			},
 			handleCurrentChange(val) {
 				this.page = val;
@@ -290,9 +379,6 @@
 
 				});
 			}
-		},
-		mounted() {
-			this.getUsers();
 		}
 	}
 

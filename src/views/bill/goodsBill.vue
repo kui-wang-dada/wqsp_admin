@@ -6,10 +6,9 @@
 				<el-form-item>
 					<el-input v-model="filters.id" placeholder="审核单号"></el-input>
 				</el-form-item>
-				<el-select v-model="value" placeholder="审核状态">
+				<el-select v-model="filters.value" placeholder="审核状态">
 					<el-option
 							v-for="item in filters.options"
-							:key="item.value"
 							:label="item.label"
 							:value="item.value">
 					</el-option>
@@ -46,24 +45,28 @@
 		          style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column prop="billNo" label="审核单号" width="200" sortable>
+			<el-table-column prop="billNo" label="审核单号" width="200">
 			</el-table-column>
-			<el-table-column prop="merNum" label="数量" width="100" sortable>
+			<el-table-column prop="merNum" label="数量" width="80" >
 			</el-table-column>
-			<el-table-column prop="createName" label="创建人" width="100" sortable>
+			<el-table-column prop="createName" label="创建人" width="100" >
 			</el-table-column>
-			<el-table-column prop="updateName" label="审核人" width="120" sortable>
+			<el-table-column prop="updateName" label="审核人" width="100" >
 			</el-table-column>
-			<el-table-column prop="checkStatus==2?'haha':'were'" label="审核状态" min-width="180" sortable>
+			<el-table-column  label="审核状态" :formatter="checkStatus" min-width="120" >
+				<template scope="scope">
+					<span v-if="scope.row.checkStatus==='2'" style="color:green">审核通过</span>
+					<span v-else style="color:orange">待审核</span>
+				</template>
 			</el-table-column>
-			<el-table-column prop="createDate" label="创建时间" min-width="180" sortable>
+			<el-table-column prop="createDate" label="创建时间" min-width="160" >
 			</el-table-column>
-			<el-table-column prop="opType" label="操作类型" min-width="180" sortable>
+			<el-table-column prop="opType" label="操作类型" :formatter="opType" min-width="120" >
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column label="操作" min-width="180">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" icon="edit" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+					<el-button type="danger" icon="delete" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -145,6 +148,7 @@
 			return {
 				filters: {
 					id: '',
+					value:'',
 					options: [
 						{
 							value: "选项1",
@@ -211,8 +215,11 @@
 		},
 		methods: {
 			//性别显示转换
-			formatSex: function (row, column) {
-				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+			checkStatus: function (row, column) {
+				return row.checkStatus == 2 ? '审核通过' : row.checkStatus == 1 ? '待审核' : '未知';
+			},
+			opType: function (row, column) {
+				return row.opType == 2 ? '修改' : row.opType == 1 ? '增加' : '未知';
 			},
 			handleCurrentChange(val) {
 				this.page = val;

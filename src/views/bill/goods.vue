@@ -4,33 +4,13 @@
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
-					<el-input v-model="filters.id" placeholder="审核单号"></el-input>
-				</el-form-item>
-				<el-select v-model="value" placeholder="审核状态">
-					<el-option
-							v-for="item in filters.options"
-							:key="item.value"
-							:label="item.label"
-							:value="item.value">
-					</el-option>
-				</el-select>
-				<el-form-item>
-					<el-input v-model="filters.goodsName" placeholder="商品名称"></el-input>
+					<el-input v-model="filters.Name" placeholder="商品名称"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-input v-model="filters.goodsCode" placeholder="商品编码"></el-input>
+					<el-input v-model="filters.goodsName" placeholder="商品全称"></el-input>
 				</el-form-item>
 				<el-form-item>
-					<el-input v-model="filters.createPerson" placeholder="创建人"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-input v-model="filters.checkPerson" placeholder="审核人"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-input v-model="filters.startTime" placeholder="开始时间"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-input v-model="filters.endTime" placeholder="结束时间"></el-input>
+					<el-input v-model="filters.id" placeholder="商品编号"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -42,28 +22,30 @@
 		</el-col>
 		
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe
 		          style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column prop="billNo" label="审核单号" width="120" sortable>
+			<el-table-column prop="id" label="编号" width="80" >
 			</el-table-column>
-			<el-table-column prop="merNum" label="数量" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="goodsName" label="商品名称" width="100" >
 			</el-table-column>
-			<el-table-column prop="createName" label="创建人" width="100" sortable>
+			<el-table-column prop="fullName" label="商品全称" width="100" >
 			</el-table-column>
-			<el-table-column prop="updateName" label="审核人" width="120" sortable>
+			<el-table-column prop="createDate" label="创建时间" width="150" >
 			</el-table-column>
-			<el-table-column prop="{checkStatus==2?'审核通过':'待审核'}" label="审核状态" min-width="180" sortable>
+			<el-table-column prop="updateDate" label="更改时间" min-width="150" >
 			</el-table-column>
-			<el-table-column prop="createDate" label="创建时间" min-width="180" sortable>
+			<el-table-column prop="createName" label="创建人" min-width="120" >
 			</el-table-column>
-			<el-table-column prop="{opType==1?'新增':'修改'}" label="操作类型" min-width="180" sortable>
+			<el-table-column prop="updateName" label="更改人" min-width="120" >
+			</el-table-column>
+			<el-table-column prop="shelfLife" label="保质期" min-width="80" >
 			</el-table-column>
 			<el-table-column label="操作" width="150">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" type="primary" icon="circle-check"  @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+				
 				</template>
 			</el-table-column>
 		</el-table>
@@ -139,36 +121,16 @@
 	//import NProgress from 'nprogress'
 	import {getUserListPage, removeUser, batchRemoveUser, editUser, addUser} from '../../api/api';
 
-	var addGoods = require("../../mock/falseData/goodsAdmin_2/addGoodsAdmin")
+	var Goods = require("../../mock/falseData/goodsAdmin_2/goodsAdmin")
 	export default {
 		data() {
 			return {
 				filters: {
-					id: '',
-					options: [
-						{
-							value: "选项1",
-							label: "待审核"
-						},
-						{
-							value: "选项2",
-							label: "审核通过"
-						},
-						{
-							value: "选项3",
-							label: "退回"
-						}
-					],
+					id:'',
+					Name: "",
 					goodsName: "",
-					goodsCode: "",
-					createPerson: '',
-					checkPerson: '',
-					startTime: '',
-					endTime: ''
-
-
 				},
-				users: addGoods.data,
+				users: Goods.data,
 				total: 88,
 				page: 1,
 				listLoading: false,
@@ -343,9 +305,6 @@
 
 				});
 			}
-		},
-		mounted() {
-			this.getUsers();
 		}
 	}
 
