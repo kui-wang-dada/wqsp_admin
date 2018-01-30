@@ -21,7 +21,7 @@
 			</el-table-column>
 			<el-table-column prop="billNo" label="审核单号" min-width="180" >
 			</el-table-column>
-			<el-table-column prop="merNum" label="商户数量" min-width="80"  >
+			<el-table-column prop="merNum" label="商户数量" min-width="110"  >
 			</el-table-column>
 			<el-table-column prop="createUser" label="创建人" min-width="100" >
 			</el-table-column>
@@ -38,9 +38,9 @@
 					<span v-else   style="color:red">退回</span>
 				</template>
 			</el-table-column>
-			<el-table-column prop="opType" label="操作类型" :formatter="opType" min-width="100" >
+			<el-table-column prop="opType" label="操作类型" :formatter="opType" min-width="100">
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column label="操作" width="150" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" type="primary" icon="circle-check"  @click="handleEdit(scope.$index, scope.row)">详情</el-button>
 

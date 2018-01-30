@@ -45,43 +45,43 @@
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe fit size="mini" style="width: 100%;">
 			<el-table-column type="selection" min-width="55">
 			</el-table-column>
-			<el-table-column prop="id" label="编码" >
+			<el-table-column prop="id" label="编码" width="70">
 			</el-table-column>
-			<el-table-column prop="title" label="代金券名称" >
+			<el-table-column prop="title" label="代金券名称" width="130">
 			</el-table-column>
-			<el-table-column prop="oaName" label="运营区名称" >
+			<el-table-column prop="oaName" label="运营区名称" width="140">
 			</el-table-column>
-			<el-table-column prop="address" label="状态"  >
+			<el-table-column prop="address" label="状态" width="90" >
 			</el-table-column>
-			<el-table-column prop="startDate" label="代金券开始日期" >
+			<el-table-column prop="startDate" label="代金券开始日期" width="170">
 			</el-table-column>
-			<el-table-column prop="endDate" label="代金券结束日期" >
+			<el-table-column prop="endDate" label="代金券结束日期" width="170">
 			</el-table-column>
-			<el-table-column prop="shareRateSelf" label="平台分摊比例" >
+			<el-table-column prop="shareRateSelf" label="平台分摊比例" width="130">
 			</el-table-column>
-			<el-table-column prop="shareRateThird" label="第三方分摊比例" >
+			<el-table-column prop="shareRateThird" label="第三方分摊比例" width="130">
 			</el-table-column>
-			<el-table-column prop="merchantName" label="第三方商户名称">
+			<el-table-column prop="merchantName" label="第三方商户名称" width="140">
 			</el-table-column>
-			<el-table-column prop="useRange" label="使用范围"  >
+			<el-table-column prop="useRange" label="使用范围" width="120" >
 			</el-table-column>
-			<el-table-column prop="useDays" label="使用天数"  >
+			<el-table-column prop="useDays" label="使用天数"  width="120">
 			</el-table-column>
-			<el-table-column prop="delayUseDays" label="推迟使用天数"  >
+			<el-table-column prop="delayUseDays" label="推迟使用天数"  width="130">
 			</el-table-column>
-			<el-table-column prop="conditionAmount" label="满减达到金额"  >
+			<el-table-column prop="conditionAmount" label="满减达到金额"  width="140">
 			</el-table-column>
-			<el-table-column prop="giftAmount" label="减免金额"  >
+			<el-table-column prop="giftAmount" label="减免金额"  width="120">
 			</el-table-column>
-			<el-table-column prop="createName" label="创建人" >
+			<el-table-column prop="createName" label="创建人" width="120">
 			</el-table-column>
-			<el-table-column prop="createDate" label="创建时间">
+			<el-table-column prop="createDate" label="创建时间" width="150">
 			</el-table-column>
-			<el-table-column prop="updateName" label="修改人">
+			<el-table-column prop="updateName" label="修改人" width="120">
 			</el-table-column>
-			<el-table-column prop="updateDate" label="修改时间"  >
+			<el-table-column prop="updateDate" label="修改时间"  width="150">
 			</el-table-column>
-			<el-table-column label="操作" min-width="80" align="center">
+			<el-table-column label="操作" min-width="110" align="center" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="circle-check" type="primary" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
 				</template>

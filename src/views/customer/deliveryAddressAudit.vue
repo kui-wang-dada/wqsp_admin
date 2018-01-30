@@ -41,14 +41,14 @@
 			</el-table-column>
 			<el-table-column prop="isDefault" label="是否默认" :formatter="isDefault" min-width="100" >
 			</el-table-column>
-			<el-table-column prop="checkstatus" label="审核状态" min-width="100" >
+			<el-table-column prop="checkstatus" label="审核状态" min-width="100">
 				<template scope="scope">
 					<span v-if="scope.row.checkstatus===2" style="color:green">审核通过</span>
 					<span v-else-if="scope.row.checkstatus===1" style="color:orange">待审核</span>
 					<span v-else   style="color:red">退回</span>
 				</template>
 			</el-table-column>
-			<el-table-column label="操作" min-width="80" align="center">
+			<el-table-column label="操作" min-width="80" align="center"  fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="circle-check" type="primary" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
 				</template>

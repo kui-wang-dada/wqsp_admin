@@ -43,7 +43,7 @@
 			</el-table-column>
 			<el-table-column prop="status" label="状态" min-width="150" :formatter="status">
 			</el-table-column>
-			<el-table-column label="操作" min-width="180" align="center">
+			<el-table-column label="操作" min-width="220" align="center">
 				<template slot-scope="scope">
 					<el-button size="small" icon="circle-check" type="primary"
 					           @click="handleEdit(scope.$index, scope.row)">修改

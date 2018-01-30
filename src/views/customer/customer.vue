@@ -49,40 +49,40 @@
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe align="center" fit=true style="width: 100%;">
 			<el-table-column type="selection" min-width="45" align="center">
 			</el-table-column>
-			<el-table-column  label="省" min-width="40"  align="center" >
+			<el-table-column  label="省" min-width="110"  align="center" >
 			</el-table-column>
-			<el-table-column  label="市" min-width="40"  align="center">
+			<el-table-column  label="市" min-width="110"  align="center">
 			</el-table-column>
-			<el-table-column  label="区" min-width="40"  align="center">
+			<el-table-column  label="区" min-width="110"  align="center">
 			</el-table-column>
-			<el-table-column  label="店铺名称"  min-width="80" align="center" >
+			<el-table-column  label="店铺名称"  min-width="120" align="center" >
 			</el-table-column>
-			<el-table-column  label="渠道类型" min-width="80"  align="center">
+			<el-table-column  label="渠道类型" min-width="120"  align="center">
 			</el-table-column>
-			<el-table-column  label="店主姓名" min-width="80"  align="center">
+			<el-table-column  label="店主姓名" min-width="120"  align="center">
 			</el-table-column>
-			<el-table-column  label="店主手机"  min-width="80"  align="center">
+			<el-table-column  label="店主手机"  min-width="120"  align="center">
 			</el-table-column>
-			<el-table-column  label="联系人" min-width="60"  align="center">
+			<el-table-column  label="联系人" min-width="120"  align="center">
 			</el-table-column>
-			<el-table-column  label="联系电话"  min-width="80"align="center" >
+			<el-table-column  label="联系电话"  min-width="130" align="center" >
 			</el-table-column>
-			<el-table-column  label="店铺地址" min-width="80"  align="center">
+			<el-table-column  label="店铺地址" min-width="130"  align="center">
 			</el-table-column>
-			<el-table-column  label="状态" min-width="60"  align="center">
+			<el-table-column  label="状态" min-width="110"  align="center">
 			</el-table-column>
-			<el-table-column  label="审核状态"  min-width="80"  align="center">
+			<el-table-column  label="审核状态"  min-width="120"  align="center">
 			</el-table-column>
-			<el-table-column  label="创建时间"  min-width="80"  align="center">
+			<el-table-column  label="创建时间"  min-width="160"  align="center">
 			</el-table-column>
-			<el-table-column  label="更新时间"  min-width="80"  align="center">
+			<el-table-column  label="更新时间"  min-width="160"  align="center">
 			</el-table-column>
-			<el-table-column  label="地推人员名称"  min-width="80"  align="center">
+			<el-table-column  label="地推人员名称"  min-width="150"  align="center">
 			</el-table-column>
-			<el-table-column  label="地推人员手机"  min-width="80"  align="center">
+			<el-table-column  label="地推人员手机"  min-width="150"  align="center">
 			</el-table-column>
 			
-			<el-table-column label="操作" min-width="80" align="center">
+			<el-table-column label="操作" min-width="140" align="center" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="edit" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" icon="delete" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>

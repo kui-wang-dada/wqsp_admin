@@ -45,9 +45,9 @@
 			</el-table-column>
 			<el-table-column prop="shopName" label="店铺名称" min-width="110"  align="center" >
 			</el-table-column>
-			<el-table-column prop="channelType" label="渠道类型" min-width="90" :formatter="channelType"  align="center">
+			<el-table-column prop="channelType" label="渠道类型" min-width="110" :formatter="channelType"  align="center">
 			</el-table-column>
-			<el-table-column prop="shopMan" label="店主姓名" min-width="80"  align="center">
+			<el-table-column prop="shopMan" label="店主姓名" min-width="110"  align="center">
 			</el-table-column>
 			<el-table-column prop="shopPhone" label="店主手机"  min-width="130"align="center" >
 			</el-table-column>
@@ -64,10 +64,10 @@
 					<span v-else   style="color:red">未知</span>
 				</template>
 			</el-table-column>
-			<el-table-column prop="opType" label="操作类型" :formatter="opType"  min-width="80"  align="center">
+			<el-table-column prop="opType" label="操作类型" :formatter="opType"  min-width="110"  align="center">
 			</el-table-column>
 
-			<el-table-column label="操作" min-width="180" align="center">
+			<el-table-column label="操作" min-width="180" align="center" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="edit" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" icon="delete" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>

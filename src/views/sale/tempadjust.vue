@@ -50,7 +50,7 @@
 			<el-table-column prop="opType" label="操作类型" min-width="150" :formatter="opType">
 			</el-table-column>
 
-			<el-table-column label="操作" min-width="180" align="center">
+			<el-table-column label="操作" min-width="180" align="center" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="circle-check" type="primary"
 					           @click="handleEdit(scope.$index, scope.row)">修改

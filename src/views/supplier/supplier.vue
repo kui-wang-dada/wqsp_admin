@@ -49,7 +49,7 @@
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe align="center" style="width: 100%;">
 			<el-table-column type="selection" min-width="45" align="center">
 			</el-table-column>
-			<el-table-column prop="id" label="供应商编码" min-width="80" align="center">
+			<el-table-column prop="id" label="供应商编码" min-width="110" align="center">
 			</el-table-column>
 			<el-table-column prop="supplierName" label="供应商名称" min-width="110"  align="center" >
 			</el-table-column>
@@ -57,22 +57,22 @@
 			</el-table-column>
 			<el-table-column prop="linkMan" label="联系人" min-width="80"  align="center">
 			</el-table-column>
-			<el-table-column prop="createUser" label="创建人"  min-width="80"align="center" >
+			<el-table-column prop="createUser" label="创建人"  min-width="80" align="center" >
 			</el-table-column>
 			<el-table-column prop="createDateStr" label="创建时间" min-width="150"  align="center">
 			</el-table-column>
-			<el-table-column prop="auditUser" label="最后修改人" min-width="90"  align="center">
+			<el-table-column prop="auditUser" label="最后修改人" min-width="140"  align="center">
 			</el-table-column>
 			<el-table-column prop="auditDateStr" label="最后修改时间" min-width="150"  align="center">
 			</el-table-column>
 			<el-table-column prop="buyType" label="采购类型" :formatter="buyType" min-width="100"  align="center">
 			</el-table-column>
-			<el-table-column prop="payType" label="支付类型" :formatter="payType"  min-width="80"  align="center">
+			<el-table-column prop="payType" label="支付类型" :formatter="payType"  min-width="100"  align="center">
 			</el-table-column>
 			<el-table-column prop="status" label="状态" :formatter="dataType"  min-width="70"  align="center">
 			</el-table-column>
 			
-			<el-table-column label="操作" min-width="180" align="center">
+			<el-table-column label="操作" min-width="180" align="center" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="edit" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" icon="delete" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>

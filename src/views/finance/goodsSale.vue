@@ -3,8 +3,40 @@
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
-				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+				<el-form-item label="运营区">
+					<el-select v-model="value" placeholder="请选择运营区">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="商户名称">
+					<el-input v-model="filters.name" placeholder="商户名称"></el-input>
+				</el-form-item>
+				<el-form-item label="商品名称">
+					<el-input v-model="filters.name" placeholder="商品名称"></el-input>
+				</el-form-item>
+				<el-form-item label="运营商ID">
+					<el-input v-model="filters.name" placeholder="运营商ID"></el-input>
+				</el-form-item>
+				<el-form-item label="商户商品ID">
+					<el-input v-model="filters.name" placeholder="商户商品ID"></el-input>
+				</el-form-item>
+				<el-form-item label="WMS编码">
+					<el-input v-model="filters.name" placeholder="WMS编码"></el-input>
+				</el-form-item>
+				<el-form-item label="品牌">
+					<el-input v-model="filters.name" placeholder="品牌"></el-input>
+				</el-form-item>
+				<el-form-item label="商品类型">
+					<el-input v-model="filters.name" placeholder="商品类型"></el-input>
+				</el-form-item>
+				<el-form-item label="开始时间">
+					<el-date-picker v-model="value1" type="datetime" placeholder="选择日期时间">
+					</el-date-picker>
+				</el-form-item>
+				<el-form-item label="结束时间">
+					<el-date-picker v-model="value2" type="datetime" placeholder="选择日期时间">
+					</el-date-picker>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -16,27 +48,51 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<!-- <el-table-column type="index" width="60">
+			</el-table-column> -->
+			<el-table-column prop="name" label="运营区" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="sex" label="商品ID" width="120" :formatter="formatSex" sortable>
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="name" label="运营区商品ID" width="160" sortable>
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="sex" label="WMS编码" width="140" sortable>
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="age" label="商品名称" width="140" sortable>
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="birth" label="商品类型" width="140" sortable>
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column prop="addr" label="商品长" min-width="120" sortable>
+			</el-table-column>
+			<el-table-column prop="name" label="商品宽" width="120" sortable>
+			</el-table-column>
+			<el-table-column prop="sex" label="商品高" width="140"  sortable>
+			</el-table-column>
+			<el-table-column prop="age" label="品牌" width="120" sortable>
+			</el-table-column>
+			<el-table-column prop="birth" label="货主" width="120" sortable>
+			</el-table-column>
+			<el-table-column prop="addr" label="平均售价" min-width="130" sortable>
+			</el-table-column>
+			<el-table-column prop="name" label="销售数量" width="130" sortable>
+			</el-table-column>
+			<el-table-column prop="sex" label="销售金额" width="130" sortable>
+			</el-table-column>
+			<el-table-column prop="age" label="库存" width="120" sortable>
+			</el-table-column>
+			<el-table-column prop="birth" label="基本单位" width="120" sortable>
+			</el-table-column>
+			<el-table-column prop="addr" label="转换基数" min-width="120" sortable>
+			</el-table-column>
+			<!-- <el-table-column label="操作" width="150" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
-			</el-table-column>
+			</el-table-column> -->
 		</el-table>
 
 		<!--工具条-->
@@ -112,6 +168,8 @@
 	export default {
 		data() {
 			return {
+				value1:"",
+				value2:"",
 				filters: {
 					name: ''
 				},

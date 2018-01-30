@@ -50,7 +50,7 @@
 			</el-table-column>
 			<el-table-column prop="merchantName" label="商户名称" min-width="110"  align="center" >
 			</el-table-column>
-			<el-table-column prop="merchantType" label="商户类型" min-width="90" :formatter="merchantType"  align="center">
+			<el-table-column prop="merchantType" label="商户类型" min-width="110" :formatter="merchantType"  align="center">
 			</el-table-column>
 			<el-table-column prop="linkMan" label="联系人" min-width="80"  align="center">
 			</el-table-column>
@@ -73,7 +73,7 @@
 			<el-table-column prop="updateDateStr" label="修改日期" :formatter="dataType"  min-width="120"  align="center">
 			</el-table-column>
 			
-			<el-table-column label="操作" min-width="180" align="center">
+			<el-table-column label="操作" min-width="180" align="center" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="edit" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" icon="delete" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>

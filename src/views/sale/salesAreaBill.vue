@@ -28,7 +28,7 @@
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe fit size="mini" style="width: 100%;">
 			<el-table-column type="selection" min-width="55">
 			</el-table-column>
-			<el-table-column prop="billNo" label="审核单号" min-width="150">
+			<el-table-column prop="billNo" label="审核单号" min-width="180">
 			</el-table-column>
 			<el-table-column prop="merNum" label="数量" min-width="150" :formatter="channel">
 			</el-table-column>
@@ -50,7 +50,7 @@
 			<el-table-column prop="opType" label="操作类型" min-width="150" :formatter="opType">
 			</el-table-column>
 
-			<el-table-column label="操作" min-width="180" align="center">
+			<el-table-column label="操作" min-width="200" align="center" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="circle-check" type="primary"
 					           @click="handleEdit(scope.$index, scope.row)">修改

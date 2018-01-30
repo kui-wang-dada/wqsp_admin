@@ -88,7 +88,7 @@
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe fit size="small" style="width: 100%;">
 			<el-table-column prop="id" label="编码" min-width="120">
 			</el-table-column>
-			<el-table-column prop="wmsGoodsNo" label="WMS商品编码" min-width="120">
+			<el-table-column prop="wmsGoodsNo" label="WMS商品编码" min-width="140">
 			</el-table-column>
 			<el-table-column prop="goodsId" label="商品编码" min-width="120" >
 			</el-table-column>
@@ -118,27 +118,27 @@
 			</el-table-column>
 			<el-table-column prop="conversionCoefficient" label="转换基数" min-width="120" >
 			</el-table-column>
-			<el-table-column prop="issyn" label="是否自动同步" min-width="120" >
+			<el-table-column prop="issyn" label="是否自动同步" min-width="140" >
 			</el-table-column>
-			<el-table-column prop="normalShelves" label="正常品上架状态" min-width="120" >
+			<el-table-column prop="normalShelves" label="正常品上架状态" min-width="145" >
 			</el-table-column>
-			<el-table-column prop="swapCapShelves" label="换盖品上架状态" min-width="120" >
+			<el-table-column prop="swapCapShelves" label="换盖品上架状态" min-width="145" >
 			</el-table-column>
-			<el-table-column prop="integralShelves" label="积分品上架状态" min-width="120" >
+			<el-table-column prop="integralShelves" label="积分品上架状态" min-width="145" >
 			</el-table-column>
-			<el-table-column prop="normalUptime" label="正常品上架时间" min-width="120" >
+			<el-table-column prop="normalUptime" label="正常品上架时间" min-width="145" >
 			</el-table-column>
-			<el-table-column prop="normalDowntime" label="正常品下架时间" min-width="120" >
+			<el-table-column prop="normalDowntime" label="正常品下架时间" min-width="145" >
 			</el-table-column>
-			<el-table-column prop="swapUptime" label="换盖品上架时间" min-width="120" >
+			<el-table-column prop="swapUptime" label="换盖品上架时间" min-width="145" >
 			</el-table-column>
-			<el-table-column prop="swapDowntime" label="换盖品下架时间" min-width="120" >
+			<el-table-column prop="swapDowntime" label="换盖品下架时间" min-width="145" >
 			</el-table-column>
-			<el-table-column prop="integralUptime" label="积分品上架时间" min-width="120" >
+			<el-table-column prop="integralUptime" label="积分品上架时间" min-width="145" >
 			</el-table-column>
-			<el-table-column prop="intergralDowntime" label="积分品下架时间" min-width="120" >
+			<el-table-column prop="intergralDowntime" label="积分品下架时间" min-width="145" >
 			</el-table-column>
-			<el-table-column label="操作" min-width="180" align="center">
+			<el-table-column label="操作" min-width="180" align="center" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="circle-check" type="primary"
 					           @click="handleEdit(scope.$index, scope.row)">详情

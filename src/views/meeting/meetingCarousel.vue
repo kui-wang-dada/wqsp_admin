@@ -45,7 +45,7 @@
 			</el-table-column>
 			<el-table-column prop="delFlag" label="状态" min-width="90" :formatter="formatdel" sortable>
 			</el-table-column>
-			<el-table-column label="操作" width="310">
+			<el-table-column label="操作" width="310" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>

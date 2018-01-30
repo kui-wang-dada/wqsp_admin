@@ -3,8 +3,8 @@
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
-				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+				<el-form-item label="采购单号">
+					<el-input v-model="filters.name" placeholder="采购单号"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -16,22 +16,33 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<!-- <el-table-column type="index" width="60">
+			</el-table-column> -->
+			<el-table-column prop="purchaseNo" label="采购单号" width="180" sortable>
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="supplierName" label="供应商名称" width="130"  sortable>
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="wmsName" label="仓库" width="100" sortable>
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="merchantName" label="货主名称" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="createUser" label="创建人" min-width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="updateUser" label="审核人" width="100" sortable>
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column prop="status" label="审核状态" width="120"  sortable>
+				<template scope="scope">
+					<span v-if="scope.row.status==2" style="color:green">审核通过</span>
+					<span v-else-if="scope.row.status==1"   style="color:orange">待审核</span>
+					<span v-else  style="color:red">退回</span>
+				</template>
+			</el-table-column>
+			<el-table-column prop="descript" label="备注" width="180" sortable>
+			</el-table-column>
+			<el-table-column label="操作" width="150" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
@@ -108,14 +119,14 @@
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
-
+	var Audit=require("../../mock/falseData/8_purchase/2_purchase");
 	export default {
 		data() {
 			return {
 				filters: {
 					name: ''
 				},
-				users: [],
+				users: Audit.data,
 				total: 0,
 				page: 1,
 				listLoading: false,

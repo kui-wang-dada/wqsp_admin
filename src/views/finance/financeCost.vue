@@ -3,8 +3,28 @@
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
-				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+				<el-form-item label="订单编号">
+					<el-input v-model="filters.name" placeholder="订单编号"></el-input>
+				</el-form-item>
+				<el-form-item label="创建时间">
+					<el-date-picker v-model="value1" type="datetime" placeholder="选择日期时间">
+					</el-date-picker>
+				</el-form-item>
+				<el-form-item label="支付时间">
+					<el-date-picker v-model="value2" type="datetime" placeholder="选择日期时间">
+					</el-date-picker>
+				</el-form-item>
+				<el-form-item label="运营区">
+					<el-select v-model="value" placeholder="请选择运营区">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="订单状态">
+					<el-select v-model="value" placeholder="请选择订单状态">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -16,27 +36,37 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<!-- <el-table-column type="index" width="60">
+			</el-table-column> -->
+			<el-table-column prop="name" label="省" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="sex" label="市" width="120" :formatter="formatSex" sortable>
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="name" label="区" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="sex" label="客户电话" width="130" sortable>
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="age" label="门店简称" width="130" sortable>
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="birth" label="订单金额" width="130" sortable>
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column prop="addr" label="订单号" min-width="160" sortable>
+			</el-table-column>
+			<el-table-column prop="name" label="优惠名称" width="130" sortable>
+			</el-table-column>
+			<el-table-column prop="sex" label="优惠类型" width="130"  sortable>
+			</el-table-column>
+			<el-table-column prop="age" label="优惠金额" width="130" sortable>
+			</el-table-column>
+			<!-- <el-table-column label="操作" width="150" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
-			</el-table-column>
+			</el-table-column> -->
 		</el-table>
 
 		<!--工具条-->
@@ -112,6 +142,8 @@
 	export default {
 		data() {
 			return {
+				value1:"",
+				value2:"",
 				filters: {
 					name: ''
 				},

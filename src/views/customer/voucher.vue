@@ -16,11 +16,11 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
-			</el-table-column>
+			<!-- <el-table-column type="index" width="60">
+			</el-table-column> -->
 			<el-table-column prop="name" label="姓名" width="120" sortable>
 			</el-table-column>
 			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>

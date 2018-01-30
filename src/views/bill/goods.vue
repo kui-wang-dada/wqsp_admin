@@ -42,7 +42,7 @@
 			</el-table-column>
 			<el-table-column prop="shelfLife" label="保质期" min-width="80" >
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column label="操作" width="150" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" type="primary" icon="circle-check"  @click="handleEdit(scope.$index, scope.row)">详情</el-button>
 				

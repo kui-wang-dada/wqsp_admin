@@ -52,10 +52,9 @@
 			</el-table-column>
 			<el-table-column prop="dataType" label="操作类型" :formatter="getDataType" min-width="100" >
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column label="操作" width="150" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" type="primary" icon="circle-check"  @click="handleEdit(scope.$index, scope.row)">详情</el-button>
-					
 				</template>
 			</el-table-column>
 		</el-table>

@@ -47,7 +47,7 @@
 			</el-table-column>
 			<el-table-column prop="sort" label="排序" min-width="150" >
 			</el-table-column>
-			<el-table-column label="生产日期"  min-width="150" >
+			<el-table-column label="生产日期"  min-width="150">
 				<template slot-scope="scope">
 					<el-input v-model="filters.name" placeholder="生产日期"></el-input>
 				</template>
@@ -58,7 +58,7 @@
 					<el-input v-model="filters.name" placeholder="清仓日期"></el-input>
 				</template>
 			</el-table-column>
-			<el-table-column label="操作" min-width="180" align="center">
+			<el-table-column label="操作" min-width="180" align="center" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="circle-check" type="primary"
 					           @click="handleEdit(scope.$index, scope.row)">保存

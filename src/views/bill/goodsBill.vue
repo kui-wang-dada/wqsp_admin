@@ -7,10 +7,7 @@
 					<el-input v-model="filters.id" placeholder="审核单号"></el-input>
 				</el-form-item>
 				<el-select v-model="filters.value" placeholder="审核状态">
-					<el-option
-							v-for="item in filters.options"
-							:label="item.label"
-							:value="item.value">
+					<el-option v-for="item in filters.options" :label="item.label" :value="item.value">
 					</el-option>
 				</el-select>
 				<el-form-item>
@@ -63,7 +60,7 @@
 			</el-table-column>
 			<el-table-column prop="opType" label="操作类型" :formatter="opType" min-width="120" >
 			</el-table-column>
-			<el-table-column label="操作" min-width="180">
+			<el-table-column label="操作" min-width="180" fixed="right">
 				<template slot-scope="scope">
 					<el-button size="small" icon="edit" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" icon="delete" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
