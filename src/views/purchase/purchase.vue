@@ -291,9 +291,7 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+		
 	}
 
 </script>

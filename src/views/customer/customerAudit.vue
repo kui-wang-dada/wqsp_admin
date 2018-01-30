@@ -2,39 +2,75 @@
 	<section>
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-			<el-form :inline="true" :model="filters">
+			<el-form :inline="true" :model="filters" label-width="100px" size="medium">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+					<el-input v-model="filters.name" placeholder="店铺名称"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-select v-model="filters.value1" placeholder="--渠道类型--">
+						<el-option
+								v-for="item in filters.options1"
+								:label="item.label"
+								:value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item >
+					<el-select v-model="filters.value2" placeholder="--审核状态--">
+						<el-option
+								v-for="item in filters.options2"
+								:label="item.label"
+								:value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item >
+					<el-input v-model="filters.name" placeholder="所属区域"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="店主手机"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="联系电话"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="handleAdd">新增</el-button>
 				</el-form-item>
 			</el-form>
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
-			<el-table-column type="selection" width="55">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe align="center" style="width: 100%;">
+			<el-table-column type="selection" min-width="45" align="center">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<el-table-column prop="shopName" label="店铺名称" min-width="110"  align="center" >
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="channelType" label="渠道类型" min-width="90" :formatter="channelType"  align="center">
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="shopMan" label="店主姓名" min-width="80"  align="center">
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="shopPhone" label="店主手机"  min-width="130"align="center" >
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="linkMan" label="联系人" min-width="150"  align="center">
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="contactNum" label="联系电话" min-width="100"  align="center">
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column prop="shopAddress" label="店铺地址"  min-width="120"  align="center">
+			</el-table-column>
+			<el-table-column label="审核状态" min-width="100"  align="center">
+				<template scope="scope">
+					<span v-if="scope.row.auditStatus===3" style="color:green">审核通过</span>
+					<span v-else-if="scope.row.auditStatus===2" style="color:blue">已提交</span>
+					<span v-else   style="color:red">未知</span>
+				</template>
+			</el-table-column>
+			<el-table-column prop="opType" label="操作类型" :formatter="opType"  min-width="80"  align="center">
+			</el-table-column>
+
+			<el-table-column label="操作" min-width="180" align="center">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" icon="edit" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+					<el-button type="danger" icon="delete" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -109,13 +145,15 @@
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
+	var datas= require("../../mock/falseData/5_customer/1_customerAudit")
+
 	export default {
 		data() {
 			return {
 				filters: {
 					name: ''
 				},
-				users: [],
+				users: datas.data,
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -158,8 +196,11 @@
 		},
 		methods: {
 			//性别显示转换
-			formatSex: function (row, column) {
-				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+			channelType: function (row, column) {
+				return row.channelType == 0 ? '流通' : row.channelType == 1 ? '特通' : '未知';
+			},
+			opType: function (row, column) {
+				return row.opType == 2 ? '修改' : row.opType == 1 ? '新增' : '未知';
 			},
 			handleCurrentChange(val) {
 				this.page = val;
@@ -291,9 +332,7 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+
 	}
 
 </script>

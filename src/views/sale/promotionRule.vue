@@ -1,40 +1,103 @@
 <template>
 	<section>
 		<!--工具条-->
-		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-			<el-form :inline="true" :model="filters">
+		<el-col :span="24" class="toolbar" style="padding-bottom: 0;">
+			<el-form :inline="true" :model="filters" size="mini">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+					<el-select v-model="filters.value1" placeholder="运营区" >
+						<el-option
+								v-for="item in filters.options1"
+								:label="item.label"
+								:value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item>
+					<el-select v-model="filters.value1" placeholder="--状态--" >
+						<el-option
+								v-for="item in filters.options1"
+								:label="item.label"
+								:value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="促销开始日期从"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="促销开始日期到"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="促销结束日期从"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="促销结束时期到"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="第三方名称"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="促销名称"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="handleAdd">新增</el-button>
 				</el-form-item>
 			</el-form>
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
-			<el-table-column type="selection" width="55">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe fit size="mini" style="width: 100%;">
+			<el-table-column type="selection" min-width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<el-table-column prop="id" label="编码" min-width="150">
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="promotion_name" label="促销名称" min-width="150" :formatter="channel">
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="operate_area_name" label="运营区名称" min-width="150">
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="valid_flag" label="状态" min-width="150">
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="start_time" label="促销开始日期" min-width="150">
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="end_time" label="促销结束日期" min-width="150">
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column prop="platform_share_scale" label="平台分摊比例" min-width="150">
+			</el-table-column>
+			<el-table-column prop="out_share_scale" label="第三方分摊比例" min-width="150">
+			</el-table-column>
+			<el-table-column prop="out_name" label="第三方名称" min-width="150">
+			</el-table-column>
+			<el-table-column prop="interval_day" label="间隔天数" min-width="150">
+			</el-table-column>
+			<el-table-column prop="cycle_tallest_count" label="周期最高次数" min-width="150">
+			</el-table-column>
+			<el-table-column prop="minus_reach_amount" label="满减达到金额" min-width="150">
+			</el-table-column>
+			<el-table-column prop="minus_amount" label="减免金额" min-width="150">
+			</el-table-column>
+			<el-table-column prop="minus_tallest_amount" label="减免最高金额" min-width="150">
+			</el-table-column>
+			<el-table-column prop="have_buy_goods" label="必买商品编码" min-width="150">
+			</el-table-column>
+			<el-table-column prop="min_sku_num" label="必买SKU数量" min-width="150">
+			</el-table-column>
+			<el-table-column prop="rule_group" label="所属促销组" min-width="150">
+			</el-table-column>
+			<el-table-column prop="created_by" label="创建人" min-width="150">
+			</el-table-column>
+			<el-table-column prop="created_time" label="创建时间" min-width="150">
+			</el-table-column>
+			<el-table-column prop="updated_by" label="修改人" min-width="150">
+			</el-table-column>
+			<el-table-column prop="update_time" label="修改时间" min-width="150">
+			</el-table-column>
+			
+			
+			<el-table-column label="操作" min-width="180" align="center">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" icon="circle-check" type="primary"
+					           @click="handleEdit(scope.$index, scope.row)">修改
+					</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -109,13 +172,15 @@
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
+	var datas= require("../../mock/falseData/6_operate/9_promotionRule")
+
 	export default {
 		data() {
 			return {
 				filters: {
 					name: ''
 				},
-				users: [],
+				users: datas.data,
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -291,9 +356,7 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+		
 	}
 
 </script>

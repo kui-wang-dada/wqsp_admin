@@ -102,7 +102,7 @@
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
-	var permiss=require("../../mock/falseData/systemAdmin_1/permiss")
+	var permiss=require("../../mock/falseData/1_systemAdmin/permiss")
 
 	export default {
 		data() {

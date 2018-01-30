@@ -43,15 +43,15 @@
 		<!--列表-->
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe
 		          style="width: 100%;">
-			<el-table-column type="selection" width="55">
+			<el-table-column type="selection" min-width="55">
 			</el-table-column>
-			<el-table-column prop="billNo" label="审核单号" width="200">
+			<el-table-column prop="billNo" label="审核单号" min-width="200">
 			</el-table-column>
-			<el-table-column prop="merNum" label="数量" width="80" >
+			<el-table-column prop="merNum" label="数量" min-width="80" >
 			</el-table-column>
-			<el-table-column prop="createName" label="创建人" width="100" >
+			<el-table-column prop="createName" label="创建人" min-width="100" >
 			</el-table-column>
-			<el-table-column prop="updateName" label="审核人" width="100" >
+			<el-table-column prop="updateName" label="审核人" min-width="100" >
 			</el-table-column>
 			<el-table-column  label="审核状态" :formatter="checkStatus" min-width="120" >
 				<template scope="scope">
@@ -142,7 +142,7 @@
 	//import NProgress from 'nprogress'
 	import {getUserListPage, removeUser, batchRemoveUser, editUser, addUser} from '../../api/api';
 
-	var addGoods = require("../../mock/falseData/goodsAdmin_2/addGoodsAdmin")
+	var addGoods = require("../../mock/falseData/2_goodsAdmin/addGoodsAdmin")
 	export default {
 		data() {
 			return {

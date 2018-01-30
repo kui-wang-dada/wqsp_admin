@@ -121,7 +121,7 @@
 	//import NProgress from 'nprogress'
 	import {getUserListPage, removeUser, batchRemoveUser, editUser, addUser} from '../../api/api';
 
-	var Goods = require("../../mock/falseData/goodsAdmin_2/goodsAdmin")
+	var Goods = require("../../mock/falseData/2_goodsAdmin/goodsAdmin")
 	export default {
 		data() {
 			return {

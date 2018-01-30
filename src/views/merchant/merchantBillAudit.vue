@@ -16,25 +16,34 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
-			<el-table-column type="selection" width="55">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe style="width: 100%;">
+			<el-table-column type="selection" min-width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<el-table-column prop="billNo" label="审核单号" min-width="180" >
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="merNum" label="商户数量" min-width="80"  >
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="createUser" label="创建人" min-width="100" >
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="createDateStr" label="创建日期" min-width="150" >
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="updateUser" label="审核人" min-width="100" >
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="updateDateStr" label="审核日期" min-width="150" >
+			</el-table-column>
+			<el-table-column  label="审核状态"  min-width="100" >
+				<template scope="scope">
+					<span v-if="scope.row.checkStatus===2" style="color:green">审核通过</span>
+					<span v-else-if="scope.row.checkStatus===1"   style="color:orange">待审核</span>
+					<span v-else   style="color:red">退回</span>
+				</template>
+			</el-table-column>
+			<el-table-column prop="opType" label="操作类型" :formatter="opType" min-width="100" >
 			</el-table-column>
 			<el-table-column label="操作" width="150">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" type="primary" icon="circle-check"  @click="handleEdit(scope.$index, scope.row)">详情</el-button>
+
 				</template>
 			</el-table-column>
 		</el-table>
@@ -109,14 +118,15 @@
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
+	var datas= require("../../mock/falseData/4_merchant/1_merchantAudit")
 	export default {
 		data() {
 			return {
 				filters: {
 					name: ''
 				},
-				users: [],
-				total: 0,
+				users: datas.data,
+				total: 40,
 				page: 1,
 				listLoading: false,
 				sels: [],//列表选中列
@@ -158,8 +168,8 @@
 		},
 		methods: {
 			//性别显示转换
-			formatSex: function (row, column) {
-				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+			opType: function (row, column) {
+				return row.opType == 2 ? '修改' : row.opType == 1 ? '新增' : '未知';
 			},
 			handleCurrentChange(val) {
 				this.page = val;
@@ -291,9 +301,6 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
 	}
 
 </script>

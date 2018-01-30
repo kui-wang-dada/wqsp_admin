@@ -1,40 +1,61 @@
 <template>
 	<section>
 		<!--工具条-->
-		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-			<el-form :inline="true" :model="filters">
+		<el-col :span="24" class="toolbar" style="padding-bottom: 0;">
+			<el-form :inline="true" :model="filters" size="mini">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+					<el-input v-model="filters.name" placeholder="审核单号"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-select v-model="filters.value1" placeholder="--审核状态--" >
+						<el-option
+								v-for="item in filters.options1"
+								:label="item.label"
+								:value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="货主"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="handleAdd">新增</el-button>
 				</el-form-item>
 			</el-form>
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
-			<el-table-column type="selection" width="55">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe fit size="mini" style="width: 100%;">
+			<el-table-column type="selection" min-width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<el-table-column prop="billNo" label="审核单号" min-width="150">
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="merNum" label="数量" min-width="150" :formatter="channel">
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="createName" label="创建人" min-width="150">
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="updateName" label="审核人" min-width="150">
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="checkStatus" label="审核状态" min-width="150">
+				<template scope="scope">
+					<span v-if="scope.row.checkStatus==2" style="color:green">审核通过</span>
+					<span v-else-if="scope.row.checkStatus==1"   style="color:orange">待审核</span>
+					<span v-else   style="color:red">退回</span>
+				</template>
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="createDate" label="创建时间" min-width="150">
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column prop="updateDate" label="审核时间" min-width="150">
+			</el-table-column>
+			<el-table-column prop="opType" label="操作类型" min-width="150" :formatter="opType">
+			</el-table-column>
+			
+			<el-table-column label="操作" min-width="180" align="center">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" icon="circle-check" type="primary"
+					           @click="handleEdit(scope.$index, scope.row)">修改
+					</el-button>
+					<el-button size="small" icon="circle-check" type="primary">管理分类</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -108,6 +129,8 @@
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
+
+	var datas= require("../../mock/falseData/6_operate/12_promotionGroup")
 
 	export default {
 		data() {
@@ -291,9 +314,7 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+
 	}
 
 </script>

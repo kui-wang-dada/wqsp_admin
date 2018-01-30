@@ -42,7 +42,7 @@
 <script>
 	import { getUserList } from '../../api/api';
 
-		var datadict=require("../../mock/falseData/systemAdmin_1/datadict")
+		var datadict=require("../../mock/falseData/1_systemAdmin/datadict")
 	//import NProgress from 'nprogress'
 	export default {
 		data() {

@@ -31,21 +31,22 @@
 
 		<!--列表-->
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe style="width: 100%;">
-			<el-table-column type="selection" width="55">
+			<el-table-column type="selection" min-width="55">
 			</el-table-column>
-			<el-table-column prop="batchNo" label="批次号" width="180" >
+			<el-table-column prop="batchNo" label="批次号" min-width="180" >
 			</el-table-column>
-			<el-table-column prop="createDateStr" label="创建时间" width="200"  >
+			<el-table-column prop="createDateStr" label="创建时间" min-width="200"  >
 			</el-table-column>
-			<el-table-column prop="createUser" label="创建人" width="100" >
+			<el-table-column prop="createUser" label="创建人" min-width="100" >
 			</el-table-column>
-			<el-table-column prop="auditDateStr" label="审核时间" width="200" >
+			<el-table-column prop="auditDateStr" label="审核时间" min-width="200" >
 			</el-table-column>
 			<el-table-column prop="auditUser" label="审核人" min-width="100" >
 			</el-table-column>
-			<el-table-column  label="审核状态" :formatter="getStatus" min-width="100" >
+			<el-table-column  label="审核状态" min-width="100" >
 				<template scope="scope">
 					<span v-if="scope.row.status===2" style="color:green">审核通过</span>
+					<span v-else-if="scope.row.status===1"   style="color:orange">待审核</span>
 					<span v-else style="color:red">退回</span>
 				</template>
 			</el-table-column>
@@ -129,7 +130,7 @@
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
-	var supplierAudit = require("../../mock/falseData/supplier_3/supplierAudit")
+	var supplierAudit = require("../../mock/falseData/3_supplier/supplierAudit")
 	
 	export default {
 		data() {

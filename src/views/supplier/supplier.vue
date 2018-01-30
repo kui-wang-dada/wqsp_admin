@@ -46,36 +46,36 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe style="width: 100%;">
-			<el-table-column type="selection" width="55">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe align="center" style="width: 100%;">
+			<el-table-column type="selection" min-width="45" align="center">
 			</el-table-column>
-			<el-table-column prop="id" label="供应商编码" width="80" >
+			<el-table-column prop="id" label="供应商编码" min-width="80" align="center">
 			</el-table-column>
-			<el-table-column prop="supplierName" label="供应商名称" width="120"  >
+			<el-table-column prop="supplierName" label="供应商名称" min-width="110"  align="center" >
 			</el-table-column>
-			<el-table-column prop="phone" label="联系电话" width="130" >
+			<el-table-column prop="phone" label="联系电话" min-width="130"  align="center">
 			</el-table-column>
-			<el-table-column prop="linkMan" label="联系人" width="80" >
+			<el-table-column prop="linkMan" label="联系人" min-width="80"  align="center">
 			</el-table-column>
-			<el-table-column prop="createUser" label="创建人" min-width="80" >
+			<el-table-column prop="createUser" label="创建人"  min-width="80"align="center" >
 			</el-table-column>
-			<el-table-column prop="createDateStr" label="创建时间" min-width="150" >
+			<el-table-column prop="createDateStr" label="创建时间" min-width="150"  align="center">
 			</el-table-column>
-			<el-table-column prop="auditUser" label="最后修改人" min-width="80" >
+			<el-table-column prop="auditUser" label="最后修改人" min-width="90"  align="center">
 			</el-table-column>
-			<el-table-column prop="auditDateStr" label="最后修改时间" min-width="150" >
+			<el-table-column prop="auditDateStr" label="最后修改时间" min-width="150"  align="center">
 			</el-table-column>
-			<el-table-column prop="buyType" label="采购类型" :formatter="buyType" min-width="100" >
+			<el-table-column prop="buyType" label="采购类型" :formatter="buyType" min-width="100"  align="center">
 			</el-table-column>
-			<el-table-column prop="payType" label="支付类型" :formatter="payType"  min-width="90" >
+			<el-table-column prop="payType" label="支付类型" :formatter="payType"  min-width="80"  align="center">
 			</el-table-column>
-			<el-table-column prop="status" label="状态" :formatter="dataType"  min-width="60" >
+			<el-table-column prop="status" label="状态" :formatter="dataType"  min-width="70"  align="center">
 			</el-table-column>
 			
-			<el-table-column label="操作" width="150">
+			<el-table-column label="操作" min-width="180" align="center">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" icon="edit" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+					<el-button type="danger" icon="delete" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -150,7 +150,7 @@
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
-	var supplier = require("../../mock/falseData/supplier_3/supplier")
+	var supplier = require("../../mock/falseData/3_supplier/supplier")
 	export default {
 		data() {
 			return {

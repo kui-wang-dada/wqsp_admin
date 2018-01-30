@@ -101,7 +101,7 @@
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
-		var role=require("../../mock/falseData/systemAdmin_1/role")
+		var role=require("../../mock/falseData/1_systemAdmin/role")
 	export default {
 		data() {
 			return {

@@ -2,39 +2,88 @@
 	<section>
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
-			<el-form :inline="true" :model="filters">
+			<el-form :inline="true" :model="filters" label-width="110px" size="medium">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+					<el-input v-model="filters.name" placeholder="运营区"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-select v-model="filters.value1" placeholder="--状态--">
+						<el-option
+								v-for="item in filters.options1"
+								:label="item.label"
+								:value="item.value">
+						</el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="商户名称">
+					<el-input v-model="filters.name" placeholder="第三方商户名称"></el-input>
+				</el-form-item>
+				<el-form-item label="代金券名称">
+					<el-input v-model="filters.name" placeholder="代金券名称"></el-input>
+				</el-form-item>
+				<el-form-item label="代金券开始日期">
+					<el-input v-model="filters.name" placeholder="代金券开始日期从"></el-input>
+				
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="代金券开始日期到"></el-input>
+				</el-form-item>
+				<el-form-item label="代金券结束日期">
+					<el-input v-model="filters.name" placeholder="代金券结束日期从"></el-input>
+					
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="代金券结束日期到"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="handleAdd">新增</el-button>
 				</el-form-item>
 			</el-form>
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
-			<el-table-column type="selection" width="55">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe fit size="mini" style="width: 100%;">
+			<el-table-column type="selection" min-width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<el-table-column prop="id" label="编码" >
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="title" label="代金券名称" >
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="oaName" label="运营区名称" >
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="address" label="状态"  >
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="startDate" label="代金券开始日期" >
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="endDate" label="代金券结束日期" >
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column prop="shareRateSelf" label="平台分摊比例" >
+			</el-table-column>
+			<el-table-column prop="shareRateThird" label="第三方分摊比例" >
+			</el-table-column>
+			<el-table-column prop="merchantName" label="第三方商户名称">
+			</el-table-column>
+			<el-table-column prop="useRange" label="使用范围"  >
+			</el-table-column>
+			<el-table-column prop="useDays" label="使用天数"  >
+			</el-table-column>
+			<el-table-column prop="delayUseDays" label="推迟使用天数"  >
+			</el-table-column>
+			<el-table-column prop="conditionAmount" label="满减达到金额"  >
+			</el-table-column>
+			<el-table-column prop="giftAmount" label="减免金额"  >
+			</el-table-column>
+			<el-table-column prop="createName" label="创建人" >
+			</el-table-column>
+			<el-table-column prop="createDate" label="创建时间">
+			</el-table-column>
+			<el-table-column prop="updateName" label="修改人">
+			</el-table-column>
+			<el-table-column prop="updateDate" label="修改时间"  >
+			</el-table-column>
+			<el-table-column label="操作" min-width="80" align="center">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" icon="circle-check" type="primary" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -108,6 +157,7 @@
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
+	var datas= require("../../mock/falseData/5_customer/4_voucherGrant")
 
 	export default {
 		data() {
@@ -115,7 +165,7 @@
 				filters: {
 					name: ''
 				},
-				users: [],
+				users: datas.data,
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -291,9 +341,7 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+
 	}
 
 </script>

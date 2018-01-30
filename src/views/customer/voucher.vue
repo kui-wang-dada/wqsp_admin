@@ -109,13 +109,16 @@
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 
+	var datas= require("../../mock/falseData/5_customer/6_voucher")
+
+
 	export default {
 		data() {
 			return {
 				filters: {
 					name: ''
 				},
-				users: [],
+				users: datas.data,
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -291,9 +294,7 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+
 	}
 
 </script>
