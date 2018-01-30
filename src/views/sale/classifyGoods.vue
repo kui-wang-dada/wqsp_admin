@@ -12,12 +12,13 @@
 				<el-form-item>
 					<el-input v-model="filters.name" placeholder="商品名称"></el-input>
 				</el-form-item>
+			
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
 				</el-form-item>
 			</el-form>
 		</el-col>
-
+		
 		<!--列表-->
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border
 		          stripe fit size="mini" style="width: 100%;">
@@ -40,6 +41,7 @@
 					</el-button>
 				</template>
 			</el-table-column>
+		
 		</el-table>
 
 		<!--工具条-->

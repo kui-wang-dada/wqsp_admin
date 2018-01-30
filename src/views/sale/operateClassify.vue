@@ -20,7 +20,7 @@
 				</el-form-item>
 			</el-form>
 		</el-col>
-
+		
 		<!--列表-->
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe fit size="mini" style="width: 100%;">
 			<el-table-column type="selection" min-width="55">
@@ -39,6 +39,7 @@
 					<el-button size="small" icon="circle-check" type="primary">详情</el-button>
 				</template>
 			</el-table-column>
+		
 		</el-table>
 
 		<!--工具条-->

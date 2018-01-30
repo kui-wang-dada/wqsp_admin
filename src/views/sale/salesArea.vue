@@ -84,7 +84,6 @@
 				</el-form-item>
 			</el-form>
 		</el-col>
-
 		<!--列表-->
 		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border stripe fit size="small" style="width: 100%;">
 			<el-table-column prop="id" label="编码" min-width="120">
@@ -146,6 +145,7 @@
 					</el-button>
 				</template>
 			</el-table-column>
+		
 		</el-table>
 
 		<!--工具条-->

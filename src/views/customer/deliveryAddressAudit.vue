@@ -53,6 +53,7 @@
 					<el-button size="small" icon="circle-check" type="primary" @click="handleEdit(scope.$index, scope.row)">详情</el-button>
 				</template>
 			</el-table-column>
+			
 		</el-table>
 
 		<!--工具条-->
