@@ -3,8 +3,17 @@
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
-				<el-form-item>
+				<el-form-item label="姓名">
 					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+				</el-form-item>
+				<el-form-item label="短信内容">
+					<el-input v-model="filters.name" placeholder="短信内容"></el-input>
+				</el-form-item>
+				<el-form-item label="短信类型">
+					<el-select v-model="value" placeholder="请选择">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -16,33 +25,33 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<!-- <el-table-column type="index" width="60">
+			</el-table-column> -->
+			<el-table-column prop="mobileNum" label="电话号码" width="160" sortable>
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="content" label="短信内容" width="400"  sortable>
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="createTime" label="创建时间" width="210" :formatter="formatTime" sortable>
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="randomCode" label="验证码" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="type" label="类型" min-width="130" :formatter="formatSex" sortable>
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
-			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<!-- <el-table-column label="操作" width="150">
 				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
 				</template>
-			</el-table-column>
+			</el-table-column> -->
 		</el-table>
 
 		<!--工具条-->
 		<el-col :span="24" class="toolbar">
 			<el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :current-page="1" :pagesize="pagesize" :total="total" style="float:right;">
 			</el-pagination>
 		</el-col>
 
@@ -108,14 +117,25 @@
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
-
+	var sms=require("../../mock/falseData/sms_15/sms");
 	export default {
 		data() {
 			return {
 				filters: {
 					name: ''
 				},
-				users: [],
+				options: [{
+					value: '选项1',
+					label: '注册'
+					}, {
+					value: '选项2',
+					label: '忘记密码'
+					}, {
+					value: '选项3',
+					label: '验证地推'
+					}],
+				value: '请选择',
+				users: sms.data,
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -159,7 +179,17 @@
 		methods: {
 			//性别显示转换
 			formatSex: function (row, column) {
-				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+				return row.type == 1 ? '注册' : row.type == 3 ? '已地推' : '未知';
+			},
+			formatTime:function (row, column) {    
+				var date = new Date(row.createTime);
+				var	Y = date.getFullYear() + '-';
+				var	M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+				var	D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+				var	h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+				var	m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
+				var	s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds()); 
+				return (Y+M+D+h+m+s);     
 			},
 			handleCurrentChange(val) {
 				this.page = val;
@@ -291,9 +321,9 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+		// mounted() {
+		// 	this.getUsers();
+		// }
 	}
 
 </script>

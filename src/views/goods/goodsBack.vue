@@ -3,8 +3,34 @@
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
-				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+				<el-form-item label="退货单号">
+					<el-input v-model="filters.name" placeholder="退货单号"></el-input>
+				</el-form-item>
+				<el-form-item label="起始时间">
+					<el-date-picker v-model="value1" type="datetime" placeholder="选择日期时间">
+					</el-date-picker>
+				</el-form-item>
+				<el-form-item label="结束时间">
+					<el-date-picker v-model="value2" type="datetime" placeholder="选择日期时间">
+					</el-date-picker>
+				</el-form-item>
+				<el-form-item label="商品编码">
+					<el-input v-model="filters.name" placeholder="商品编码"></el-input>
+				</el-form-item>
+				<el-form-item label="商品条码">
+					<el-input v-model="filters.name" placeholder="商品条码"></el-input>
+				</el-form-item>
+				<el-form-item label="商品名称">
+					<el-input v-model="filters.name" placeholder="商品名称"></el-input>
+				</el-form-item>
+				<el-form-item label="货主名称">
+					<el-input v-model="filters.name" placeholder="货主名称"></el-input>
+				</el-form-item>
+				<el-form-item label="供应商名称">
+					<el-input v-model="filters.name" placeholder="供应商名称"></el-input>
+				</el-form-item>
+				<el-form-item label="仓库名称">
+					<el-input v-model="filters.name" placeholder="仓库名称"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -16,20 +42,30 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<!-- <el-table-column type="index" width="60">
+			</el-table-column> -->
+			<el-table-column prop="name" label="退货单号" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="sex" label="供应商名称" width="130" :formatter="formatSex" sortable>
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="age" label="仓库" width="100" sortable>
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="birth" label="货主名称" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="addr" label="创建人" min-width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="name" label="创建时间" width="160" sortable>
+			</el-table-column>
+			<el-table-column prop="sex" label="审核人" width="100" :formatter="formatSex" sortable>
+			</el-table-column>
+			<el-table-column prop="age" label="审核时间" width="160" sortable>
+			</el-table-column>
+			<el-table-column prop="birth" label="审核状态" width="120" sortable>
+			</el-table-column>
+			<el-table-column prop="addr" label="备注" min-width="180" sortable>
 			</el-table-column>
 			<el-table-column label="操作" width="150">
 				<template slot-scope="scope">
@@ -112,6 +148,8 @@
 	export default {
 		data() {
 			return {
+				value1: '',
+				value2: '',
 				filters: {
 					name: ''
 				},
@@ -291,9 +329,9 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+		// mounted() {
+		// 	this.getUsers();
+		// }
 	}
 
 </script>

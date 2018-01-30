@@ -4,7 +4,19 @@
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="姓名"></el-input>
+					<el-input v-model="filters.name" placeholder="审核单号"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="商品编码"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-input v-model="filters.name" placeholder="商品名称"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-select v-model="value" placeholder="审核状态">
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+						</el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -16,22 +28,26 @@
 		</el-col>
 
 		<!--列表-->
-		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+		<el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" border style="width: 100%;">
 			<el-table-column type="selection" width="55">
 			</el-table-column>
-			<el-table-column type="index" width="60">
+			<!-- <el-table-column type="index" width="60">
+			</el-table-column> -->
+			<el-table-column prop="billNo" label="审核单号" width="240" sortable>
 			</el-table-column>
-			<el-table-column prop="name" label="姓名" width="120" sortable>
+			<el-table-column prop="createUser" label="创建人" width="100"  sortable>
 			</el-table-column>
-			<el-table-column prop="sex" label="性别" width="100" :formatter="formatSex" sortable>
+			<el-table-column prop="createDate" label="创建时间" width="180" :formatter="formattime" sortable>
 			</el-table-column>
-			<el-table-column prop="age" label="年龄" width="100" sortable>
+			<el-table-column prop="updateUser" label="审核人" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="birth" label="生日" width="120" sortable>
+			<el-table-column prop="updateDate" label="审核时间" min-width="180" :formatter="formattimet" sortable>
 			</el-table-column>
-			<el-table-column prop="addr" label="地址" min-width="180" sortable>
+			<el-table-column prop="checkStatus" label="审核状态" width="120" :formatter="formatcheck" sortable>
 			</el-table-column>
-			<el-table-column label="操作" width="150">
+			<el-table-column prop="delFlag" label="操作类型" width="120" :formatter="formatdel" sortable>
+			</el-table-column>
+			<el-table-column label="操作" min-width="150">
 				<template slot-scope="scope">
 					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
@@ -108,14 +124,14 @@
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
 	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
-
+	var audit=require("../../mock/falseData/audit_11/audit");
 	export default {
 		data() {
 			return {
 				filters: {
 					name: ''
 				},
-				users: [],
+				users: audit.data,
 				total: 0,
 				page: 1,
 				listLoading: false,
@@ -158,8 +174,31 @@
 		},
 		methods: {
 			//性别显示转换
-			formatSex: function (row, column) {
-				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
+			formatcheck: function (row, column) {
+				return row.checkStatus == 2 ? '审核通过' : row.checkStatus == 0 ? ' ' : '未知';
+			},
+			formatdel: function (row, column) {
+				return row.delFlag == 1 ? '新增' : row.delFlag == 0 ? ' ' : '未知';
+			},
+			formattime: function (row, column) {
+				var date = new Date(row.createDate);
+				var	Y = date.getFullYear() + '-';
+				var	M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+				var	D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+				var	h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+				var	m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
+				var	s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds()); 
+				return (Y+M+D+h+m+s); 
+			},
+			formattimet: function (row, column) {
+				var date = new Date(row.updateDate);
+				var	Y = date.getFullYear() + '-';
+				var	M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+				var	D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+				var	h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+				var	m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
+				var	s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds()); 
+				return (Y+M+D+h+m+s); 
 			},
 			handleCurrentChange(val) {
 				this.page = val;
@@ -291,9 +330,9 @@
 				});
 			}
 		},
-		mounted() {
-			this.getUsers();
-		}
+		// mounted() {
+		// 	this.getUsers();
+		// }
 	}
 
 </script>
