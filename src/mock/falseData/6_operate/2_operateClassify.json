@@ -1,0 +1,127 @@
+{
+  "draw": 1,
+  "recordsTotal": 10,
+  "recordsFiltered": 10,
+  "data": [
+    {
+      "operateClassifyId": 2,
+      "details": null,
+      "operateAreaId": 2,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1508169600000,
+      "oaName": "厦门市",
+      "children": [],
+      "id": 2,
+      "channel": "１"
+    },
+    {
+      "operateClassifyId": 3,
+      "details": null,
+      "operateAreaId": 4,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1509984000000,
+      "oaName": "福州市",
+      "children": [],
+      "id": 3,
+      "channel": "2"
+    },
+    {
+      "operateClassifyId": 4,
+      "details": null,
+      "operateAreaId": 5,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1510848000000,
+      "oaName": "漳州市",
+      "children": [],
+      "id": 4,
+      "channel": "2"
+    },
+    {
+      "operateClassifyId": 5,
+      "details": null,
+      "operateAreaId": 5,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1510848000000,
+      "oaName": "漳州市",
+      "children": [],
+      "id": 5,
+      "channel": "１"
+    },
+    {
+      "operateClassifyId": 7,
+      "details": null,
+      "operateAreaId": 6,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1511280000000,
+      "oaName": "浙江区",
+      "children": [],
+      "id": 7,
+      "channel": "2"
+    },
+    {
+      "operateClassifyId": 8,
+      "details": null,
+      "operateAreaId": 7,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1511366400000,
+      "oaName": "三明市",
+      "children": [],
+      "id": 8,
+      "channel": "2"
+    },
+    {
+      "operateClassifyId": 9,
+      "details": null,
+      "operateAreaId": 8,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1511452800000,
+      "oaName": "龙岩市",
+      "children": [],
+      "id": 9,
+      "channel": "2"
+    },
+    {
+      "operateClassifyId": 10,
+      "details": null,
+      "operateAreaId": 2,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1511452800000,
+      "oaName": "厦门市",
+      "children": [],
+      "id": 10,
+      "channel": "2"
+    },
+    {
+      "operateClassifyId": 12,
+      "details": null,
+      "operateAreaId": 11,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1511712000000,
+      "oaName": "南平浦城",
+      "children": [],
+      "id": 12,
+      "channel": "2"
+    },
+    {
+      "operateClassifyId": 13,
+      "details": null,
+      "operateAreaId": 10,
+      "updateId": 1,
+      "delFlag": 1,
+      "updateDate": 1511712000000,
+      "oaName": "南平市",
+      "children": [],
+      "id": 13,
+      "channel": "2"
+    }
+  ]
+}
