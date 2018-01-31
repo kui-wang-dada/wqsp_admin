@@ -1,4 +1,9 @@
  //覆盖一些element-ui样式
+ .el-submenu__title{
+  .el-submenu__icon-arrow{
+    top:55% !important;
+  }
+ }
 
  .el-breadcrumb__inner, .el-breadcrumb__inner a{
   font-weight: 400!important;
