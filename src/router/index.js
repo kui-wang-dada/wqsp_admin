@@ -164,7 +164,7 @@ export const asyncRouterMap = [
     meta: { title: '商品上下架管理', icon: '拣货下架', noCache: true },
     leaf: true,
     children: [
-      { path: 'goodsShelvesAudit', component: _import('audit/goodsShelvesAudit'), name: '商品上下架管理列表', meta: { title: '商品上下架管理', icon: '拣货下架' }}
+      { path: 'goodsShelvesAudit', component: _import('audit/goodsShelvesAudit'), name: '商品上下架管理列表', meta: { title: '商品上下架管理' }}
     ]
   },
   {
@@ -220,7 +220,7 @@ export const asyncRouterMap = [
     meta: { title: '短信发送', icon: '推送消息', noCache: true },
     leaf: true,
     children: [
-      { path: 'sms', component: _import('sms/sms'), name: '短信发送列表', meta: { title: '短信发送列表', icon: '推送消息' }}
+      { path: 'sms', component: _import('sms/sms'), name: '短信发送列表', meta: { title: '短信发送列表' }}
     ]
   },
 

@@ -1,4 +1,7 @@
  //覆盖一些element-ui样式
+ .el-button+.el-button{
+   margin-left: 0px !important;
+ }
  .el-submenu__title{
   .el-submenu__icon-arrow{
     top:55% !important;

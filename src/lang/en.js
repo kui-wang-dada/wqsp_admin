@@ -54,6 +54,31 @@ export default {
     any: '随便填',
     thirdparty: '第三方登录',
     thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！'
+  },
+  table: {
+    add:'新增',
+    search:'查询'
+  },
+  head: {
+    title_1:'标题',
+    title_2:'请选择运营区',
+    title_2_4:'标题',
+    add:'增加',
+    search:'查询'
+  },
+  sms: {
+    filter: {
+      title_1:'电话号码',
+      title_2:'短信内容',
+      title_3_1:'短信类型',
+      search:'查询'
+    },
+    table:{
+      mobileNum:'联系电话',
+      content:'短信内容',
+      createTime:'创建时间',
+      randomCode:'验证码',
+      type:'类型'
+    },
   }
-
 }
