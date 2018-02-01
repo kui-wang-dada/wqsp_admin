@@ -10,7 +10,7 @@ export default {
       name:'名称',
       sort:'排序',
       parentName:'上级目录',
-      actions:"操作",
+      actions: '操作',
       descript:'描述',
       edit:'修改',
       delete:'删除'
