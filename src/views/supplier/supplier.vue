@@ -1,79 +1,80 @@
 <template>
   <div class="app-container calendar-list-container">
-    <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('table.title')" v-model="listQuery.title">
-      </el-input>
-      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" :placeholder="$t('table.importance')">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item">
-        </el-option>
-      </el-select>
-      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('table.type')">
-        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
-        </el-option>
-      </el-select>
-      <el-select @change='handleFilter' style="width: 140px" class="filter-item" v-model="listQuery.sort">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
-        </el-option>
-      </el-select>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('table.add')}}</el-button>
-      <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('table.export')}}</el-button>
-      <el-checkbox class="filter-item" style='margin-left:15px;' @change='tableKey=tableKey+1' v-model="showReviewer">{{$t('table.reviewer')}}</el-checkbox>
-    </div>
-
-    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
+    <el-form :inline="true" :model="listQuery" label-width="100px" size="medium">
+      <el-form-item label="id" >
+        <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('supplier.filter.billNo')" v-model="listQuery.title"></el-input>
+      </el-form-item>
+      <el-form-item label="供应商名称">
+        <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('supplier.filter.billNo')" v-model="listQuery.title"></el-input>
+      </el-form-item>
+      <el-form-item label="联系电话">
+        <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('supplier.filter.billNo')" v-model="listQuery.title"></el-input>
+      </el-form-item>
+      <el-form-item label="采购类型">
+        <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('supplier.filter.checkStatus')">
+          <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="支付方式">
+        <el-select  clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('supplier.filter.checkStatus')">
+          <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="状态">
+        <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('supplier.filter.checkStatus')">
+          <el-option
+            v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('supplier.filter.search')}}</el-button>
+      </el-form-item>
+    </el-form>
+  
+    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
               style="width: 100%">
-      <el-table-column align="center" :label="$t('table.id')" width="65">
+      <el-table-column type="selection" width="55" align="center">
+      </el-table-column>
+      <el-table-column align="center" :label="$t('supplier.table.batchNo')" min-width="150px">
         <template slot-scope="scope">
-          <span>{{scope.row.id}}</span>
+          <span>{{scope.row.batchNo}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="150px" align="center" :label="$t('table.date')">
+      <el-table-column min-width="150px" align="center" :label="$t('supplier.table.createDate')">
         <template slot-scope="scope">
-          <span>{{scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+          <span>{{scope.row.createDateStr}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150px" :label="$t('table.title')">
+      <el-table-column min-width="150" align="center" :label="$t('supplier.table.createUser')">
         <template slot-scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.title}}</span>
-          <el-tag>{{scope.row.type | typeFilter}}</el-tag>
+          <span>{{scope.row.createUser}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" align="center" :label="$t('table.author')">
+      <el-table-column min-width="150" align="center" :label="$t('supplier.table.auditDateStr')">
         <template slot-scope="scope">
-          <span>{{scope.row.author}}</span>
+          <span>{{scope.row.auditDateStr}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="110px" v-if='showReviewer' align="center" :label="$t('table.reviewer')">
+      <el-table-column min-width="150" align="center" :label="$t('supplier.table.status')">
         <template slot-scope="scope">
-          <span style='color:red;'>{{scope.row.reviewer}}</span>
+          <span v-if="scope.row.status=='2'" style="color:green">审核通过</span>
+          <span v-else-if="scope.row.status==1" style="color:orange">待审核</span>
+          <span v-else style="color:red">退回</span>
         </template>
       </el-table-column>
-      <el-table-column width="80px" :label="$t('table.importance')">
+      <el-table-column min-width="150" align="center" :label="$t('supplier.table.createDate')">
         <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" icon-class="star" class="meta-item__icon" :key="n"></svg-icon>
+          <span>{{scope.row.createDate}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="$t('table.readings')" width="95">
-        <template slot-scope="scope">
-          <span v-if="scope.row.pageviews" class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>
-          <span v-else>0</span>
-        </template>
+      <el-table-column prop="dataType" align="center" :label="$t('supplier.table.dataType')" :formatter="getdataType" min-width="120" >
       </el-table-column>
-      <el-table-column class-name="status-col" :label="$t('table.status')" width="100">
+      <el-table-column align="center" :label="$t('supplier.table.actions')" min-width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" :label="$t('table.actions')" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('table.edit')}}</el-button>
-          <el-button v-if="scope.row.status!='published'" size="mini" type="success" @click="handleModifyStatus(scope.row,'published')">{{$t('table.publish')}}
-          </el-button>
-          <el-button v-if="scope.row.status!='draft'" size="mini" @click="handleModifyStatus(scope.row,'draft')">{{$t('table.draft')}}
-          </el-button>
-          <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus(scope.row,'deleted')">{{$t('table.delete')}}
-          </el-button>
+          <el-button type="primary" size="mini" icon="el-icon-circle-check" @click="handleUpdate(scope.row)">{{$t('supplier.table.detail')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -151,6 +152,9 @@
     return acc
   }, {})
 
+
+  var datas=require("../../mock/falseData/1_systemAdmin/user")
+
   export default {
     name: 'complexTable',
     directives: {
@@ -159,9 +163,9 @@
     data() {
       return {
         tableKey: 0,
-        list: null,
+        list: datas.data,
         total: null,
-        listLoading: true,
+        listLoading: false,
         listQuery: {
           page: 1,
           limit: 20,
@@ -213,10 +217,13 @@
         return calendarTypeKeyValue[type]
       }
     },
-    created() {
-      this.getList()
-    },
+    // created() {
+    //   this.getList()
+    // },
     methods: {
+      getDataType: function (row, column) {
+        return row.dataType == 0 ? '新增' : row.dataType == 1 ? '修改' : '未知';
+      },
       getList() {
         this.listLoading = true
         fetchList(this.listQuery).then(response => {
