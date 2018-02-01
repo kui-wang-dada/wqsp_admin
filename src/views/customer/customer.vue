@@ -1,65 +1,61 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.billNo')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('customer.filter.shopName')" v-model="listQuery.title">
       </el-input>
-      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('bill.filter.checkStatus')">
+      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('customer.filter.channelType')">
         <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
         </el-option>
       </el-select>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.goodsName')" v-model="listQuery.title">
+      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('customer.filter.auditStatus')">
+        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
+        </el-option>
+      </el-select>
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('customer.filter.belongArea')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.goodsCode')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('customer.filter.shopPhone')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.createName')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('customer.filter.contactNum')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.updateName')" v-model="listQuery.title">
-      </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.startTime')" v-model="listQuery.title">
-      </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.endTime')" v-model="listQuery.title">
-      </el-input>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('bill.filter.search')}}</el-button>
-    
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('customer.filter.search')}}</el-button>
+  
     </div>
     
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
               style="width: 100%">
-      <el-table-column type="selection" width="55" align="center">
+      <el-table-column type="selection" min-width="45" align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('bill.table.billNo')" min-width="150px">
-        <template slot-scope="scope">
-          <span>{{scope.row.billNo}}</span>
-        </template>
+      <el-table-column  label="省" min-width="40"  align="center" >
       </el-table-column>
-      <el-table-column min-width="150px" align="center" :label="$t('bill.table.merNum')">
-        <template slot-scope="scope">
-          <span>{{scope.row.merNum}}</span>
-        </template>
+      <el-table-column  label="市" min-width="40"  align="center">
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createName')">
-        <template slot-scope="scope">
-          <span>{{scope.row.createName}}</span>
-        </template>
+      <el-table-column  label="区" min-width="40"  align="center">
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.updateName')">
-        <template slot-scope="scope">
-          <span>{{scope.row.updateName}}</span>
-        </template>
+      <el-table-column  label="店铺名称"  min-width="80" align="center" >
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.checkStatus')">
-        <template slot-scope="scope">
-          <span v-if="scope.row.checkStatus=='2'" style="color:green">审核通过</span>
-          <span v-else-if="scope.row.checkStatus==1" style="color:orange">待审核</span>
-          <span v-else style="color:red">退回</span>
-        </template>
+      <el-table-column  label="渠道类型" min-width="80"  align="center">
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createDate')">
-        <template slot-scope="scope">
-          <span>{{scope.row.createDate}}</span>
-        </template>
+      <el-table-column  label="店主姓名" min-width="80"  align="center">
       </el-table-column>
-      <el-table-column prop="opType" align="center" :label="$t('bill.table.opType')" :formatter="opType" min-width="120" >
+      <el-table-column  label="店主手机"  min-width="80"  align="center">
+      </el-table-column>
+      <el-table-column  label="联系人" min-width="60"  align="center">
+      </el-table-column>
+      <el-table-column  label="联系电话"  min-width="80"align="center" >
+      </el-table-column>
+      <el-table-column  label="店铺地址" min-width="80"  align="center">
+      </el-table-column>
+      <el-table-column  label="状态" min-width="60"  align="center">
+      </el-table-column>
+      <el-table-column  label="审核状态"  min-width="80"  align="center">
+      </el-table-column>
+      <el-table-column  label="创建时间"  min-width="80"  align="center">
+      </el-table-column>
+      <el-table-column  label="更新时间"  min-width="80"  align="center">
+      </el-table-column>
+      <el-table-column  label="地推人员名称"  min-width="80"  align="center">
+      </el-table-column>
+      <el-table-column  label="地推人员手机"  min-width="80"  align="center">
       </el-table-column>
       <el-table-column align="center" :label="$t('bill.table.actions')" min-width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">

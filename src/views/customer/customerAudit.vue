@@ -1,70 +1,57 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.billNo')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('customer.filter.shopName')" v-model="listQuery.title">
       </el-input>
-      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('bill.filter.checkStatus')">
+      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('customer.filter.channelType')">
         <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
         </el-option>
       </el-select>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.goodsName')" v-model="listQuery.title">
+      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('customer.filter.auditStatus')">
+        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
+        </el-option>
+      </el-select>
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('customer.filter.belongArea')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.goodsCode')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('customer.filter.shopPhone')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.createName')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('customer.filter.contactNum')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.updateName')" v-model="listQuery.title">
-      </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.startTime')" v-model="listQuery.title">
-      </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.endTime')" v-model="listQuery.title">
-      </el-input>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('bill.filter.search')}}</el-button>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('customer.filter.search')}}</el-button>
     
     </div>
-    
-    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
-              style="width: 100%">
-      <el-table-column type="selection" width="55" align="center">
+  
+    <el-table  :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
+               style="width: 100%">
+      <el-table-column type="selection" min-width="45" align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('bill.table.billNo')" min-width="150px">
+      <el-table-column prop="shopName" align="center" :label="$t('customer.table.shopName')" min-width="150px">
+      </el-table-column>
+      <el-table-column prop="channelType" :label="$t('customer.table.channelType')" min-width="110"  align="center" >
+      </el-table-column>
+      <el-table-column prop="shopMan" :label="$t('customer.table.shopMan')" min-width="130"  align="center">
+      </el-table-column>
+      <el-table-column prop="shopPhone" :label="$t('customer.table.shopPhone')" min-width="80"  align="center">
+      </el-table-column>
+      <el-table-column prop="linkMan" :label="$t('customer.table.linkMan')"  min-width="80"align="center" >
+      </el-table-column>
+      <el-table-column prop="contactNum" :label="$t('customer.table.contactNum')" min-width="150"  align="center">
+      </el-table-column>
+      <el-table-column prop="shopAddress" :label="$t('customer.table.shopAddress')" min-width="90"  align="center">
+      </el-table-column>
+      <el-table-column :label="$t('customer.table.auditStatus')" min-width="100"  align="center">
         <template slot-scope="scope">
-          <span>{{scope.row.billNo}}</span>
+          <span v-if="scope.row.auditStatus===3" style="color:green">审核通过</span>
+          <span v-else-if="scope.row.auditStatus===2" style="color:blue">已提交</span>
+          <span v-else   style="color:red">未知</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150px" align="center" :label="$t('bill.table.merNum')">
-        <template slot-scope="scope">
-          <span>{{scope.row.merNum}}</span>
-        </template>
+      <el-table-column prop="opType" label="操作类型" :formatter="opType"  min-width="80"  align="center">
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createName')">
+      <el-table-column align="center" :label="$t('customer.table.actions')" min-width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <span>{{scope.row.createName}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.updateName')">
-        <template slot-scope="scope">
-          <span>{{scope.row.updateName}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.checkStatus')">
-        <template slot-scope="scope">
-          <span v-if="scope.row.checkStatus=='2'" style="color:green">审核通过</span>
-          <span v-else-if="scope.row.checkStatus==1" style="color:orange">待审核</span>
-          <span v-else style="color:red">退回</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createDate')">
-        <template slot-scope="scope">
-          <span>{{scope.row.createDate}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="opType" align="center" :label="$t('bill.table.opType')" :formatter="opType" min-width="120" >
-      </el-table-column>
-      <el-table-column align="center" :label="$t('bill.table.actions')" min-width="230" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('bill.table.edit')}}</el-button>
-          <el-button  size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('bill.table.delete')}}</el-button>
+          <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('customer.table.edit')}}</el-button>
+          <el-button  size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('customer.table.delete')}}</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -25,41 +25,43 @@
     
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
               style="width: 100%">
-      <el-table-column type="selection" width="55" align="center">
+      <el-table-column type="selection" min-width="55" align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('bill.table.billNo')" min-width="150px">
-        <template slot-scope="scope">
-          <span>{{scope.row.billNo}}</span>
-        </template>
+      <el-table-column prop="id" label="编码" align="center">
       </el-table-column>
-      <el-table-column min-width="150px" align="center" :label="$t('bill.table.merNum')">
-        <template slot-scope="scope">
-          <span>{{scope.row.merNum}}</span>
-        </template>
+      <el-table-column prop="title" label="代金券名称" align="center">
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createName')">
-        <template slot-scope="scope">
-          <span>{{scope.row.createName}}</span>
-        </template>
+      <el-table-column prop="oaName" label="运营区名称" align="center">
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.updateName')">
-        <template slot-scope="scope">
-          <span>{{scope.row.updateName}}</span>
-        </template>
+      <el-table-column prop="address" label="状态" align="center" >
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.checkStatus')">
-        <template slot-scope="scope">
-          <span v-if="scope.row.checkStatus=='2'" style="color:green">审核通过</span>
-          <span v-else-if="scope.row.checkStatus==1" style="color:orange">待审核</span>
-          <span v-else style="color:red">退回</span>
-        </template>
+      <el-table-column prop="startDate" label="代金券开始日期" align="center" >
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createDate')">
-        <template slot-scope="scope">
-          <span>{{scope.row.createDate}}</span>
-        </template>
+      <el-table-column prop="endDate" label="代金券结束日期" align="center">
       </el-table-column>
-      <el-table-column prop="opType" align="center" :label="$t('bill.table.opType')" :formatter="opType" min-width="120" >
+      <el-table-column prop="shareRateSelf" label="平台分摊比例" align="center">
+      </el-table-column>
+      <el-table-column prop="shareRateThird" label="第三方分摊比例" align="center">
+      </el-table-column>
+      <el-table-column prop="merchantName" label="第三方商户名称" align="center">
+      </el-table-column>
+      <el-table-column prop="useRange" label="使用范围"  align="center">
+      </el-table-column>
+      <el-table-column prop="useDays" label="使用天数"  align="center">
+      </el-table-column>
+      <el-table-column prop="delayUseDays" label="推迟使用天数"  align="center">
+      </el-table-column>
+      <el-table-column prop="conditionAmount" label="满减达到金额" align="center" >
+      </el-table-column>
+      <el-table-column prop="giftAmount" label="减免金额" align="center" >
+      </el-table-column>
+      <el-table-column prop="createName" label="创建人" align="center">
+      </el-table-column>
+      <el-table-column prop="createDate" label="创建时间" align="center">
+      </el-table-column>
+      <el-table-column prop="updateName" label="修改人" align="center">
+      </el-table-column>
+      <el-table-column prop="updateDate" label="修改时间"  align="center">
       </el-table-column>
       <el-table-column align="center" :label="$t('bill.table.actions')" min-width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
