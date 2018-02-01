@@ -150,7 +150,9 @@
     acc[cur.key] = cur.display_name
     return acc
   }, {})
-  
+
+  var datas=require("../../mock/falseData/2_goodsAdmin/goodsAdmin")
+
   export default {
     name: 'complexTable',
     directives: {
@@ -159,12 +161,12 @@
     data() {
       return {
         tableKey: 0,
-        list: null,
-        total: null,
-        listLoading: true,
+        list: datas.data,
+        total: 20,
+        listLoading: false,
         listQuery: {
           page: 1,
-          limit: 20,
+          limit: 10,
           importance: undefined,
           title: undefined,
           type: undefined,
@@ -213,9 +215,9 @@
         return calendarTypeKeyValue[type]
       }
     },
-    created() {
-      this.getList()
-    },
+    // created() {
+    //   this.getList()
+    // },
     methods: {
       getList() {
         this.listLoading = true
