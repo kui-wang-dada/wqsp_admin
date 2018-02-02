@@ -25,34 +25,34 @@
   
     <el-table  :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
                style="width: 100%">
-      <el-table-column type="selection" min-width="45" align="center"></el-table-column>
-      <el-table-column prop="id" align="center" :label="$t('merchant.table.id')" min-width="150px">
+      <el-table-column type="selection" width="45" align="center"></el-table-column>
+      <el-table-column prop="id" align="center" :label="$t('merchant.table.id')" width="150px">
       </el-table-column>
-      <el-table-column prop="merchantName" :label="$t('merchant.table.merchantName')" min-width="110"  align="center" >
+      <el-table-column prop="merchantName" :label="$t('merchant.table.merchantName')" width="110"  align="center" >
       </el-table-column>
-      <el-table-column prop="merchantType" :label="$t('merchant.table.merchantType')" :formatter="merchantType" min-width="130"  align="center">
+      <el-table-column prop="merchantType" :label="$t('merchant.table.merchantType')" :formatter="merchantType" width="130"  align="center">
       </el-table-column>
-      <el-table-column prop="linkMan" :label="$t('merchant.table.linkMan')" min-width="80"  align="center">
+      <el-table-column prop="linkMan" :label="$t('merchant.table.linkMan')" width="80"  align="center">
       </el-table-column>
-      <el-table-column prop="contactNum" :label="$t('merchant.table.contactNum')"  min-width="80"align="center" >
+      <el-table-column prop="contactNum" :label="$t('merchant.table.contactNum')"  width="80" align="center" >
       </el-table-column>
-      <el-table-column prop="addressDetail" :label="$t('merchant.table.addressDetail')" min-width="150"  align="center">
+      <el-table-column prop="addressDetail" :label="$t('merchant.table.addressDetail')" width="150"  align="center">
       </el-table-column>
-      <el-table-column :label="$t('merchant.table.merchantStatus')" min-width="100"  align="center">
+      <el-table-column :label="$t('merchant.table.merchantStatus')" width="100"  align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.merchantStatus===1" style="color:green">已启用</span>
           <span v-else   style="color:red">已禁用</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createUser" :label="$t('merchant.table.createUser')" min-width="90"  align="center">
+      <el-table-column prop="createUser" :label="$t('merchant.table.createUser')" width="90"  align="center">
       </el-table-column>
-      <el-table-column prop="createDateStr" :label="$t('merchant.table.createDate')" min-width="150"  align="center">
+      <el-table-column prop="createDateStr" :label="$t('merchant.table.createDate')" width="150"  align="center">
       </el-table-column>
-      <el-table-column prop="updateUser" :label="$t('merchant.table.updateUser')"  min-width="100"  align="center">
+      <el-table-column prop="updateUser" :label="$t('merchant.table.updateUser')"  width="100"  align="center">
       </el-table-column>
-      <el-table-column prop="updateDateStr" :label="$t('merchant.table.updateDate')"  min-width="80"  align="center">
+      <el-table-column prop="updateDateStr" :label="$t('merchant.table.updateDate')"  width="80"  align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('merchant.table.actions')" min-width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('merchant.table.actions')" fixed="right" min-width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('merchant.table.edit')}}</el-button>
           <el-button  size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('merchant.table.delete')}}</el-button>

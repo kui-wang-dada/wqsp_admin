@@ -27,41 +27,41 @@
               style="width: 100%">
       <el-table-column type="selection" width="55" align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('bill.table.billNo')" min-width="150px">
+      <el-table-column align="center" :label="$t('bill.table.billNo')" width="150px">
         <template slot-scope="scope">
           <span>{{scope.row.billNo}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150px" align="center" :label="$t('bill.table.merNum')">
+      <el-table-column width="150px" align="center" :label="$t('bill.table.merNum')">
         <template slot-scope="scope">
           <span>{{scope.row.merNum}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createName')">
+      <el-table-column width="150" align="center" :label="$t('bill.table.createName')">
         <template slot-scope="scope">
           <span>{{scope.row.createName}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.updateName')">
+      <el-table-column width="150" align="center" :label="$t('bill.table.updateName')">
         <template slot-scope="scope">
           <span>{{scope.row.updateName}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.checkStatus')">
+      <el-table-column width="150" align="center" :label="$t('bill.table.checkStatus')">
         <template slot-scope="scope">
           <span v-if="scope.row.checkStatus=='2'" style="color:green">审核通过</span>
           <span v-else-if="scope.row.checkStatus==1" style="color:orange">待审核</span>
           <span v-else style="color:red">退回</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createDate')">
+      <el-table-column width="150" align="center" :label="$t('bill.table.createDate')">
         <template slot-scope="scope">
           <span>{{scope.row.createDate}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="opType" align="center" :label="$t('bill.table.opType')" :formatter="opType" min-width="120" >
+      <el-table-column prop="opType" align="center" :label="$t('bill.table.opType')" :formatter="opType" width="120" >
       </el-table-column>
-      <el-table-column align="center" :label="$t('bill.table.actions')" min-width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('bill.table.actions')" fixed="right" min-width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('bill.table.edit')}}</el-button>
           <el-button  size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('bill.table.delete')}}</el-button>

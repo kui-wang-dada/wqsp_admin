@@ -48,7 +48,7 @@
       </el-table-column>
       <el-table-column prop="opType" label="操作类型" :formatter="opType"  min-width="80"  align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('customer.table.actions')" min-width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('customer.table.actions')" fixed="right" min-width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('customer.table.edit')}}</el-button>
           <el-button  size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('customer.table.delete')}}</el-button>

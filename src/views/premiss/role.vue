@@ -10,12 +10,12 @@
               style="width: 100%">
       <el-table-column type="selection" min-width="55" align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('premiss.table.name')" min-width="150px">
+      <el-table-column align="center" :label="$t('premiss.table.name')" min-width="180px">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150px" align="center" :label="$t('premiss.table.descript')">
+      <el-table-column min-width="180px" align="center" :label="$t('premiss.table.descript')">
         <template slot-scope="scope">
           <span>{{scope.row.descript}}</span>
         </template>

@@ -19,26 +19,26 @@
               style="width: 100%">
       <el-table-column type="selection" width="55" align="center">
       </el-table-column>
-      <el-table-column prop="batchNo" align="center" :label="$t('supplier.table.batchNo')" min-width="150px">
+      <el-table-column prop="batchNo" align="center" :label="$t('supplier.table.batchNo')" width="150px">
       </el-table-column>
-      <el-table-column prop="createDateStr" min-width="150px" align="center" :label="$t('supplier.table.createDate')">
+      <el-table-column prop="createDateStr" width="150px" align="center" :label="$t('supplier.table.createDate')">
       </el-table-column>
-      <el-table-column prop="createUser" min-width="150" align="center" :label="$t('supplier.table.createUser')">
+      <el-table-column prop="createUser" width="150" align="center" :label="$t('supplier.table.createUser')">
       </el-table-column>
-      <el-table-column prop="auditDateStr" min-width="150" align="center" :label="$t('supplier.table.auditDate')">
+      <el-table-column prop="auditDateStr" width="150" align="center" :label="$t('supplier.table.auditDate')">
       </el-table-column>
-      <el-table-column prop="auditUser" :label="$t('supplier.table.auditUser')" min-width="100" >
+      <el-table-column prop="auditUser" :label="$t('supplier.table.auditUser')" width="100" >
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('supplier.table.status')">
+      <el-table-column width="150" align="center" :label="$t('supplier.table.status')">
         <template slot-scope="scope">
           <span v-if="scope.row.status=='2'" style="color:green">审核通过</span>
           <span v-else-if="scope.row.status==1" style="color:orange">待审核</span>
           <span v-else style="color:red">退回</span>
         </template>
       </el-table-column>
-      <el-table-column prop="dataType" align="center" :label="$t('supplier.table.dataType')" :formatter="getdataType"  min-width="120" >
+      <el-table-column prop="dataType" align="center" :label="$t('supplier.table.dataType')" :formatter="getdataType"  width="120" >
       </el-table-column>
-      <el-table-column align="center" :label="$t('supplier.table.actions')" min-width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('supplier.table.actions')" fixed="right" min-width="90" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="small" icon="el-icon-circle-check" @click="handleUpdate(scope.row)">{{$t('supplier.table.detail')}}</el-button>
         </template>

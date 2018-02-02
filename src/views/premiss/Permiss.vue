@@ -8,19 +8,19 @@
 
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
       style="width: 100%">
-      <el-table-column type="selection" min-width="55" align="center">
+      <el-table-column type="selection" width="55" align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('premiss.table.name')" min-width="150px">
+      <el-table-column align="center" :label="$t('premiss.table.name')" width="180px">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150px" align="center" :label="$t('premiss.table.sort')">
+      <el-table-column width="180px" align="center" :label="$t('premiss.table.sort')">
         <template slot-scope="scope">
           <span>{{scope.row.sort}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('premiss.table.parentName')">
+      <el-table-column width="180" align="center" :label="$t('premiss.table.parentName')">
         <template slot-scope="scope">
           <span>{{scope.row.parentName}}</span>
         </template>

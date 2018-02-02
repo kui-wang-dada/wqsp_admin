@@ -38,29 +38,29 @@
               style="width: 100%">
       <el-table-column type="selection" min-width="45" align="center">
       </el-table-column>
-      <el-table-column prop="id" align="center" :label="$t('supplier.table.id')" min-width="150px">
+      <el-table-column prop="id" align="center" :label="$t('supplier.table.id')" width="150px">
       </el-table-column>
-      <el-table-column prop="supplierName" :label="$t('supplier.table.supplierName')" min-width="110"  align="center" >
+      <el-table-column prop="supplierName" :label="$t('supplier.table.supplierName')" width="110"  align="center" >
       </el-table-column>
-      <el-table-column prop="phone" :label="$t('supplier.table.phone')" min-width="130"  align="center">
+      <el-table-column prop="phone" :label="$t('supplier.table.phone')" width="130"  align="center">
       </el-table-column>
-      <el-table-column prop="linkMan" :label="$t('supplier.table.linkMan')" min-width="80"  align="center">
+      <el-table-column prop="linkMan" :label="$t('supplier.table.linkMan')" width="80"  align="center">
       </el-table-column>
-      <el-table-column prop="createUser" :label="$t('supplier.table.createUser')"  min-width="80"align="center" >
+      <el-table-column prop="createUser" :label="$t('supplier.table.createUser')"  width="80" align="center" >
       </el-table-column>
-      <el-table-column prop="createDateStr" :label="$t('supplier.table.createDate')" min-width="150"  align="center">
+      <el-table-column prop="createDateStr" :label="$t('supplier.table.createDate')" width="150"  align="center">
       </el-table-column>
-      <el-table-column prop="auditUser" :label="$t('supplier.table.auditUser')" min-width="90"  align="center">
+      <el-table-column prop="auditUser" :label="$t('supplier.table.auditUser')" width="90"  align="center">
       </el-table-column>
-      <el-table-column prop="auditDateStr" :label="$t('supplier.table.auditDate')" min-width="150"  align="center">
+      <el-table-column prop="auditDateStr" :label="$t('supplier.table.auditDate')" width="150"  align="center">
       </el-table-column>
-      <el-table-column prop="buyType" :label="$t('supplier.table.buyType')" :formatter="buyType" min-width="100"  align="center">
+      <el-table-column prop="buyType" :label="$t('supplier.table.buyType')" :formatter="buyType" width="100"  align="center">
       </el-table-column>
-      <el-table-column prop="payType" :label="$t('supplier.table.payType')" :formatter="payType"  min-width="80"  align="center">
+      <el-table-column prop="payType" :label="$t('supplier.table.payType')" :formatter="payType"  width="80"  align="center">
       </el-table-column>
-      <el-table-column prop="status" :label="$t('supplier.table.status_2')" :formatter="dataType"  min-width="70"  align="center">
+      <el-table-column prop="status" :label="$t('supplier.table.status_2')" :formatter="dataType"  width="70"  align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('supplier.table.actions')" min-width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('supplier.table.actions')" fixed="right" min-width="90" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" icon="el-icon-circle-check" @click="handleUpdate(scope.row)">{{$t('supplier.table.detail')}}</el-button>
         </template>

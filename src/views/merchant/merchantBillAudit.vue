@@ -35,7 +35,7 @@
       </el-table-column>
       <el-table-column prop="createDateStr" :label="$t('merchant.table.createDate')" min-width="80"  align="center">
       </el-table-column>
-      <el-table-column prop="updateUser" :label="$t('merchant.table.updateUser')"  min-width="80"align="center" >
+      <el-table-column prop="updateUser" :label="$t('merchant.table.updateUser')"  min-width="80" align="center" >
       </el-table-column>
       <el-table-column prop="updateDateStr" :label="$t('merchant.table.updateDate')" min-width="150"  align="center">
       </el-table-column>
@@ -48,7 +48,7 @@
       </el-table-column>
       <el-table-column prop="opType" align="center" :label="$t('merchant.table.opType')" :formatter="opType" min-width="120" >
       </el-table-column>
-      <el-table-column align="center" :label="$t('merchant.table.actions')" min-width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('merchant.table.actions')" fixed="right" min-width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('merchant.table.edit')}}</el-button>
           <el-button  size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('merchant.table.delete')}}</el-button>

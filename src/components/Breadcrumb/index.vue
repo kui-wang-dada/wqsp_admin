@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { generateTitle } from '@/utils/i18n'
 
 export default {
   created() {
@@ -27,7 +26,7 @@ export default {
     }
   },
   methods: {
-    generateTitle,
+
     getBreadcrumb() {
       let matched = this.$route.matched.filter(item => item.name)
       this.levelList = matched

@@ -10,27 +10,27 @@
               style="width: 100%">
       <el-table-column type="selection" width="55" align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('premiss.table.name')" min-width="150px">
+      <el-table-column align="center" :label="$t('premiss.table.name')" width="150px">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150px" align="center" :label="$t('premiss.table.code')">
+      <el-table-column width="150px" align="center" :label="$t('premiss.table.code')">
         <template slot-scope="scope">
           <span>{{scope.row.code}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('premiss.table.descript')">
+      <el-table-column min-width="260" align="center" :label="$t('premiss.table.descript')">
         <template slot-scope="scope">
           <span>{{scope.row.descript}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('premiss.table.value')">
+      <el-table-column width="180" align="center" :label="$t('premiss.table.value')">
         <template slot-scope="scope">
           <span>{{scope.row.value}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="$t('premiss.table.actions')" min-width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('premiss.table.actions')" min-width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('premiss.table.edit')}}</el-button>
           <el-button  size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('premiss.table.delete')}}</el-button>
