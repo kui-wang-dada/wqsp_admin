@@ -193,7 +193,7 @@
     //   this.getList()
     // },
     methods: {
-      isDefault: function (row, column) {
+      isDefault: function (row) {
         return row.isDefault == 1 ? '是' : row.isDefault == 0 ? '否' : '未知';
       },
       getList() {

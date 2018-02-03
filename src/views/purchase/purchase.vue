@@ -25,7 +25,7 @@
 			<el-table-column prop="updateUser" label="审核人" width="100" align="center">
 			</el-table-column>
 			<el-table-column prop="status" label="审核状态" width="120"  align="center">
-				<template scope="scope">
+				<template slot-scope="scope">
 					<span v-if="scope.row.status==2" style="color:green">审核通过</span>
 					<span v-else-if="scope.row.status==1"   style="color:orange">待审核</span>
 					<span v-else  style="color:red">退回</span>

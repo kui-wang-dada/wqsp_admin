@@ -202,7 +202,7 @@
     //   this.getList()
     // },
     methods: {
-      merchantType: function (row, column) {
+      merchantType: function (row) {
         return row.merchantType == 0 ? '自营商户' : row.merchantType == 1 ? '第三方商户' : '未知';
       },
       getList() {
