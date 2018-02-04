@@ -1,8 +1,8 @@
 <template>
 	<div class="form-container">
 		<div class="page-bread">
-			<el-breadcrumb separator="/">
-			  	<el-breadcrumb-item :to="{ path: 'premiss' }">客户管理</el-breadcrumb-item>
+			<el-breadcrumb separator=''>
+			  	<el-breadcrumb-item >客户管理</el-breadcrumb-item>
 			  	<el-breadcrumb-item>{{this.$route.params.customerid?'编辑客户':'新增客户'}}</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
