@@ -12,7 +12,7 @@ const tagsView = {
         title: view.meta.title || 'no-name'
       })
       if (!view.meta.noCache) {
-        state.cachedViews.push(view.name)
+        state.cachedViews.push(view.name,view.path)
       }
     },
     DEL_VISITED_VIEWS: (state, view) => {

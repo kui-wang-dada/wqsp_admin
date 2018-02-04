@@ -37,11 +37,9 @@ export const constantRouterMap = [
     meta: { title: '系统管理', icon: '系统管理', noCache: true },
     children: [
       { path: 'premiss', component: _import('premiss/Permiss'), name: 'premiss', meta: { title: '权限管理' },children:[
-        { path: 'premiss/add', component: _import('premiss/addform'), name: 'addpre', meta: { title: '权限管理' }},
-      ]
-    
-    },
-      
+          { path: 'premiss/add', component: _import('premiss/add/addform'), name: 'add', meta: { title: '123' }},
+        ]
+      },
       { path: 'role', component: _import('premiss/role'), name: 'role', meta: { title: '角色管理' }},
       { path: 'user', component: _import('premiss/user'), name: 'user', meta: { title: '用户管理' }},
       { path: 'datadict', component: _import('premiss/datadict'), name: 'datadict', meta: { title: '数据字典' }}]
