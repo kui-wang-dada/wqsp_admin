@@ -117,7 +117,7 @@ export default {
   //   this.getList()
   // },
   methods: {
-    add:function(){
+    add() {
 		  this.$router.push({ path: 'add' });
 		},
     getList() {

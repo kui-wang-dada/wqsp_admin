@@ -36,11 +36,12 @@ export const constantRouterMap = [
     name:'系统管理',
     meta: { title: '系统管理', icon: 'premiss', noCache: true },
     children: [
-      { path: 'premiss', component: _import('premiss/Permiss'), name: 'premiss', meta: { title: '权限管理' , icon: 'pre-quan' },children:[
-          
-        ] , noCache: true
+      { path: 'premiss', component: _import('premiss/Permiss'), name: 'premiss', meta: { title: '权限管理' , icon: 'pre-quan' },
+        children:[
+          // { path: 'add', component: _import('premiss/addform'), name: 'add', meta: { title: '权限修改' , icon: 'pre-jiao'} },
+        ] 
       },
-      { path: 'add', component: _import('premiss/add/addform'), name: 'add', meta: { title: '权限修改' , icon: 'pre-jiao'} , hidden: true},
+      { path: 'add', component: _import('premiss/addform'), name: 'premiss', meta: { title: '权限修改' , icon: 'pre-jiao'} , hidden: true},
       { path: 'role', component: _import('premiss/role'), name: 'role', meta: { title: '角色管理' , icon: 'pre-jiao'}},
       { path: 'user', component: _import('premiss/user'), name: 'user', meta: { title: '用户管理' , icon: 'pre-yong'}},
       { path: 'datadict', component: _import('premiss/datadict'), name: 'datadict', meta: { title: '数据字典' , icon: 'pre-zi'}}]
@@ -49,6 +50,7 @@ export const constantRouterMap = [
     path: '/goodsBills',
     component: Layout,
     name:'商品管理',
+    redirect: '/goodsBills/goodsBill',
     meta: { title: '商品管理', icon: 'goodsBill', noCache: true },
     children: [
       { path: 'goodsBill', component: _import('bill/goodsBill'), name: '新增商品单据', meta: { title: '新增商品单据' , icon: 'pre-zeng'}},
@@ -68,7 +70,7 @@ export const asyncRouterMap = [
     path: '/supplierAudits',
     component: Layout,
     name: '供应商管理',
-    redirect: 'noredirect',
+    redirect: '/supplierAudits/supplierAudit',
     meta: { title: '供应商管理', icon: 'supplier', noCache: true },
     children: [
       { path: 'supplierAudit', component: _import('supplier/supplierAudit'), name: '新增供应商', meta: { title: '新增供应商' , icon: 'pre-hu'}},
@@ -79,7 +81,7 @@ export const asyncRouterMap = [
     path: '/merchantBillAudits',
     component: Layout,
     name: '商户管理管理',
-    redirect: 'noredirect',
+    redirect: '/merchantBillAudits/merchantBillAudit',
     meta: { title: '商户管理', icon: 'merchants', noCache: true },
     children: [
       { path: 'merchantBillAudit', component: _import('merchant/merchantBillAudit'), name: '新增商户单据', meta: { title: '新增商户单据' , icon: 'pre-dan'}},
@@ -90,7 +92,7 @@ export const asyncRouterMap = [
     path: '/operateAreas',
     component: Layout,
     name: '运营区管理',
-    redirect: 'noredirect',
+    redirect: '/operateAreas/operateArea',
     meta: { title: '运营区管理', icon: 'operating', noCache: true },
     children: [
       { path: 'operateArea', component: _import('sale/operateArea'), name: '运营区管理列表', meta: { title: '运营区管理列表' , icon: 'pre-wei'}},
@@ -111,7 +113,7 @@ export const asyncRouterMap = [
     path: '/customerAudits',
     component: Layout,
     name: '客户管理',
-    redirect: 'noredirect',
+    redirect: '/customerAudits/customerAudit',
     meta: { title: '客户管理', icon: 'customer', noCache: true },
     children: [
       { path: 'customerAudit', component: _import('customer/customerAudit'), name: '新增客户单据', meta: { title: '新增客户单据' , icon: 'kehu'}},
@@ -127,7 +129,7 @@ export const asyncRouterMap = [
     path: '/appOrders',
     component: Layout,
     name: '订单管理',
-    redirect: 'noredirect',
+    redirect: '/appOrders/appOrder',
     meta: { title: '订单管理', icon: 'appOrder', noCache: true },
     children: [
       { path: 'appOrder', component: _import('finance/appOrder'), name: '订单管理列表', meta: { title: '订单管理列表' , icon: 'add-lie' }},
@@ -142,7 +144,7 @@ export const asyncRouterMap = [
     path: '/purchaseAudits',
     component: Layout,
     name: '采购管理',
-    redirect: 'noredirect',
+    redirect: '/purchaseAudits/purchaseAudit',
     meta: { title: '采购管理', icon: 'purchase', noCache: true },
     children: [
       { path: 'purchaseAudit', component: _import('purchase/purchaseAudit'), name: '新增采购单据', meta: { title: '新增采购单据' , icon: 'add-zeng' }},
@@ -153,7 +155,7 @@ export const asyncRouterMap = [
     path: '/purchasePriceAudits',
     component: Layout,
     name: '库存管理',
-    redirect: 'noredirect',
+    redirect: '/purchasePriceAudits/purchasePriceAudit',
     meta: { title: '库存管理', icon: 'purch', noCache: true },
     children: [
       { path: 'purchasePriceAudit', component: _import('purch/purchasePriceAudit'), name: '新增库存', meta: { title: '新增库存' , icon: 'add-ku' }},
@@ -164,7 +166,7 @@ export const asyncRouterMap = [
     path: '/goodsShelvesAudits',
     component: Layout,
     name: '商品上下架管理',
-    redirect: 'noredirect',
+    redirect: '/goodsShelvesAudits/goodsShelvesAudit',
     meta: { title: '商品上下架管理', icon: 'goodsShelvesAudit', noCache: true },
     leaf: true,
     children: [
@@ -175,7 +177,7 @@ export const asyncRouterMap = [
     path: '/goodsBacks',
     component: Layout,
     name: '退货管理',
-    redirect: 'noredirect',
+    redirect: '/goodsBacks/goodsBack',
     meta: { title: '退货管理', icon: 'goodsBack', noCache: true },
     children: [
       { path: 'goodsBack', component: _import('goods/goodsBack'), name: '退货单据管理', meta: { title: '退货单据管理' , icon: 'new-yun' }},
@@ -186,7 +188,7 @@ export const asyncRouterMap = [
     path: '/operateWmsAudits',
     component: Layout,
     name: '运营区仓库管理',
-    redirect: 'noredirect',
+    redirect: '/operateWmsAudits/operateWmsAudit',
     meta: { title: '运营区仓库管理', icon: 'icon_dail_fill', noCache: true },
     children: [
       { path: 'operateWmsAudit', component: _import('operate/operateWmsAudit'), name: '新增运营区仓库', meta: { title: '新增运营区仓库' , icon: 'new-cang' }},
@@ -198,7 +200,7 @@ export const asyncRouterMap = [
     path: '/pushManAudits',
     component: Layout,
     name: '地推管理',
-    redirect: 'noredirect',
+    redirect: '/pushManAudits/pushManAudit',
     meta: { title: '地推管理', icon: 'icon_file_fill', noCache: true },
     children: [
       { path: 'pushManAudit', component: _import('push/pushManAudit'), name: '新增地推', meta: { title: '新增地推' , icon: 'new-di' }},
@@ -209,7 +211,7 @@ export const asyncRouterMap = [
     path: '/headliness',
     component: Layout,
     name: 'APP管理',
-    redirect: 'noredirect',
+    redirect: '/headliness/headlines',
     meta: { title: 'APP管理', icon: 'app', noCache: true },
     children: [
       { path: 'headlines', component: _import('meeting/headlines'), name: '万全头条', meta: { title: '万全头条' , icon: 'new-tou' }},
@@ -220,7 +222,7 @@ export const asyncRouterMap = [
     path: '/smss',
     component: Layout,
     name: '短信发送',
-    redirect: 'noredirect',
+    redirect: '/smss/sms',
     meta: { title: '短信发送', icon: 'sms', noCache: true },
     leaf: true,
     children: [
