@@ -1,12 +1,16 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item"  placeholder="商品分类" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="商品分类"
+                v-model="listQuery.title">
       </el-input>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">
+        {{$t('table.search')}}
+      </el-button>
     </div>
     
-    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
+    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit
+              highlight-current-row
               style="width: 100%">
       <el-table-column type="selection" min-width="55" align="center">
       </el-table-column>
@@ -19,16 +23,20 @@
     </el-table>
     
     <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
-                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                     :current-page.sync="listQuery.page"
+                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit"
+                     layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
     
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
+      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="70px"
+               style='width: 400px; margin-left:50px;'>
         <el-form-item :label="$t('table.type')" prop="type">
           <el-select class="filter-item" v-model="temp.type" placeholder="Please select">
-            <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key">
+            <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name"
+                       :value="item.key">
             </el-option>
           </el-select>
         </el-form-item>
@@ -46,10 +54,12 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('table.importance')">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max='3'></el-rate>
+          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                   :max='3'></el-rate>
         </el-form-item>
         <el-form-item :label="$t('table.remark')">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="temp.remark">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input"
+                    v-model="temp.remark">
           </el-input>
         </el-form-item>
       </el-form>
@@ -62,8 +72,8 @@
     
     <el-dialog title="Reading statistics" :visible.sync="dialogPvVisible">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel"> </el-table-column>
-        <el-table-column prop="pv" label="Pv"> </el-table-column>
+        <el-table-column prop="key" label="Channel"></el-table-column>
+        <el-table-column prop="pv" label="Pv"></el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">{{$t('table.confirm')}}</el-button>
@@ -81,7 +91,7 @@
   const calendarTypeOptions = [
     { key: '2', display_name: '审核通过' },
     { key: '1', display_name: '待审核' },
-    { key: '0', display_name: '退回' },
+    { key: '0', display_name: '退回' }
   
   ]
   
@@ -91,7 +101,7 @@
     return acc
   }, {})
   
-  var datas=require("../../mock/falseData/6_operate/8_operateAreaGoodClass")
+  var datas = require('../../mock/falseData/6_operate/8_operateAreaGoodClass')
   
   export default {
     name: 'complexTable',
@@ -159,7 +169,7 @@
     //   this.getList()
     // },
     methods: {
-      
+  
       getList() {
         this.listLoading = true
         fetchList(this.listQuery).then(response => {
