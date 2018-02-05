@@ -118,7 +118,7 @@ export default {
   // },
   methods: {
     add:function(){
-		  this.$router.push({ path: 'premiss/premiss/add' });
+		  this.$router.push({ path: 'add' });
 		},
     getList() {
       this.listLoading = true

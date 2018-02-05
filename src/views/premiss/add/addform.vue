@@ -1,9 +1,9 @@
 <template>
 	<div class="form-container">
 		<div class="page-bread">
-			<el-breadcrumb separator=''>
-			  	<el-breadcrumb-item >客户管理</el-breadcrumb-item>
-			  	<el-breadcrumb-item>{{this.$route.params.customerid?'编辑客户':'新增客户'}}</el-breadcrumb-item>
+			<el-breadcrumb separator="/">
+			  	<el-breadcrumb-item :to="{ path: 'premiss' }">权限管理</el-breadcrumb-item>
+			  	<el-breadcrumb-item>{{this.$route.params.customerid?'编辑权限':'新增权限'}}</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 		<div class="form-content">
@@ -156,6 +156,7 @@
 	.form-container {
 	height: auto;
 	overflow: hidden;
+	padding: 20px;
 	}
 	.form-container .form-content {
 	height: auto;
@@ -165,6 +166,7 @@
 	}
 	.form-container .form-content .form-wraper {
 	width: 500px;
+	margin-left: -58px;
 	}
 	.form-container .form-content .form-wraper .line {
 	text-align: center;
