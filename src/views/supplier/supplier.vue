@@ -1,28 +1,28 @@
 <template>
   <div class="app-container calendar-list-container">
     <el-form :inline="true" :model="listQuery" label-width="100px" size="medium">
-      <el-form-item label="id" >
+      <el-form-item  >
         <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('supplier.filter.id')" v-model="listQuery.title"></el-input>
       </el-form-item>
-      <el-form-item label="供应商名称">
+      <el-form-item >
         <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('supplier.filter.supplierName')" v-model="listQuery.title"></el-input>
       </el-form-item>
-      <el-form-item label="联系电话">
+      <el-form-item >
         <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('supplier.filter.phone')" v-model="listQuery.title"></el-input>
       </el-form-item>
-      <el-form-item label="采购类型">
+      <el-form-item >
         <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('supplier.filter.buyType')">
           <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="支付方式">
+      <el-form-item >
         <el-select  clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('supplier.filter.payType')">
           <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="状态">
+      <el-form-item >
         <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('supplier.filter.status_2')">
           <el-option
             v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
@@ -58,7 +58,7 @@
       </el-table-column>
       <el-table-column prop="payType" :label="$t('supplier.table.payType')" :formatter="payType"  width="80"  align="center">
       </el-table-column>
-      <el-table-column prop="status" :label="$t('supplier.table.status_2')" :formatter="dataType"  width="70"  align="center">
+      <el-table-column prop="status" :label="$t('supplier.table.status_2')"   width="70"  align="center">
       </el-table-column>
       <el-table-column align="center" :label="$t('supplier.table.actions')" fixed="right" min-width="90" class-name="small-padding fixed-width">
         <template slot-scope="scope">

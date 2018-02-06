@@ -118,7 +118,7 @@ export default {
   // },
   methods: {
     add() {
-		  this.$router.push({ path: 'add' });
+		  this.$router.push({name:'add', params: {num: 123}} );
 		},
     getList() {
       this.listLoading = true

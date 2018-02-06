@@ -18,7 +18,7 @@
       </el-table-column>
       <el-table-column prop="billNo" label="审核单号" min-width="150" align="center">
       </el-table-column>
-      <el-table-column prop="merNum" label="数量" min-width="150" :formatter="channel" align="center">
+      <el-table-column prop="merNum" label="数量" min-width="150"  align="center">
       </el-table-column>
       <el-table-column prop="createName" label="创建人" min-width="150" align="center">
       </el-table-column>

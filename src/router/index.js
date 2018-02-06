@@ -8,6 +8,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '../views/layout/Layout'
+import AppMain from '../views/layout/components/AppMain'
 
 /** note: submenu only apppear when children.length>=1
 *   detail see  https://panjiachen.github.io/vue-element-admin-site/#/router-and-nav?id=sidebar
@@ -36,12 +37,17 @@ export const constantRouterMap = [
     name:'系统管理',
     meta: { title: '系统管理', icon: 'premiss', noCache: true },
     children: [
-      { path: 'premiss', component: _import('premiss/Permiss'), name: 'premiss', meta: { title: '权限管理' , icon: 'pre-quan' },
+      { path: 'premiss', 
+        component: AppMain,
+        name: 'premiss', 
+        redirect: 'premiss/one',
+        meta: { title: '权限管理' , icon: 'pre-quan' },
         children:[
-          // { path: 'add', component: _import('premiss/addform'), name: 'add', meta: { title: '权限修改' , icon: 'pre-jiao'} },
+          { path: 'one', component: _import('premiss/Permiss'), name: 'pre', meta: { title: '权限管理' , icon: 'pre-quan' }, },
+          { path: 'two', component: _import('premiss/addform'), name: 'add',  hidden: true , meta: { title: '权限管理' , icon: 'pre-quan' }, },
         ] 
       },
-      { path: 'add', component: _import('premiss/addform'), name: 'premiss', meta: { title: '权限修改' , icon: 'pre-jiao'} , hidden: true},
+      // { path: 'premiss:id', component: _import('premiss/addform'), name: 'premiss',  hidden: true},
       { path: 'role', component: _import('premiss/role'), name: 'role', meta: { title: '角色管理' , icon: 'pre-jiao'}},
       { path: 'user', component: _import('premiss/user'), name: 'user', meta: { title: '用户管理' , icon: 'pre-yong'}},
       { path: 'datadict', component: _import('premiss/datadict'), name: 'datadict', meta: { title: '数据字典' , icon: 'pre-zi'}}]
