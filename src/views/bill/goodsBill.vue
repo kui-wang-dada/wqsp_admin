@@ -1,107 +1,85 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item"
-                :placeholder="$t('bill.filter.billNo')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.billNo')" v-model="listQuery.title">
       </el-input>
-      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type"
-                 :placeholder="$t('bill.filter.checkStatus')">
-        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'"
-                   :value="item.key">
+      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" :placeholder="$t('bill.filter.checkStatus')">
+        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
         </el-option>
       </el-select>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item"
-                :placeholder="$t('bill.filter.goodsName')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.goodsName')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item"
-                :placeholder="$t('bill.filter.goodsCode')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.goodsCode')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item"
-                :placeholder="$t('bill.filter.createName')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.createName')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item"
-                :placeholder="$t('bill.filter.updateName')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.updateName')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item"
-                :placeholder="$t('bill.filter.startTime')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.startTime')" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item"
-                :placeholder="$t('bill.filter.endTime')" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('bill.filter.endTime')" v-model="listQuery.title">
       </el-input>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">
-        {{$t('bill.filter.search')}}
-      </el-button>
-    
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('bill.filter.search')}}</el-button>
+      
     </div>
-    
-    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit
-              highlight-current-row
+  
+    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
               style="width: 100%">
       <el-table-column type="selection" width="55" align="center">
       </el-table-column>
-      <el-table-column align="center" :label="$t('bill.table.billNo')" min-width="150px">
+      <el-table-column align="center" :label="$t('bill.table.billNo')" width="150px">
         <template slot-scope="scope">
           <span>{{scope.row.billNo}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150px" align="center" :label="$t('bill.table.merNum')">
+      <el-table-column width="150px" align="center" :label="$t('bill.table.merNum')">
         <template slot-scope="scope">
           <span>{{scope.row.merNum}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createName')">
+      <el-table-column width="150" align="center" :label="$t('bill.table.createName')">
         <template slot-scope="scope">
           <span>{{scope.row.createName}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.updateName')">
+      <el-table-column width="150" align="center" :label="$t('bill.table.updateName')">
         <template slot-scope="scope">
           <span>{{scope.row.updateName}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.checkStatus')">
+      <el-table-column width="150" align="center" :label="$t('bill.table.checkStatus')">
         <template slot-scope="scope">
           <span v-if="scope.row.checkStatus=='2'" style="color:green">审核通过</span>
           <span v-else-if="scope.row.checkStatus==1" style="color:orange">待审核</span>
           <span v-else style="color:red">退回</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150" align="center" :label="$t('bill.table.createDate')">
+      <el-table-column width="150" align="center" :label="$t('bill.table.createDate')">
         <template slot-scope="scope">
           <span>{{scope.row.createDate}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="opType" align="center" :label="$t('bill.table.opType')" :formatter="opType"
-                       min-width="120">
+      <el-table-column prop="opType" align="center" :label="$t('bill.table.opType')" :formatter="opType" width="120" >
       </el-table-column>
-      <el-table-column align="center" :label="$t('bill.table.actions')" min-width="230"
-                       class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('bill.table.actions')" fixed="right" min-width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">
-            {{$t('bill.table.edit')}}
-          </el-button>
-          <el-button size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">
-            {{$t('bill.table.delete')}}
-          </el-button>
+          <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('bill.table.edit')}}</el-button>
+          <el-button  size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('bill.table.delete')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
     
     <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                     :current-page.sync="listQuery.page"
-                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit"
-                     layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
+                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
     
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="70px"
-               style='width: 400px; margin-left:50px;'>
+      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
         <el-form-item :label="$t('table.type')" prop="type">
           <el-select class="filter-item" v-model="temp.type" placeholder="Please select">
-            <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name"
-                       :value="item.key">
+            <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key">
             </el-option>
           </el-select>
         </el-form-item>
@@ -119,12 +97,10 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('table.importance')">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-                   :max='3'></el-rate>
+          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max='3'></el-rate>
         </el-form-item>
         <el-form-item :label="$t('table.remark')">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input"
-                    v-model="temp.remark">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="temp.remark">
           </el-input>
         </el-form-item>
       </el-form>
@@ -137,8 +113,8 @@
     
     <el-dialog title="Reading statistics" :visible.sync="dialogPvVisible">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel"></el-table-column>
-        <el-table-column prop="pv" label="Pv"></el-table-column>
+        <el-table-column prop="key" label="Channel"> </el-table-column>
+        <el-table-column prop="pv" label="Pv"> </el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">{{$t('table.confirm')}}</el-button>
@@ -149,14 +125,14 @@
 </template>
 
 <script>
-  import {fetchList, fetchPv, createArticle, updateArticle} from '@/api/article'
+  import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
   import waves from '@/directive/waves' // 水波纹指令
-  import {parseTime} from '@/utils'
+  import { parseTime } from '@/utils'
   
   const calendarTypeOptions = [
-    {key: '2', display_name: '审核通过'},
-    {key: '1', display_name: '待审核'},
-    {key: '0', display_name: '退回'},
+    { key: '2', display_name: '审核通过' },
+    { key: '1', display_name: '待审核' },
+    { key: '0', display_name: '退回' },
   
   ]
   
@@ -165,9 +141,9 @@
     acc[cur.key] = cur.display_name
     return acc
   }, {})
-  
-  var datas = require("../../mock/falseData/2_goodsAdmin/addGoodsAdmin")
-  
+
+  var datas=require("../../mock/falseData/2_goodsAdmin/addGoodsAdmin")
+
   export default {
     name: 'complexTable',
     directives: {
@@ -189,7 +165,7 @@
         },
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
-        sortOptions: [{label: 'ID Ascending', key: '+id'}, {label: 'ID Descending', key: '-id'}],
+        sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
         statusOptions: ['published', 'draft', 'deleted'],
         showReviewer: false,
         temp: {
@@ -210,9 +186,9 @@
         dialogPvVisible: false,
         pvData: [],
         rules: {
-          type: [{required: true, message: 'type is required', trigger: 'change'}],
-          timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
-          title: [{required: true, message: 'title is required', trigger: 'blur'}]
+          type: [{ required: true, message: 'type is required', trigger: 'change' }],
+          timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+          title: [{ required: true, message: 'title is required', trigger: 'blur' }]
         },
         downloadLoading: false
       }
@@ -234,7 +210,7 @@
     //   this.getList()
     // },
     methods: {
-      opType: function (row, column) {
+      opType: function (row) {
         return row.opType == 2 ? '修改' : row.opType == 1 ? '增加' : '未知';
       },
       getList() {

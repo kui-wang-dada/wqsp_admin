@@ -211,7 +211,7 @@
     //   this.getList()
     // },
     methods: {
-      opType: function (row, column) {
+      opType: function (row) {
         return row.opType == 2 ? '修改' : row.opType == 1 ? '增加' : '未知';
       },
       getList() {
