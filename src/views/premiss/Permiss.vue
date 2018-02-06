@@ -84,7 +84,7 @@
 <script>
   import { fetchList, createArticle, updateArticle } from '@/api/article'
   import waves from '@/directive/waves' // 水波纹指令
-  import addForm from './add/addform'
+  import addForm from './addform'
   
   var datas = require("../../mock/falseData/1_systemAdmin/permiss")
   
