@@ -70,7 +70,7 @@ export default {
       buyType: '采购类型',
       payType: '支付类型',
       status_2: '状态',
-      id: 'id',
+      id: '供应商编码',
       search: '查询'
     },
     table: {

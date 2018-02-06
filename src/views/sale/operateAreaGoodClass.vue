@@ -18,7 +18,7 @@
       </el-table-column>
       <el-table-column prop="oaName" label="运营区" min-width="150" align="center">
       </el-table-column>
-      <el-table-column prop="className" label="商品分类" min-width="150" :formatter="areaLevel" align="center">
+      <el-table-column prop="className" label="商品分类" min-width="150"  align="center">
       </el-table-column>
     </el-table>
     

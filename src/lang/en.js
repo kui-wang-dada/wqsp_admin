@@ -4,12 +4,13 @@ export default {
   },
   premiss: {
     filter: {
-      title_1: '权限管理',
+      title_1: '权限名称',
       title_2: '角色名称',
       title_3_1: '用户名',
       title_3_2: '账号',
       title_4: '字典名称',
-      search: '查询'
+      search: '查询',
+      add:'新增',
     },
     table: {
       name: '名称',
@@ -69,7 +70,7 @@ export default {
       buyType: '采购类型',
       payType: '支付类型',
       status_2: '状态',
-      id: 'id',
+      id: '供应商编码',
       search: '查询'
     },
     table: {
