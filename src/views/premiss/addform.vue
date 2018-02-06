@@ -2,7 +2,7 @@
   <div class="form-container">
     <div class="page-bread">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: 'premiss' }">权限管理</el-breadcrumb-item>
+        <el-breadcrumb-item >权限管理</el-breadcrumb-item>
         <el-breadcrumb-item>{{this.$route.params.customerid?'编辑权限':'新增权限'}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -62,7 +62,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button @click="goback">取消</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -71,6 +71,8 @@
 
 <script>
   export default {
+    name:'addForm',
+    props:["addDialog"],
     data() {
       var validateTel = function (rule, value, callback) {
         if (value !== '') {
@@ -133,6 +135,9 @@
       this.$refs['ruleForm'].resetFields()
     },
     methods: {
+      goback: function(){
+        this.$emit("c","true")
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {

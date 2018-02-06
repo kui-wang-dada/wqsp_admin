@@ -1,15 +1,12 @@
 <template>
   <div>
-    <div v-show="addDialog" class="app-container calendar-list-container">
+    <div class="app-container calendar-list-container">
       <div class="filter-container">
         <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item"
                   :placeholder="$t('premiss.filter.title_1')" v-model="listQuery.title">
         </el-input>
         <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">
           {{$t('premiss.filter.search')}}
-        </el-button>
-        <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="add">
-          {{$t('premiss.filter.add')}}
         </el-button>
       </div>
       
@@ -58,13 +55,13 @@
             <el-input v-model="temp.title" placeholder="权限管理"></el-input>
           </el-form-item>
           <el-form-item label="上级目录" prop="title">
-            <el-input v-model="temp.title" placeholder="系统管理" disabled></el-input>
+            <el-input placeholder="系统管理" disabled></el-input>
           </el-form-item>
           <el-form-item label="排序" prop="title">
-            <el-input v-model="temp.title" placeholder="数字越小排序越靠前"></el-input>
+            <el-input v-model="temp.num" placeholder="数字越小排序越靠前"></el-input>
           </el-form-item>
           <el-form-item label="访问白名单" prop="title">
-            <el-input v-model="temp.title" placeholder="多个用；隔开"></el-input>
+            <el-input v-model="temp.whitename" placeholder="多个用；隔开"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -75,19 +72,14 @@
         </div>
       </el-dialog>
     </div>
-    <add-form v-show="!addDialog"></add-form>
   </div>
-
-
 </template>
 
 <script>
   import { fetchList, createArticle, updateArticle } from '@/api/article'
   import waves from '@/directive/waves' // 水波纹指令
-  import addForm from './addform'
   
   var datas = require("../../mock/falseData/1_systemAdmin/permiss")
-  
   export default {
     name: 'complexTable',
     directives: {
@@ -108,13 +100,9 @@
           sort: '+id'
         },
         temp: {
-          id: undefined,
-          importance: 1,
-          remark: '',
-          timestamp: new Date(),
+          num: '',
+          whitename: '',
           title: '',
-          type: '',
-          status: 'published'
         },
         dialogFormVisible: false,
         dialogStatus: '',
@@ -130,16 +118,12 @@
           title: [{ required: true, message: '这是必填项', trigger: 'blur' }]
         },
         downloadLoading: false,
-        addDialog: true
       }
     },
     // created() {
     //   this.getList()
     // },
     methods: {
-      add: function() {
-        this.addDialog = false
-      },
       getList() {
         this.listLoading = true
         fetchList(this.listQuery).then(response => {
@@ -230,16 +214,6 @@
           }
         })
       },
-      reload() {
-        this.addDialog = true
-      }
     },
-    components: {
-      addForm
-    },
-    watch: {
-      '$route': 'reload'
-    }
-  
   }
 </script>
