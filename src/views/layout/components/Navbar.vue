@@ -62,7 +62,7 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss" scoped type="text/scss">
 .navbar {
   height: 50px;
   line-height: 50px;
