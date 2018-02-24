@@ -1,11 +1,5 @@
 <template>
 	<div class="form-container">
-		<div class="page-bread">
-			<el-breadcrumb separator="/">
-			  	<el-breadcrumb-item>商品管理</el-breadcrumb-item>
-			  	<el-breadcrumb-item>{{this.$route.params.productNo?'编辑商品':'新增商品'}}</el-breadcrumb-item>
-			</el-breadcrumb>
-		</div>
 		<div class="form-content">
 			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="form-wraper">
 			  	<el-form-item label="产品分类" prop="classify">
@@ -418,7 +412,7 @@
 							this.$message({
 										type: 'warning',
 										message: '请添加规格'
-									}); 
+									});
 						}
 					},
 					doCancel:function(){

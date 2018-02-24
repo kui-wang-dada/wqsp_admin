@@ -11,8 +11,9 @@
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">
         {{$t('table.search')}}
       </el-button>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="add">{{$t('premiss.filter.add')}}</el-button>
     </div>
-    
+
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit
               highlight-current-row
               style="width: 100%">
@@ -34,7 +35,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <div class="pagination-container">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
                      :current-page.sync="listQuery.page"
@@ -42,7 +43,7 @@
                      layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
-    
+
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="70px"
                style='width: 400px; margin-left:50px;'>
@@ -82,7 +83,7 @@
         <el-button v-else type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
       </div>
     </el-dialog>
-    
+
     <el-dialog title="Reading statistics" :visible.sync="dialogPvVisible">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
         <el-table-column prop="key" label="Channel"></el-table-column>
@@ -92,7 +93,7 @@
         <el-button type="primary" @click="dialogPvVisible = false">{{$t('table.confirm')}}</el-button>
       </span>
     </el-dialog>
-  
+
   </div>
 </template>
 
@@ -100,22 +101,22 @@
   import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
   import waves from '@/directive/waves' // 水波纹指令
   import { parseTime } from '@/utils'
-  
+
   const calendarTypeOptions = [
     { key: '2', display_name: '审核通过' },
     { key: '1', display_name: '待审核' },
     { key: '0', display_name: '退回' }
-  
+
   ]
-  
+
   // arr to obj ,such as { CN : "China", US : "USA" }
   const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
     acc[cur.key] = cur.display_name
     return acc
   }, {})
-  
+
   var datas = require('../../mock/falseData/6_operate/2_operateClassify')
-  
+
   export default {
     name: 'complexTable',
     directives: {

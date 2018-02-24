@@ -75,7 +75,7 @@ export const asyncRouterMap = [
   {
     path: '/merchantBillAudits',
     component: Layout,
-    name: '商户管理管理',
+    name: '商户管理',
     redirect: '/merchantBillAudits/merchantBillAudit',
     meta: { title: '商户管理', icon: 'merchants', noCache: true },
     children: [

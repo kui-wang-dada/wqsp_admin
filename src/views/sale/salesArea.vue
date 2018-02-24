@@ -37,8 +37,9 @@
         <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
         </el-option>
       </el-select>
-      
+
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="add">{{$t('premiss.filter.add')}}</el-button>
     </div>
 
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
@@ -162,22 +163,22 @@
   import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
   import waves from '@/directive/waves' // 水波纹指令
   import { parseTime } from '@/utils'
-  
+
   const calendarTypeOptions = [
     { key: '2', display_name: '审核通过' },
     { key: '1', display_name: '待审核' },
     { key: '0', display_name: '退回' },
-  
+
   ]
-  
+
   // arr to obj ,such as { CN : "China", US : "USA" }
   const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
     acc[cur.key] = cur.display_name
     return acc
   }, {})
-  
+
   var datas=require("../../mock/falseData/6_operate/4_salesArea")
-  
+
   export default {
     name: 'complexTable',
     directives: {

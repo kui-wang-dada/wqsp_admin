@@ -10,6 +10,7 @@
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="货主" v-model="listQuery.title">
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="add">{{$t('premiss.filter.add')}}</el-button>
     </div>
 
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
@@ -37,7 +38,7 @@
       </el-table-column>
       <el-table-column prop="opType" label="操作类型" min-width="150" :formatter="opType" align="center">
       </el-table-column>
-  
+
       <el-table-column align="center" :label="$t('supplier.table.actions')" fixed="right" min-width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('supplier.table.edit')}}</el-button>
@@ -105,22 +106,22 @@
   import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
   import waves from '@/directive/waves' // 水波纹指令
   import { parseTime } from '@/utils'
-  
+
   const calendarTypeOptions = [
     { key: '2', display_name: '审核通过' },
     { key: '1', display_name: '待审核' },
     { key: '0', display_name: '退回' },
-  
+
   ]
-  
+
   // arr to obj ,such as { CN : "China", US : "USA" }
   const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
     acc[cur.key] = cur.display_name
     return acc
   }, {})
-  
+
   var datas=require("../../mock/falseData/6_operate/3_salesAreaBill")
-  
+
   export default {
     name: 'complexTable',
     directives: {

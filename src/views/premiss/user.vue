@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="app-container calendar-list-container" v-show="addDialog">
+    <div class="app-container calendar-list-container">
       <div class="filter-container">
         <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item"
                   :placeholder="$t('premiss.filter.title_3_1')" v-model="listQuery.title">
@@ -15,7 +15,7 @@
             {{$t('premiss.filter.add')}}
           </el-button>
       </div>
-      
+
       <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit
                 highlight-current-row
                 style="width: 100%">
@@ -53,7 +53,7 @@
           </template>
         </el-table-column>
       </el-table>
-      
+
       <div class="pagination-container">
         <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
                       :current-page.sync="listQuery.page"
@@ -62,9 +62,7 @@
         </el-pagination>
       </div>
     </div>
-    <div v-show="!addDialog">
-      <add-user v-bind:addDialog="addDialog" v-on:c="getback($event)"></add-user>
-    </div>
+   <add-dialog :addContent="addContent" ref="addDialog"></add-dialog>
   </div>
 </template>
 
@@ -73,6 +71,7 @@
   import waves from '@/directive/waves' // 水波纹指令
   import {parseTime} from '@/utils'
   import adduser from './add/adduser'
+  import addDialog from '@/components/Dialog/addDialog'
 
   const calendarTypeOptions = [
     {key: 'CN', display_name: 'China'},
@@ -80,13 +79,13 @@
     {key: 'JP', display_name: 'Japan'},
     {key: 'EU', display_name: 'Eurozone'}
   ]
-  
+
   // arr to obj ,such as { CN : "China", US : "USA" }
   const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
     acc[cur.key] = cur.display_name
     return acc
   }, {})
-  
+
   var datas = require("../../mock/falseData/1_systemAdmin/user")
   export default {
     name: 'complexTable',
@@ -122,6 +121,7 @@
           status: 'published'
         },
         dialogFormVisible: false,
+        dialogadd:false,
         dialogStatus: '',
         textMap: {
           update: 'Edit',
@@ -135,7 +135,21 @@
           title: [{required: true, message: 'title is required', trigger: 'blur'}]
         },
         downloadLoading: false,
-        addDialog: true
+        addDialog: true,
+        addContent:{
+          title:"新增用户信息",
+          width:'50%',
+          type:0,
+          content:[
+            {type:0,label:"姓名",placehold:'姓名'},
+            {type:0,label:"账号",placehold:'账号'},
+            {type:2,label:"角色",placehold:'请选择角色',select:'',options:['系统管理员','录入员','审核员','测试员','123']},
+            {type:0,label:"联系电话",placehold:'联系电话'},
+            {type:0,label:"邮箱",placehold:'邮箱'},
+            {type:1,label:"用户类型",placehold:'普通用户',select:'',options:['普通用户','商户用户']},
+            {type:2,label:"运营区",placehold:'请选择运营区',select:'',options:['厦门市','宁德区']},
+          ]
+        }
       }
     },
     filters: {
@@ -155,8 +169,9 @@
     //   this.getList()
     // },
     methods: {
-      add: function() {
-        this.addDialog = false
+      add:function () {
+        this.dialogadd = true
+        this.$refs.addDialog.add()
       },
       getback: function(val){
         this.addDialog = val
@@ -298,7 +313,8 @@
       }
     },
     components: {
-      'add-user': adduser
+      'add-user': adduser,
+      addDialog
     },
     watch: {
       '$route': 'reload'

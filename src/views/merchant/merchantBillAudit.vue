@@ -20,9 +20,9 @@
       <el-input @keyup.enter.native="handleFilter" style="width: 150px;" class="filter-item" :placeholder="$t('merchant.filter.phone')" v-model="listQuery.title">
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('merchant.filter.search')}}</el-button>
-    
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="add">{{$t('premiss.filter.add')}}</el-button>
     </div>
-    
+
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
               style="width: 100%">
       <el-table-column type="selection" min-width="45" align="center">
@@ -55,13 +55,13 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <div class="pagination-container">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
                      :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
-    
+
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
         <el-form-item :label="$t('table.type')" prop="type">
@@ -97,7 +97,7 @@
         <el-button v-else type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
       </div>
     </el-dialog>
-    
+
     <el-dialog title="Reading statistics" :visible.sync="dialogPvVisible">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
         <el-table-column prop="key" label="Channel"> </el-table-column>
@@ -107,7 +107,9 @@
         <el-button type="primary" @click="dialogPvVisible = false">{{$t('table.confirm')}}</el-button>
       </span>
     </el-dialog>
-  
+
+    <add-dialog :addContent="addContent" ref="addDialog"></add-dialog>
+
   </div>
 </template>
 
@@ -115,22 +117,23 @@
   import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
   import waves from '@/directive/waves' // 水波纹指令
   import { parseTime } from '@/utils'
-  
+  import addDialog from '@/components/Dialog/addDialog'
+
   const calendarTypeOptions = [
     { key: '2', display_name: '审核通过' },
     { key: '1', display_name: '待审核' },
     { key: '0', display_name: '退回' },
-  
+
   ]
-  
+
   // arr to obj ,such as { CN : "China", US : "USA" }
   const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
     acc[cur.key] = cur.display_name
     return acc
   }, {})
-  
+
   var datas=require("../../mock/falseData/4_merchant/1_merchantAudit")
-  
+
   export default {
     name: 'complexTable',
     directives: {
@@ -177,7 +180,28 @@
           timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
           title: [{ required: true, message: 'title is required', trigger: 'blur' }]
         },
-        downloadLoading: false
+        downloadLoading: false,
+        addContent: {
+          title: "新增商户审核单据",
+          width:'90%',
+          type: 1,
+          label: [
+            {type: 0, label: "商户名称", width: "150"},
+            {type: 1, label: '商户类型',width: "150", options: ['系统管理员', '录入员', '审核员', '测试员', '123']},
+            {type: 0, label: "联系人", width: "150"},
+            {type: 0, label: "联系电话", width: "150"},
+            {type: 1, label: '所属省份',width: "150", options: ['系统管理员', '录入员', '审核员', '测试员', '123']},
+            {type: 1, label: '所属城市',width: "150", options: ['系统管理员', '录入员', '审核员', '测试员', '123']},
+            {type: 1, label: '所属区县',width: "150", options: ['系统管理员', '录入员', '审核员', '测试员', '123']},
+            {type: 0, label: '详细地址',width: "100"},
+            {type: 0, label: '物流服务',width: "100"},
+            {type: 0, label: '配送服务',width: "100"},
+            {type: 0, label: '操作',width: "100"},
+          ],
+          content: [
+            {model: []}
+          ]
+        }
       }
     },
     filters: {
@@ -197,6 +221,9 @@
     //   this.getList()
     // },
     methods: {
+      add: function () {
+        this.$refs.addDialog.add()
+      },
       opType: function (row, column) {
         return row.opType == 2 ? '修改' : row.opType == 1 ? '增加' : '未知';
       },
@@ -332,6 +359,9 @@
           }
         }))
       }
+    },
+    components:{
+      addDialog
     }
   }
 </script>
