@@ -12,7 +12,7 @@
         </el-option>
       </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('table.add')}}</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" @click="add" type="primary" icon="el-icon-plus">{{$t('table.add')}}</el-button>
     </div>
     
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
@@ -83,17 +83,7 @@
         <el-button v-else type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
       </div>
     </el-dialog>
-    
-    <el-dialog title="Reading statistics" :visible.sync="dialogPvVisible">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel"> </el-table-column>
-        <el-table-column prop="pv" label="Pv"> </el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">{{$t('table.confirm')}}</el-button>
-      </span>
-    </el-dialog>
-  
+    <add-dialog :addContent="addContent" ref="addDialog"></add-dialog>
   </div>
 </template>
 
@@ -101,7 +91,8 @@
   import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
   import waves from '@/directive/waves' // 水波纹指令
   import { parseTime } from '@/utils'
-  
+  import addDialog from '@/components/Dialog/addDialog'
+
   const calendarTypeOptions = [
     { key: 'CN', display_name: 'China' },
     { key: 'US', display_name: 'USA' },
@@ -161,7 +152,26 @@
           timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
           title: [{ required: true, message: 'title is required', trigger: 'blur' }]
         },
-        downloadLoading: false
+        downloadLoading: false,
+        addContent: {
+          title: "新增库存审核单据",
+          width:'90%',
+          type: 1,
+          label: [
+            {type: 0, label: "商品名称", width: "150"},
+            {type: 0, label: "供应商", width: "150"},
+            {type: 0, label: "货主", width: "150"},
+            {type: 0, label: "仓库", width: "150"},
+            {type: 0, label: "进价", width: "150"},
+            {type: 1, label: '是否退还',width: "150", options: ['系统管理员', '录入员', '审核员', '测试员', '123']},
+            {type: 0, label: '可用库存',width: "180"},
+            {type: 0, label: '不可用库存',width: "180"},
+            {type: 0, label: '总库存',width: "150"},           
+          ],
+          content: [
+            {model: []}
+          ]
+        }
       }
     },
     filters: {
@@ -181,6 +191,9 @@
     //   this.getList()
     // },
     methods: {
+      add: function () {
+        this.$refs.addDialog.add()
+      },
       getList() {
         this.listLoading = true
         fetchList(this.listQuery).then(response => {
@@ -313,6 +326,9 @@
           }
         }))
       }
+    },
+    components: {
+      addDialog
     }
   }
 </script>

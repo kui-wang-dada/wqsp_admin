@@ -8,7 +8,7 @@
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="机构名称" v-model="listQuery.title">
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('table.add')}}</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-plus">{{$t('table.add')}}</el-button>
     </div>
     
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
@@ -25,8 +25,8 @@
 			</el-table-column>
 			<el-table-column label="操作" min-width="160" align="center">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" @click="handleCreate('修改')">修改</el-button>
+					<el-button size="small" @click="handleCreate('详情')">详情</el-button>
 				</template>
 			</el-table-column>
     </el-table>
@@ -38,51 +38,35 @@
     </div>
     
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
-        <el-form-item :label="$t('table.type')" prop="type">
-          <el-select class="filter-item" v-model="temp.type" placeholder="Please select">
+      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="110px" style='width: 400px; margin-left:50px;'>
+        <el-form-item label="机构类型" prop="type">
+          <el-select class="filter-item" v-model="temp.type" placeholder="请选择">
             <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item :label="$t('table.title')" prop="title">
+        <el-form-item label="机构名称" prop="title">
           <el-input v-model="temp.title"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('table.status')">
-          <el-select class="filter-item" v-model="temp.status" placeholder="Please select">
-            <el-option v-for="item in  statusOptions" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
+       <el-form-item label="机构编码" prop="title">
+          <el-input v-model="temp.title"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('table.importance')">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max='3'></el-rate>
+        <el-form-item label="机构状态" prop="title" v-if="dialogStatus=='详情'">
+          <el-input v-model="temp.title"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('table.remark')">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="temp.remark">
-          </el-input>
+        <el-form-item label="创建时间" prop="title" v-if="dialogStatus=='详情'">
+          <el-input v-model="temp.title"></el-input>
+        </el-form-item>
+        <el-form-item label="修改时间" prop="title" v-if="dialogStatus=='详情'">
+          <el-input v-model="temp.title"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{$t('table.cancel')}}</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('table.confirm')}}</el-button>
+        <el-button v-if="dialogStatus=='详情'" type="primary" @click="createData">{{$t('table.confirm')}}</el-button>
         <el-button v-else type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
       </div>
     </el-dialog>
-    
-    <el-dialog title="Reading statistics" :visible.sync="dialogPvVisible">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel"> </el-table-column>
-        <el-table-column prop="pv" label="Pv"> </el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">{{$t('table.confirm')}}</el-button>
-      </span>
-    </el-dialog>
-  
   </div>
 </template>
 
@@ -92,10 +76,10 @@
   import { parseTime } from '@/utils'
   
   const calendarTypeOptions = [
-    { key: 'CN', display_name: 'China' },
-    { key: 'US', display_name: 'USA' },
-    { key: 'JP', display_name: 'Japan' },
-    { key: 'EU', display_name: 'Eurozone' }
+    { key: 'CN', display_name: '福州市' },
+    { key: 'US', display_name: '三明市' },
+    { key: 'JP', display_name: '长泰市' },
+    { key: 'EU', display_name: '随州市' }
   ]
   
   // arr to obj ,such as { CN : "China", US : "USA" }
@@ -128,7 +112,7 @@
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
         sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-        statusOptions: ['published', 'draft', 'deleted'],
+        statusOptions: ['仓库一', '仓库二', '仓库三'],
         showReviewer: false,
         temp: {
           id: undefined,
@@ -142,8 +126,8 @@
         dialogFormVisible: false,
         dialogStatus: '',
         textMap: {
-          update: 'Edit',
-          create: 'Create'
+          update: '修改',
+          create: '详情'
         },
         dialogPvVisible: false,
         pvData: [],
@@ -210,9 +194,9 @@
           type: ''
         }
       },
-      handleCreate() {
+      handleCreate(val) {
         this.resetTemp()
-        this.dialogStatus = 'create'
+        this.dialogStatus = val
         this.dialogFormVisible = true
         this.$nextTick(() => {
           this.$refs['dataForm'].clearValidate()

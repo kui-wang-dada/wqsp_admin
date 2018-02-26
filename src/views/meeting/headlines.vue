@@ -3,7 +3,12 @@
     <div class="filter-container">
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('head.title_1')" v-model="listQuery.title">
       </el-input>     
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('head.search')}}</el-button>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">
+        {{$t('head.search')}}
+      </el-button>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-plus" @click="handleUpdate">
+        {{$t('premiss.filter.add')}}
+      </el-button>
     </div>
 
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
@@ -18,8 +23,9 @@
       </el-table-column>
       <el-table-column label="操作" width="210" align="center">
         <template slot-scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+          <el-button size="small" type="primary" @click="handleUpdate(scope.$index, scope.row)">修改</el-button>
+          <el-button size="small" type="primary" @click="handleUpdate(scope.$index, scope.row)">详情</el-button>
+          <el-button type="danger" size="small" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -31,32 +37,28 @@
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
-        <el-form-item :label="$t('table.type')" prop="type">
+      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
+        <el-form-item :label="$t('table.title')" prop="title">
+          <el-input v-model="temp.title"></el-input>
+        </el-form-item>
+        <el-form-item label="运营区" prop="type">
           <el-select class="filter-item" v-model="temp.type" placeholder="Please select">
             <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item :label="$t('table.title')" prop="title">
-          <el-input v-model="temp.title"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('table.status')">
-          <el-select class="filter-item" v-model="temp.status" placeholder="Please select">
-            <el-option v-for="item in  statusOptions" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('table.importance')">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max='3'></el-rate>
-        </el-form-item>
-        <el-form-item :label="$t('table.remark')">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="temp.remark">
-          </el-input>
+  
+        <el-form-item label="上传图片" prop="title">
+          <el-upload
+            action="https://jsonplaceholder.typicode.com/posts/"
+            list-type="picture-card"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -64,16 +66,6 @@
         <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('table.confirm')}}</el-button>
         <el-button v-else type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
       </div>
-    </el-dialog>
-
-    <el-dialog title="Reading statistics" :visible.sync="dialogPvVisible">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel"> </el-table-column>
-        <el-table-column prop="pv" label="Pv"> </el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">{{$t('table.confirm')}}</el-button>
-      </span>
     </el-dialog>
 
   </div>
@@ -129,13 +121,13 @@
           remark: '',
           timestamp: new Date(),
           title: '',
-          type: '',
+          type: '图片',
           status: 'published'
         },
         dialogFormVisible: false,
         dialogStatus: '',
         textMap: {
-          update: 'Edit',
+          update: '修改头条信息',
           create: 'Create'
         },
         dialogPvVisible: false,
@@ -185,32 +177,7 @@
         this.listQuery.page = val
         this.getList()
       },
-      handleModifyStatus(row, status) {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        })
-        row.status = status
-      },
-      resetTemp() {
-        this.temp = {
-          id: undefined,
-          importance: 1,
-          remark: '',
-          timestamp: new Date(),
-          title: '',
-          status: 'published',
-          type: ''
-        }
-      },
-      handleCreate() {
-        this.resetTemp()
-        this.dialogStatus = 'create'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
+
       createData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
@@ -272,31 +239,8 @@
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
       },
-      handleFetchPv(pv) {
-        fetchPv(pv).then(response => {
-          this.pvData = response.data.pvData
-          this.dialogPvVisible = true
-        })
-      },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-          const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-          const data = this.formatJson(filterVal, this.list)
-          excel.export_json_to_excel(tHeader, data, 'table-list')
-          this.downloadLoading = false
-        })
-      },
-      formatJson(filterVal, jsonData) {
-        return jsonData.map(v => filterVal.map(j => {
-          if (j === 'timestamp') {
-            return parseTime(v[j])
-          } else {
-            return v[j]
-          }
-        }))
-      }
     }
   }
 </script>
+
+

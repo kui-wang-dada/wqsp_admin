@@ -18,7 +18,7 @@
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="所属区域" v-model="listQuery.title">
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">{{$t('table.search')}}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">{{$t('table.add')}}</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-plus">{{$t('table.add')}}</el-button>
     </div>
     
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row
@@ -47,10 +47,11 @@
 			</el-table-column>
 			<el-table-column prop="updateDate" label="更改时间" width="180" :formatter="formattimet" align="center">
 			</el-table-column>
-			<el-table-column label="操作" width="150" fixed="right" align="center">
+			<el-table-column label="操作" width="210" fixed="right" align="center">
 				<template slot-scope="scope">
-					<el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-					<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+					<el-button size="small" @click="handleUpdate(scope.$index, scope.row)">修改</el-button>
+          <el-button size="small" @click="handleUpdate(scope.$index, scope.row)">禁用</el-button>
+					<el-button type="danger" size="small" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
     </el-table>
@@ -62,32 +63,31 @@
     </div>
     
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
-        <el-form-item :label="$t('table.type')" prop="type">
-          <el-select class="filter-item" v-model="temp.type" placeholder="Please select">
-            <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key">
-            </el-option>
+      <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="100px" style='width: 550px; margin-left:50px;'>
+        <el-form-item label="选择地区">
+          <el-select size="small" style="width: 100px" v-model="selectProv" placeholder="请选择省份" v-on:change="getProv($event)">
+            <el-option v-for="item in provs" :key="item.label" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+          <el-select size="small" style="width: 100px"  v-model="selectCity" placeholder="请选择城市" v-on:change="getCity($event)">
+            <el-option v-for="item in citys" :key="item.label" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+          <el-select size="small" style="width: 100px"  v-model="selectCountry" placeholder="请选择县区" v-on:change="getCountry($event)">
+            <el-option v-for="item in countrys" :key="item.label" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date">
-          </el-date-picker>
+        <el-form-item label="渠道类型">
+          <el-select class="filter-item" v-model="temp.status" placeholder="请选择类型">
+            <el-option v-for="item in  statusOptions" :key="item" :label="item" :value="item"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item :label="$t('table.title')" prop="title">
+        <el-form-item label="编号">
           <el-input v-model="temp.title"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('table.status')">
-          <el-select class="filter-item" v-model="temp.status" placeholder="Please select">
-            <el-option v-for="item in  statusOptions" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
+        <el-form-item label="姓名">
+          <el-input v-model="temp.title"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('table.importance')">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max='3'></el-rate>
-        </el-form-item>
-        <el-form-item :label="$t('table.remark')">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Please input" v-model="temp.remark">
-          </el-input>
+        <el-form-item label="手机号">
+          <el-input v-model="temp.title"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -95,16 +95,6 @@
         <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{$t('table.confirm')}}</el-button>
         <el-button v-else type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
       </div>
-    </el-dialog>
-    
-    <el-dialog title="Reading statistics" :visible.sync="dialogPvVisible">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel"> </el-table-column>
-        <el-table-column prop="pv" label="Pv"> </el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">{{$t('table.confirm')}}</el-button>
-      </span>
     </el-dialog>
   
   </div>
@@ -137,6 +127,15 @@
     },
     data() {
       return {
+        provs:[{label:"北京市",value:"北京市"},
+              {label:"福建省",value:"福建省"},
+              ] ,
+        citys: [],
+        countrys: [],
+        selectProv: '',
+        selectCity: '',
+        selectCountry: '',
+
         tableKey: 0,
         list: tbl.data,
         total: null,
@@ -152,7 +151,7 @@
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
         sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-        statusOptions: ['published', 'draft', 'deleted'],
+        statusOptions: ['流通', '特通'],
         showReviewer: false,
         temp: {
           id: undefined,
@@ -161,13 +160,13 @@
           timestamp: new Date(),
           title: '',
           type: '',
-          status: 'published'
+          status: '流通'
         },
         dialogFormVisible: false,
         dialogStatus: '',
         textMap: {
-          update: 'Edit',
-          create: 'Create'
+          update: '编辑地推人员',
+          create: '修改地推人员'
         },
         dialogPvVisible: false,
         pvData: [],
@@ -327,7 +326,85 @@
             return v[j]
           }
         }))
-      }
+      },
+      getProv: function (prov) {
+        let tempCity=[];              
+        this.citys=[];
+        this.selectCity='';               
+        let allCity=[{
+            prov: "北京市",
+            label: "北京市"
+        },{
+            prov: "福建省",
+            label: "福州市"
+        }, {
+            prov: "福建省",
+            label: "厦门市"
+        }, {
+            prov: "福建省",
+            label: "莆田市"
+        }, {
+            prov: "福建省",
+            label: "三明市"
+        }, {
+            prov: "福建省",
+            label: "泉州市"
+        }, {
+            prov: "福建省",
+            label: "漳州市"
+        }, {
+            prov: "福建省",
+            label: "南平市"
+        }, {
+            prov: "福建省",
+            label: "龙岩市"
+        }, {
+            prov: "福建省",
+            label: "宁德市"
+        }];
+        for (var val of allCity){
+            if (prov == val.prov){
+                console.log(val);
+                tempCity.push({label: val.label, value: val.label})
+            }
+        }
+        this.citys = tempCity;
+    },
+    getCity: function (city) {
+        let tempCountry=[];              
+        this.countrys=[];
+        this.selectCountry='';               
+        let allCountry=[{
+            city: "北京市",
+            label: "朝阳区"
+        },{
+          city: "福州市",
+          label: "鼓楼区",
+        }, {           
+            city: "福州市",
+            label: "龙海区",
+        }, {           
+            city: "福州市",
+            label: "龙泰区",
+        },{ 
+            city: "福州市",
+            label: "东山区",
+        }, {
+            city: "福州市",
+            label: "平和区",
+        },];
+        for (var val of allCountry){
+            if (city == val.city){
+                console.log(val);
+                tempCountry.push({label: val.label, value: val.label})
+            }
+        }
+        this.countrys = tempCountry;
+    },
+    getCountry: function (country) {
+        console.log(country);
+        console.log(this.selectCountry)
+    },
     }
   }
 </script>

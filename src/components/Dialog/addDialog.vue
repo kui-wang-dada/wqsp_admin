@@ -53,6 +53,13 @@
               </el-select>
             </template>
           </el-table-column>
+          <el-table-column align="center" label="操作" fixed="right" min-width="80">
+            <template slot-scope="scope">
+              <el-button size="mini" type="danger"  @click="handleDelete(scope.$index, scope.row)">
+                删除
+              </el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div style="margin-top: 20px">
           <el-button @click="addRow" type="success">添加一行</el-button>
@@ -132,6 +139,16 @@
       },
       handleSelect(item){
         console.log(item)
+      },
+      handleDelete(row) {
+        this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success',
+          duration: 2000
+        })
+        const index = this.list.indexOf(row)
+        this.list.splice(index, 1)
       },
       updateData() {
         console.log(this.addContent)
