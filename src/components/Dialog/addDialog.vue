@@ -2,27 +2,41 @@
   <div>
     <el-dialog :title="addContent.title" :visible.sync="showDialog" :width="addContent.width">
       <div v-if="addContent.type==0">
-        <el-form ref="dataForm" :model="addContent"  label-position="left" label-width="110px"
-                 style='width: 400px; margin-left:50px;'>
-          <el-form-item :label="item.label"  v-for="item in addContent.content">
-            <el-input v-if="item.type==0" :placeholder="item.placehold" v-model="item.select"></el-input>
-            <el-select v-else-if="item.type==1" :placeholder="item.placehold" v-model="item.select">
-              <el-option
-                v-for="option in item.options"
-                :label="option"
-                :value="option">
-              </el-option>
-            </el-select>
-            <el-autocomplete
-              v-else-if="item.type==2"
-              class="inline-input"
-              v-model="item.select"
-              :fetch-suggestions="querySearch"
-              :placeholder="item.placehold"
-              @focus="handleFocus(item)"
-              @select="handleSelect"
-            ></el-autocomplete>
-          </el-form-item>
+        <el-form ref="dataForm" :model="addContent"  label-position="right" label-width="80px"
+                 style='width: 90%; margin-left:50px;' class="demo-form-inline">
+          <el-col :span="item.width" v-for="item in addContent.content">
+            <el-form-item :label="item.label">
+              <el-input v-if="item.type==0" :placeholder="item.placehold" v-model="item.select" :disabled="item.disabled"></el-input>
+              <el-select v-else-if="item.type==1" :placeholder="item.placehold" v-model="item.select">
+                <el-option
+                  v-for="option in item.options"
+                  :label="option"
+                  :value="option">
+                </el-option>
+              </el-select>
+              <el-autocomplete
+                v-else-if="item.type==2"
+                class="inline-input"
+                v-model="item.select"
+                :fetch-suggestions="querySearch"
+                :placeholder="item.placehold"
+                @focus="handleFocus(item)"
+                @select="handleSelect"
+              ></el-autocomplete>
+              <div v-if="item.type==3">
+                <el-select  v-model="item.prov"  placeholder="请选择省份" @change="getProv(item,$event)">
+                  <el-option v-for="prov in item.select" :value="prov.name"></el-option>
+                </el-select>
+                <el-select  v-model="item.city" ref="citys" placeholder="请选择城市" @change="getCity(item,$event)">
+                  <el-option v-for="city in citys" :value="city.name"></el-option>
+                </el-select>
+                <el-select v-model="item.area" ref="areas" placeholder="请选择县区" >
+                  <el-option v-for="area in areas" :value="area"></el-option>
+                </el-select>
+              </div>
+            </el-form-item>
+          </el-col>
+
         </el-form>
       </div>
       <div v-else-if="addContent.type==1">
@@ -66,7 +80,9 @@
         showDialog:false,
         select_1:"角色",
         selection:[],
-        state1:''
+        state1:'',
+        citys:['武汉'],
+        areas:[]
       }
     },
     created(){
@@ -74,6 +90,22 @@
     methods:{
       add:function () {
         this.showDialog = true
+      },
+      getProv(item,event){
+        var city = item.select.filter(o=>{
+          return o.name==event
+        })
+        this.citys=city[0].city
+        item.city=''
+
+      },
+      getCity(item,event){
+        var area = this.citys.filter(o=>{
+          return o.name==event
+        })
+        this.areas=area[0].area
+        item.area=''
+
       },
       addRow:function () {
         var content={placehold:this.addContent.content[0].placehold,model:[]}

@@ -107,6 +107,7 @@
         <el-button type="primary" @click="dialogPvVisible = false">{{$t('table.confirm')}}</el-button>
       </span>
     </el-dialog>
+    <add-dialog :addContent="addContent" ref="addDialog"></add-dialog>
 
   </div>
 </template>
@@ -115,6 +116,7 @@
   import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
   import waves from '@/directive/waves' // 水波纹指令
   import { parseTime } from '@/utils'
+  import addDialog from '@/components/Dialog/addDialog'
 
   const calendarTypeOptions = [
     { key: '2', display_name: '审核通过' },
@@ -130,6 +132,7 @@
   }, {})
 
   var datas=require("../../mock/falseData/5_customer/1_customerAudit")
+  var address=require("../../mock/address")
 
   export default {
     name: 'complexTable',
@@ -177,7 +180,27 @@
           timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
           title: [{ required: true, message: 'title is required', trigger: 'blur' }]
         },
-        downloadLoading: false
+        downloadLoading: false,
+        addContent:{
+          title:"新增客户信息",
+          width:'80%',
+          type:0,
+          content:[
+            {type:3,label:"所属区域",select:address,prov:'',city:'',area:'',width:24},
+            {type:0,label:"店铺名称",placehold:'店铺名称',select:'',width:12},
+            {type:1,label:"渠道类型",placehold:'选择渠道类型',width:12,select:'流通',options:['流通','特通']},
+            {type:0,label:"店铺地址",placehold:'店铺地址',width:24,select:''},
+            {type:1,label:"证件类型",placehold:'请选择',width:12,select:'',options:['烟草许可证','营业执照号']},
+            {type:0,label:"证件号",placehold:'证件号',width:12,select:''},
+            {type:0,label:"店主姓名",placehold:'店主姓名',width:12,select:''},
+            {type:0,label:"店主手机",placehold:'店主手机',width:12,select:''},
+            {type:0,label:"积分",placehold:'0',width:12,select:'',disabled:true},
+            {type:0,label:"固定电话",placehold:'固定电话',width:12,select:''},
+            {type:0,label:"联系人",placehold:'联系人',width:12,select:''},
+            {type:0,label:"联系电话",placehold:'联系电话',width:12,select:''},
+            {type:1,label:"地推人员",placehold:'请选择',width:24,select:'',options:['普通用户','商户用户']},
+          ]
+        }
       }
     },
     filters: {
@@ -197,6 +220,9 @@
     //   this.getList()
     // },
     methods: {
+      add: function () {
+        this.$refs.addDialog.add()
+      },
       opType: function (row) {
         return row.opType == 2 ? '修改' : row.opType == 1 ? '增加' : '未知';
       },
@@ -332,6 +358,9 @@
           }
         }))
       }
+    },
+    components: {
+      addDialog
     }
   }
 </script>
