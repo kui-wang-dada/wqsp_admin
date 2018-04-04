@@ -118,7 +118,7 @@
 						    <el-table-column
 						      	label="操作"
 						      	width="260">
-						      	<template scope="scope">
+						      	<template slot-scope="scope">
 						        	<el-button
 						         		@click.native.prevent="deleteRow(scope.$index, tableData)"
 						          		type="text"
@@ -128,7 +128,7 @@
 						      	</template>
 						    </el-table-column>
 						</el-table>
-						
+
 					</div>
 					<div class="footer-bar">
 							<el-button type="primary">提交</el-button>
@@ -137,18 +137,18 @@
 			    </el-tab-pane>
 			</el-tabs>
 		</div>
-		<el-dialog 
+		<el-dialog
 			title="添加商品"
 			size="d-grid"
 			:visible.sync="dialogTableVisible"
 			:modal-append-to-body="false"
 		  	:close-on-press-escape="false"
 		  	:close-on-click-modal="false">
-			<div :params="params" 
+			<div :params="params"
 				:dialogTableVisible="dialogTableVisible"
 				@sureDialog="sureDialog"
 				@cancelDialog="cancelDialog">
-                <el-table 
+                <el-table
                 :data="gridData"
                 ref="multipleTable"
                 height="300"
@@ -157,47 +157,47 @@
                         type="selection"
                         width="55">
                         </el-table-column>
-                    <el-table-column 
-                        prop="goodsBarCode" 
-                        label="商品条码" 
+                    <el-table-column
+                        prop="goodsBarCode"
+                        label="商品条码"
                         width="150">
                         </el-table-column>
-                    <el-table-column 
-                        prop="supplier" 
-                        label="供应商" 
+                    <el-table-column
+                        prop="supplier"
+                        label="供应商"
                         width="250">
                         </el-table-column>
-                    <el-table-column 
+                    <el-table-column
                         prop="productNo"
                         label="产品编号"
                         width="150">
                         </el-table-column>
-                    <el-table-column 
+                    <el-table-column
                         prop="classify"
                         label="产品分类"
                         width="150">
                         </el-table-column>
-                    <el-table-column 
+                    <el-table-column
                         prop="brand"
                         label="品牌"
                         width="200">
                         </el-table-column>
-                    <el-table-column 
+                    <el-table-column
                         prop="batchNo"
                         label="批号/型号/货号"
                         width="150">
                         </el-table-column>
-                    <el-table-column 
+                    <el-table-column
                         prop="productName"
                         label="产品名称"
                         width="150">
                         </el-table-column>
-                    <el-table-column 
+                    <el-table-column
                         prop="specification"
                         label="规格"
                         width="100">
                         </el-table-column>
-                    <el-table-column 
+                    <el-table-column
                         prop="unit"
                         label="单位"
                         width="100">
@@ -239,7 +239,7 @@ export default {
       loading: true,
       tableData: [],
       dialogTableVisible: false
-    };
+    }
   },
   // props:["params","dialogTableVisible"],
   // watch:{
@@ -252,16 +252,16 @@ export default {
   // 	}
   // },
   mounted: function() {
-    console.log(this.$route.params);
-    this.loadData();
-    this.getdata();
+    console.log(this.$route.params)
+    this.loadData()
+    this.getdata()
   },
   methods: {
     goback: function() {
-      this.$emit("c", "true");
+      this.$emit("c", "true")
     },
     loadData: function() {
-      console.log(this.params);
+      console.log(this.params)
       this.gridData = [
         {
           id: "1",
@@ -323,55 +323,55 @@ export default {
           specification: "sdsa",
           unit: "2"
         }
-      ];
+      ]
     },
     handleSelectionChange: function(val) {
-      this.multipleSelection = val;
+      this.multipleSelection = val
     },
     doSure: function() {
       if (this.multipleSelection.length > 0) {
-        this.$emit("sureDialog", this.multipleSelection);
+        this.$emit("sureDialog", this.multipleSelection)
       } else {
         this.$message({
           message: "请选择商品",
           type: "warning"
-        });
+        })
       }
     },
     doCancel: function() {
-      this.$emit("cancelDialog");
+      this.$emit("cancelDialog")
     },
     getdata: function() {
-      this.loading = true;
-      this.tableData = [];
+      this.loading = true
+      this.tableData = []
       setTimeout(() => {
-        this.loading = false;
-      }, 100);
+        this.loading = false
+      }, 100)
     },
     deleteRow(index, rows) {
-      rows.splice(index, 1);
+      rows.splice(index, 1)
     },
     onSearch: function() {
-      this.currentPage = 1;
-      console.log("onSearch!");
-      this.getdata();
+      this.currentPage = 1
+      console.log("onSearch!")
+      this.getdata()
     },
     addGoods: function() {
-      this.dialogTableVisible = true;
+      this.dialogTableVisible = true
     },
     sureDialog: function(arr) {
       if (this.tableData.length > 0) {
-        this.tableData = this.tableData.concat(arr);
+        this.tableData = this.tableData.concat(arr)
       } else {
-        this.tableData = arr;
+        this.tableData = arr
       }
-      this.dialogTableVisible = false;
+      this.dialogTableVisible = false
     },
     cancelDialog: function() {
-      this.dialogTableVisible = false;
+      this.dialogTableVisible = false
     }
   }
-};
+}
 </script>
 <style lang="css">
 .grid-container {
