@@ -44,13 +44,13 @@
       <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
         <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="110px" style='width: 400px; margin-left:50px;'>
           <el-form-item label="名称" prop="title">
-            <el-input v-model="temp.title" placeholder="权限管理"></el-input>
+            <el-input v-model="temp.name" placeholder="权限管理"></el-input>
           </el-form-item>
           <el-form-item label="上级目录" prop="title">
             <el-input placeholder="系统管理" disabled></el-input>
           </el-form-item>
           <el-form-item label="排序" prop="title">
-            <el-input v-model="temp.num" placeholder="数字越小排序越靠前"></el-input>
+            <el-input v-model="temp.sort" placeholder="数字越小排序越靠前"></el-input>
           </el-form-item>
           <el-form-item label="访问白名单" prop="title">
             <el-input v-model="temp.whitename" placeholder="多个用；隔开"></el-input>
@@ -90,9 +90,9 @@ export default {
         sort: "+id"
       },
       temp: {
-        num: "",
-        whitename: "",
-        title: ""
+        sort: 0,
+        name: "",
+        whitename: ""
       },
       dialogFormVisible: false,
       dialogStatus: "",
@@ -112,7 +112,7 @@ export default {
             trigger: "change"
           }
         ],
-        title: [{ required: true, message: "这是必填项", trigger: "blur" }]
+        name: [{ required: true, message: "这是必填项", trigger: "blur" }]
       }
     }
   },
@@ -159,7 +159,6 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateArticle(tempData).then(() => {
             for (const v of this.list) {
               if (v.id === this.temp.id) {
