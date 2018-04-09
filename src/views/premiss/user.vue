@@ -2,23 +2,19 @@
   <div>
     <div class="app-container calendar-list-container">
       <div class="filter-container">
-        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item"
-                  :placeholder="$t('premiss.filter.title_3_1')" v-model="listQuery.title">
+        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('premiss.filter.title_3_1')" v-model="listQuery.title">
         </el-input>
-        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item"
-                  :placeholder="$t('premiss.filter.title_3_2')" v-model="listQuery.title">
+        <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('premiss.filter.title_3_2')" v-model="listQuery.title">
         </el-input>
         <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">
           {{$t('premiss.filter.search')}}
         </el-button>
         <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="add">
-            {{$t('premiss.filter.add')}}
-          </el-button>
+          {{$t('premiss.filter.add')}}
+        </el-button>
       </div>
 
-      <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit
-                highlight-current-row
-                style="width: 100%">
+      <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row style="width: 100%">
         <el-table-column type="selection" min-width="55" align="center">
         </el-table-column>
         <el-table-column align="center" :label="$t('premiss.table.name_2')" min-width="150px">
@@ -41,8 +37,7 @@
             <span>{{scope.row.email}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" :label="$t('premiss.table.actions')" min-width="230"
-                        class-name="small-padding fixed-width">
+        <el-table-column align="center" :label="$t('premiss.table.actions')" min-width="230" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" icon="el-icon-edit" @click="add">
               {{$t('premiss.table.edit')}}
@@ -55,269 +50,310 @@
       </el-table>
 
       <div class="pagination-container">
-        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                      :current-page.sync="listQuery.page"
-                      :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit"
-                      layout="total, sizes, prev, pager, next, jumper" :total="total">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
     </div>
-   <add-dialog :addContent="addContent" ref="addDialog"></add-dialog>
+    <add-dialog :addContent="addContent" ref="addDialog"></add-dialog>
   </div>
 </template>
 
 <script>
-  import {fetchList, fetchPv, createArticle, updateArticle} from '@/api/article'
-  import waves from '@/directive/waves' // 水波纹指令
-  import {parseTime} from '@/utils'
-  import adduser from './add/adduser'
-  import addDialog from '@/components/Dialog/addDialog'
+import {
+  fetchList,
+  fetchPv,
+  createArticle,
+  updateArticle
+} from "@/api/article"
+import waves from "@/directive/waves" // 水波纹指令
+import { parseTime } from "@/utils"
+import addDialog from "@/components/Dialog/addDialog"
 
-  const calendarTypeOptions = [
-    {key: 'CN', display_name: 'China'},
-    {key: 'US', display_name: 'USA'},
-    {key: 'JP', display_name: 'Japan'},
-    {key: 'EU', display_name: 'Eurozone'}
-  ]
+const calendarTypeOptions = [
+  { key: "CN", display_name: "China" },
+  { key: "US", display_name: "USA" },
+  { key: "JP", display_name: "Japan" },
+  { key: "EU", display_name: "Eurozone" }
+]
 
-  // arr to obj ,such as { CN : "China", US : "USA" }
-  const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-    acc[cur.key] = cur.display_name
-    return acc
-  }, {})
+// arr to obj ,such as { CN : "China", US : "USA" }
+const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.display_name
+  return acc
+}, {})
 
-  var datas = require("../../mock/falseData/1_systemAdmin/user")
-  export default {
-    name: 'complexTable',
-    directives: {
-      waves
-    },
-    data() {
-      return {
-        tableKey: 0,
-        list: datas.data,
-        total: 20,
-        listLoading: false,
-        listQuery: {
-          page: 1,
-          limit: 20,
-          importance: undefined,
-          title: undefined,
-          type: undefined,
-          sort: '+id'
-        },
-        importanceOptions: [1, 2, 3],
-        calendarTypeOptions,
-        sortOptions: [{label: 'ID Ascending', key: '+id'}, {label: 'ID Descending', key: '-id'}],
-        statusOptions: ['published', 'draft', 'deleted'],
-        showReviewer: false,
-        temp: {
-          id: undefined,
-          importance: 1,
-          remark: '',
-          timestamp: new Date(),
-          title: '',
-          type: '',
-          status: 'published'
-        },
-        dialogFormVisible: false,
-        dialogadd:false,
-        dialogStatus: '',
-        textMap: {
-          update: 'Edit',
-          create: 'Create'
-        },
-        dialogPvVisible: false,
-        pvData: [],
-        rules: {
-          type: [{required: true, message: 'type is required', trigger: 'change'}],
-          timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
-          title: [{required: true, message: 'title is required', trigger: 'blur'}]
-        },
-        downloadLoading: false,
-        addDialog: true,
-        addContent:{
-          title:"新增用户信息",
-          width:'50%',
-          type:0,
-          content:[
-            {type:0,label:"姓名",placehold:'姓名'},
-            {type:0,label:"账号",placehold:'账号'},
-            {type:2,label:"角色",placehold:'请选择角色',select:'',options:['系统管理员','录入员','审核员','测试员','123']},
-            {type:0,label:"联系电话",placehold:'联系电话'},
-            {type:0,label:"邮箱",placehold:'邮箱'},
-            {type:1,label:"用户类型",placehold:'普通用户',select:'',options:['普通用户','商户用户']},
-            {type:2,label:"运营区",placehold:'请选择运营区',select:'',options:['厦门市','宁德区']},
-          ]
-        }
-      }
-    },
-    filters: {
-      statusFilter(status) {
-        const statusMap = {
-          published: 'success',
-          draft: 'info',
-          deleted: 'danger'
-        }
-        return statusMap[status]
+var datas = require("../../mock/falseData/1_systemAdmin/user")
+export default {
+  name: "complexTable",
+  directives: {
+    waves
+  },
+  data() {
+    return {
+      tableKey: 0,
+      list: datas.data,
+      total: 20,
+      listLoading: false,
+      listQuery: {
+        pageIndex: 3,
+        page: 1,
+        limit: 20,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: "+id"
       },
-      typeFilter(type) {
-        return calendarTypeKeyValue[type]
-      }
-    },
-    // created() {
-    //   this.getList()
-    // },
-    methods: {
-      add:function () {
-        this.dialogadd = true
-        this.$refs.addDialog.add()
+      importanceOptions: [1, 2, 3],
+      calendarTypeOptions,
+      sortOptions: [
+        { label: "ID Ascending", key: "+id" },
+        { label: "ID Descending", key: "-id" }
+      ],
+      statusOptions: ["published", "draft", "deleted"],
+      showReviewer: false,
+      temp: {
+        id: undefined,
+        importance: 1,
+        remark: "",
+        timestamp: new Date(),
+        title: "",
+        type: "",
+        status: "published"
       },
-      getback: function(val){
-        this.addDialog = val
+      dialogFormVisible: false,
+      dialogadd: false,
+      dialogStatus: "",
+      textMap: {
+        update: "Edit",
+        create: "Create"
       },
-      getList() {
-        this.listLoading = true
-        fetchList(this.listQuery).then(response => {
-          this.list = response.data.items
-          this.total = response.data.total
-          this.listLoading = false
-        })
-      },
-      handleFilter() {
-        this.listQuery.page = 1
-        this.getList()
-      },
-      handleSizeChange(val) {
-        this.listQuery.limit = val
-        this.getList()
-      },
-      handleCurrentChange(val) {
-        this.listQuery.page = val
-        this.getList()
-      },
-      handleModifyStatus(row, status) {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        })
-        row.status = status
-      },
-      resetTemp() {
-        this.temp = {
-          id: undefined,
-          importance: 1,
-          remark: '',
-          timestamp: new Date(),
-          title: '',
-          status: 'published',
-          type: ''
-        }
-      },
-      handleCreate() {
-        this.resetTemp()
-        this.dialogStatus = 'create'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      createData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-            this.temp.author = 'vue-element-admin'
-            createArticle(this.temp).then(() => {
-              this.list.unshift(this.temp)
-              this.dialogFormVisible = false
-              this.$notify({
-                title: '成功',
-                message: '创建成功',
-                type: 'success',
-                duration: 2000
-              })
-            })
+      dialogPvVisible: false,
+      pvData: [],
+      rules: {
+        type: [
+          { required: true, message: "type is required", trigger: "change" }
+        ],
+        timestamp: [
+          {
+            type: "date",
+            required: true,
+            message: "timestamp is required",
+            trigger: "change"
           }
-        })
+        ],
+        title: [
+          { required: true, message: "title is required", trigger: "blur" }
+        ]
       },
-      handleUpdate(row) {
-        this.temp = Object.assign({}, row) // copy obj
-        this.temp.timestamp = new Date(this.temp.timestamp)
-        this.dialogStatus = 'update'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      updateData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            const tempData = Object.assign({}, this.temp)
-            tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-            updateArticle(tempData).then(() => {
-              for (const v of this.list) {
-                if (v.id === this.temp.id) {
-                  const index = this.list.indexOf(v)
-                  this.list.splice(index, 1, this.temp)
-                  break
-                }
+      downloadLoading: false,
+      addDialog: true,
+      addContent: {
+        title: "新增用户信息",
+        width: "50%",
+        type: 0,
+        content: [
+          { type: 0, label: "姓名", placehold: "姓名" },
+          { type: 0, label: "账号", placehold: "账号" },
+          {
+            type: 2,
+            label: "角色",
+            placehold: "请选择角色",
+            select: "",
+            options: ["系统管理员", "录入员", "审核员", "测试员", "123"]
+          },
+          { type: 0, label: "联系电话", placehold: "联系电话" },
+          { type: 0, label: "邮箱", placehold: "邮箱" },
+          {
+            type: 1,
+            label: "用户类型",
+            placehold: "普通用户",
+            select: "",
+            options: ["普通用户", "商户用户"]
+          },
+          {
+            type: 2,
+            label: "运营区",
+            placehold: "请选择运营区",
+            select: "",
+            options: ["厦门市", "宁德区"]
+          }
+        ]
+      }
+    }
+  },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: "success",
+        draft: "info",
+        deleted: "danger"
+      }
+      return statusMap[status]
+    },
+    typeFilter(type) {
+      return calendarTypeKeyValue[type]
+    }
+  },
+  // created() {
+  //   this.getList()
+  // },
+  methods: {
+    add: function() {
+      this.dialogadd = true
+      this.$refs.addDialog.add()
+    },
+    getback: function(val) {
+      this.addDialog = val
+    },
+    getList() {
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.data
+        this.total = response.data.total
+        this.listLoading = false
+      })
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
+    handleSizeChange(val) {
+      this.listQuery.limit = val
+      this.getList()
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val
+      this.getList()
+    },
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: "操作成功",
+        type: "success"
+      })
+      row.status = status
+    },
+    resetTemp() {
+      this.temp = {
+        id: undefined,
+        importance: 1,
+        remark: "",
+        timestamp: new Date(),
+        title: "",
+        status: "published",
+        type: ""
+      }
+    },
+    handleCreate() {
+      this.resetTemp()
+      this.dialogStatus = "create"
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          this.temp.author = "vue-element-admin"
+          createArticle(this.temp).then(() => {
+            this.list.unshift(this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: "成功",
+              message: "创建成功",
+              type: "success",
+              duration: 2000
+            })
+          })
+        }
+      })
+    },
+    handleUpdate(row) {
+      this.temp = Object.assign({}, row) // copy obj
+      this.temp.timestamp = new Date(this.temp.timestamp)
+      this.dialogStatus = "update"
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate()
+      })
+    },
+    updateData() {
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          updateArticle(tempData).then(() => {
+            for (const v of this.list) {
+              if (v.id === this.temp.id) {
+                const index = this.list.indexOf(v)
+                this.list.splice(index, 1, this.temp)
+                break;
               }
-              this.dialogFormVisible = false
-              this.$notify({
-                title: '成功',
-                message: '更新成功',
-                type: 'success',
-                duration: 2000
-              })
+            }
+            this.dialogFormVisible = false
+            this.$notify({
+              title: "成功",
+              message: "更新成功",
+              type: "success",
+              duration: 2000
             })
-          }
-        })
-      },
-      handleDelete(row) {
-        this.$notify({
-          title: '成功',
-          message: '删除成功',
-          type: 'success',
-          duration: 2000
-        })
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
-      },
-      handleFetchPv(pv) {
-        fetchPv(pv).then(response => {
-          this.pvData = response.data.pvData
-          this.dialogPvVisible = true
-        })
-      },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-          const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-          const data = this.formatJson(filterVal, this.list)
-          excel.export_json_to_excel(tHeader, data, 'table-list')
-          this.downloadLoading = false
-        })
-      },
-      formatJson(filterVal, jsonData) {
-        return jsonData.map(v => filterVal.map(j => {
-          if (j === 'timestamp') {
+          })
+        }
+      })
+    },
+    handleDelete(row) {
+      this.$notify({
+        title: "成功",
+        message: "删除成功",
+        type: "success",
+        duration: 2000
+      })
+      const index = this.list.indexOf(row)
+      this.list.splice(index, 1)
+    },
+    handleFetchPv(pv) {
+      fetchPv(pv).then(response => {
+        this.pvData = response.data.pvData
+        this.dialogPvVisible = true
+      })
+    },
+    handleDownload() {
+      this.downloadLoading = true
+      import("@/vendor/Export2Excel").then(excel => {
+        const tHeader = ["timestamp", "title", "type", "importance", "status"]
+        const filterVal = [
+          "timestamp",
+          "title",
+          "type",
+          "importance",
+          "status"
+        ]
+        const data = this.formatJson(filterVal, this.list)
+        excel.export_json_to_excel(tHeader, data, "table-list")
+        this.downloadLoading = false
+      })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "timestamp") {
             return parseTime(v[j])
           } else {
             return v[j]
           }
-        }))
-      },
-      reload() {
-        this.addDialog = true
-      }
+        })
+      )
     },
-    components: {
-      'add-user': adduser,
-      addDialog
-    },
-    watch: {
-      '$route': 'reload'
+    reload() {
+      this.addDialog = true
     }
+  },
+  components: {
+    addDialog
+  },
+  watch: {
+    $route: "reload"
   }
+}
 </script>

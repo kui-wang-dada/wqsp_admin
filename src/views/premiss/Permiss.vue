@@ -82,6 +82,7 @@ export default {
       total: 10,
       listLoading: false,
       listQuery: {
+        pageIndex: 1,
         page: 1,
         limit: 10,
         importance: undefined,
@@ -90,6 +91,7 @@ export default {
         sort: "+id"
       },
       temp: {
+        pageIndex: 1,
         sort: 0,
         name: "",
         whitename: ""
