@@ -1,39 +1,39 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="一级分类" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="搜索板块" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="二级分类" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="搜索板块" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="品牌" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="搜索板块" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="商品名称" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="搜索板块" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="商品编号" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="搜索板块" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="WMS商品编码" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="搜索板块" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="商品类型" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="搜索板块" v-model="listQuery.title">
       </el-input>
-      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="编码" v-model="listQuery.title">
+      <el-input @keyup.enter.native="handleFilter" style="width: 130px;" class="filter-item" placeholder="搜索板块" v-model="listQuery.title">
       </el-input>
-      <el-select clearable style="width: 130px" class="filter-item" v-model="listQuery.importance" placeholder="运营区">
+      <el-select clearable style="width: 130px" class="filter-item" v-model="listQuery.importance" placeholder="搜索板块">
         <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item">
         </el-option>
       </el-select>
-      <el-select clearable class="filter-item" style="width: 150px" v-model="listQuery.type" placeholder="请输入货主名称">
+      <el-select clearable class="filter-item" style="width: 150px" v-model="listQuery.type" placeholder="搜索板块">
         <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
         </el-option>
       </el-select>
-      <el-select clearable class="filter-item" style="width: 150px" v-model="listQuery.type" placeholder="正常品上架状态">
+      <el-select clearable class="filter-item" style="width: 150px" v-model="listQuery.type" placeholder="搜索板块">
         <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
         </el-option>
       </el-select>
-      <el-select clearable class="filter-item" style="width: 150px" v-model="listQuery.type" placeholder="换盖品上架状态">
+      <el-select clearable class="filter-item" style="width: 150px" v-model="listQuery.type" placeholder="搜索板块">
         <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
         </el-option>
       </el-select>
-      <el-select clearable class="filter-item" style="width: 150px" v-model="listQuery.type" placeholder="积分品上架状态">
+      <el-select clearable class="filter-item" style="width: 150px" v-model="listQuery.type" placeholder="搜索板块">
         <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">
         </el-option>
       </el-select>
@@ -42,71 +42,69 @@
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="add">{{$t('premiss.filter.add')}}</el-button>
     </div>
 
-    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row
-              style="width: 100%">
-      <el-table-column prop="id" label="编码" min-width="120" align="center">
+    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row style="width: 100%">
+      <el-table-column prop="id" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="wmsGoodsNo" label="WMS商品编码" min-width="120" align="center">
+      <el-table-column prop="wmsGoodsNo" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="goodsId" label="商品编码" min-width="120" align="center">
+      <el-table-column prop="goodsId" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="goodsName" label="商品名称" min-width="120" align="center">
+      <el-table-column prop="goodsName" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="oaName" label="运营区" min-width="120" align="center">
+      <el-table-column prop="oaName" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="merchantName" label="商户" min-width="120" align="center">
+      <el-table-column prop="merchantName" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="serviceProvider" label="服务商" min-width="120" align="center">
+      <el-table-column prop="serviceProvider" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="typeName" label="商品类型" min-width="120" align="center">
+      <el-table-column prop="typeName" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="oneClassify" label="一级分类" min-width="120" align="center">
+      <el-table-column prop="oneClassify" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="twoClassify" label="二级分类" min-width="120" align="center">
+      <el-table-column prop="twoClassify" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="brankName" label="品牌" min-width="120" align="center">
+      <el-table-column prop="brankName" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="goodsUnit" label="基本单位" min-width="120" align="center">
+      <el-table-column prop="goodsUnit" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="stock" label="库存" min-width="120" align="center">
+      <el-table-column prop="stock" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="price" label="售价" min-width="120" align="center">
+      <el-table-column prop="price" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="sales" label="总销量" min-width="120" align="center">
+      <el-table-column prop="sales" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="conversionCoefficient" label="转换基数" min-width="120" align="center">
+      <el-table-column prop="conversionCoefficient" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="issyn" label="是否自动同步" min-width="120" align="center">
+      <el-table-column prop="issyn" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="normalShelves" label="正常品上架状态" min-width="120" align="center">
+      <el-table-column prop="normalShelves" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="swapCapShelves" label="换盖品上架状态" min-width="120" align="center">
+      <el-table-column prop="swapCapShelves" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="integralShelves" label="积分品上架状态" min-width="120" align="center">
+      <el-table-column prop="integralShelves" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="normalUptime" label="正常品上架时间" min-width="120" align="center">
+      <el-table-column prop="normalUptime" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="normalDowntime" label="正常品下架时间" min-width="120" align="center">
+      <el-table-column prop="normalDowntime" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="swapUptime" label="换盖品上架时间" min-width="120" align="center">
+      <el-table-column prop="swapUptime" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="swapDowntime" label="换盖品下架时间" min-width="120" align="center">
+      <el-table-column prop="swapDowntime" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="integralUptime" label="积分品上架时间" min-width="120" align="center">
+      <el-table-column prop="integralUptime" label="标题区" min-width="120" align="center">
       </el-table-column>
-      <el-table-column prop="intergralDowntime" label="积分品下架时间" min-width="120" align="center">
+      <el-table-column prop="intergralDowntime" label="标题区" min-width="120" align="center">
       </el-table-column>
       <el-table-column align="center" :label="$t('supplier.table.actions')" fixed="right" min-width="180" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{$t('supplier.table.edit')}}</el-button>
-          <el-button  size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('supplier.table.delete')}}</el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">{{$t('supplier.table.delete')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
-                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
 
@@ -160,223 +158,249 @@
 </template>
 
 <script>
-  import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
-  import waves from '@/directive/waves' // 水波纹指令
-  import { parseTime } from '@/utils'
+import {
+  fetchList,
+  fetchPv,
+  createArticle,
+  updateArticle
+} from "@/api/article"
+import waves from "@/directive/waves" // 水波纹指令
+import { parseTime } from "@/utils"
 
-  const calendarTypeOptions = [
-    { key: '2', display_name: '审核通过' },
-    { key: '1', display_name: '待审核' },
-    { key: '0', display_name: '退回' },
+const calendarTypeOptions = [
+  { key: "2", display_name: "审核通过" },
+  { key: "1", display_name: "待审核" },
+  { key: "0", display_name: "退回" }
+]
 
-  ]
+// arr to obj ,such as { CN : "China", US : "USA" }
+const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.display_name
+  return acc
+}, {})
 
-  // arr to obj ,such as { CN : "China", US : "USA" }
-  const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-    acc[cur.key] = cur.display_name
-    return acc
-  }, {})
+var datas = require("../../mock/falseData/6_operate/4_salesArea")
 
-  var datas=require("../../mock/falseData/6_operate/4_salesArea")
-
-  export default {
-    name: 'complexTable',
-    directives: {
-      waves
-    },
-    data() {
-      return {
-        tableKey: 0,
-        list: datas.data,
-        total: 20,
-        listLoading: false,
-        listQuery: {
-          page: 1,
-          limit: 10,
-          importance: undefined,
-          title: undefined,
-          type: undefined,
-          sort: '+id'
-        },
-        importanceOptions: [1, 2, 3],
-        calendarTypeOptions,
-        sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-        statusOptions: ['published', 'draft', 'deleted'],
-        showReviewer: false,
-        temp: {
-          id: undefined,
-          importance: 1,
-          remark: '',
-          timestamp: new Date(),
-          title: '',
-          type: '',
-          status: 'published'
-        },
-        dialogFormVisible: false,
-        dialogStatus: '',
-        textMap: {
-          update: 'Edit',
-          create: 'Create'
-        },
-        dialogPvVisible: false,
-        pvData: [],
-        rules: {
-          type: [{ required: true, message: 'type is required', trigger: 'change' }],
-          timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-          title: [{ required: true, message: 'title is required', trigger: 'blur' }]
-        },
-        downloadLoading: false
-      }
-    },
-    filters: {
-      statusFilter(status) {
-        const statusMap = {
-          published: 'success',
-          draft: 'info',
-          deleted: 'danger'
-        }
-        return statusMap[status]
+export default {
+  name: "complexTable",
+  directives: {
+    waves
+  },
+  data() {
+    return {
+      tableKey: 0,
+      list: datas.data,
+      total: 20,
+      listLoading: false,
+      listQuery: {
+        page: 1,
+        limit: 10,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: "+id"
       },
-      typeFilter(type) {
-        return calendarTypeKeyValue[type]
-      }
-    },
-    // created() {
-    //   this.getList()
-    // },
-    methods: {
-      getList() {
-        this.listLoading = true
-        fetchList(this.listQuery).then(response => {
-          this.list = response.data.items
-          this.total = response.data.total
-          this.listLoading = false
-        })
+      importanceOptions: [1, 2, 3],
+      calendarTypeOptions,
+      sortOptions: [
+        { label: "ID Ascending", key: "+id" },
+        { label: "ID Descending", key: "-id" }
+      ],
+      statusOptions: ["published", "draft", "deleted"],
+      showReviewer: false,
+      temp: {
+        id: undefined,
+        importance: 1,
+        remark: "",
+        timestamp: new Date(),
+        title: "",
+        type: "",
+        status: "published"
       },
-      handleFilter() {
-        this.listQuery.page = 1
-        this.getList()
+      dialogFormVisible: false,
+      dialogStatus: "",
+      textMap: {
+        update: "Edit",
+        create: "Create"
       },
-      handleSizeChange(val) {
-        this.listQuery.limit = val
-        this.getList()
-      },
-      handleCurrentChange(val) {
-        this.listQuery.page = val
-        this.getList()
-      },
-      handleModifyStatus(row, status) {
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        })
-        row.status = status
-      },
-      resetTemp() {
-        this.temp = {
-          id: undefined,
-          importance: 1,
-          remark: '',
-          timestamp: new Date(),
-          title: '',
-          status: 'published',
-          type: ''
-        }
-      },
-      handleCreate() {
-        this.resetTemp()
-        this.dialogStatus = 'create'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      createData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-            this.temp.author = 'vue-element-admin'
-            createArticle(this.temp).then(() => {
-              this.list.unshift(this.temp)
-              this.dialogFormVisible = false
-              this.$notify({
-                title: '成功',
-                message: '创建成功',
-                type: 'success',
-                duration: 2000
-              })
-            })
+      dialogPvVisible: false,
+      pvData: [],
+      rules: {
+        type: [
+          { required: true, message: "type is required", trigger: "change" }
+        ],
+        timestamp: [
+          {
+            type: "date",
+            required: true,
+            message: "timestamp is required",
+            trigger: "change"
           }
-        })
+        ],
+        title: [
+          { required: true, message: "title is required", trigger: "blur" }
+        ]
       },
-      handleUpdate(row) {
-        this.temp = Object.assign({}, row) // copy obj
-        this.temp.timestamp = new Date(this.temp.timestamp)
-        this.dialogStatus = 'update'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      updateData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            const tempData = Object.assign({}, this.temp)
-            tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-            updateArticle(tempData).then(() => {
-              for (const v of this.list) {
-                if (v.id === this.temp.id) {
-                  const index = this.list.indexOf(v)
-                  this.list.splice(index, 1, this.temp)
-                  break
-                }
+      downloadLoading: false
+    }
+  },
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: "success",
+        draft: "info",
+        deleted: "danger"
+      }
+      return statusMap[status]
+    },
+    typeFilter(type) {
+      return calendarTypeKeyValue[type]
+    }
+  },
+  // created() {
+  //   this.getList()
+  // },
+  methods: {
+    getList() {
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data.total
+        this.listLoading = false
+      })
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
+    handleSizeChange(val) {
+      this.listQuery.limit = val
+      this.getList()
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val
+      this.getList()
+    },
+    handleModifyStatus(row, status) {
+      this.$message({
+        message: "操作成功",
+        type: "success"
+      })
+      row.status = status
+    },
+    resetTemp() {
+      this.temp = {
+        id: undefined,
+        importance: 1,
+        remark: "",
+        timestamp: new Date(),
+        title: "",
+        status: "published",
+        type: ""
+      }
+    },
+    handleCreate() {
+      this.resetTemp()
+      this.dialogStatus = "create"
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate()
+      })
+    },
+    createData() {
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          this.temp.author = "vue-element-admin"
+          createArticle(this.temp).then(() => {
+            this.list.unshift(this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: "成功",
+              message: "创建成功",
+              type: "success",
+              duration: 2000
+            })
+          })
+        }
+      })
+    },
+    handleUpdate(row) {
+      this.temp = Object.assign({}, row) // copy obj
+      this.temp.timestamp = new Date(this.temp.timestamp)
+      this.dialogStatus = "update"
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate()
+      })
+    },
+    updateData() {
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          updateArticle(tempData).then(() => {
+            for (const v of this.list) {
+              if (v.id === this.temp.id) {
+                const index = this.list.indexOf(v)
+                this.list.splice(index, 1, this.temp)
+                break;
               }
-              this.dialogFormVisible = false
-              this.$notify({
-                title: '成功',
-                message: '更新成功',
-                type: 'success',
-                duration: 2000
-              })
+            }
+            this.dialogFormVisible = false
+            this.$notify({
+              title: "成功",
+              message: "更新成功",
+              type: "success",
+              duration: 2000
             })
-          }
-        })
-      },
-      handleDelete(row) {
-        this.$notify({
-          title: '成功',
-          message: '删除成功',
-          type: 'success',
-          duration: 2000
-        })
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
-      },
-      handleFetchPv(pv) {
-        fetchPv(pv).then(response => {
-          this.pvData = response.data.pvData
-          this.dialogPvVisible = true
-        })
-      },
-      handleDownload() {
-        this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-          const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-          const data = this.formatJson(filterVal, this.list)
-          excel.export_json_to_excel(tHeader, data, 'table-list')
-          this.downloadLoading = false
-        })
-      },
-      formatJson(filterVal, jsonData) {
-        return jsonData.map(v => filterVal.map(j => {
-          if (j === 'timestamp') {
+          })
+        }
+      })
+    },
+    handleDelete(row) {
+      this.$notify({
+        title: "成功",
+        message: "删除成功",
+        type: "success",
+        duration: 2000
+      })
+      const index = this.list.indexOf(row)
+      this.list.splice(index, 1)
+    },
+    handleFetchPv(pv) {
+      fetchPv(pv).then(response => {
+        this.pvData = response.data.pvData
+        this.dialogPvVisible = true
+      })
+    },
+    handleDownload() {
+      this.downloadLoading = true
+      import("@/vendor/Export2Excel").then(excel => {
+        const tHeader = ["timestamp", "title", "type", "importance", "status"]
+        const filterVal = [
+          "timestamp",
+          "title",
+          "type",
+          "importance",
+          "status"
+        ]
+        const data = this.formatJson(filterVal, this.list)
+        excel.export_json_to_excel(tHeader, data, "table-list")
+        this.downloadLoading = false
+      })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "timestamp") {
             return parseTime(v[j])
           } else {
             return v[j]
           }
-        }))
-      }
+        })
+      )
     }
   }
+}
 </script>

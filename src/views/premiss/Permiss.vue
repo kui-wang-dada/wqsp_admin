@@ -7,6 +7,9 @@
         <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">
           {{$t('premiss.filter.search')}}
         </el-button>
+        <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="add">
+          {{$t('premiss.filter.add')}}
+        </el-button>
       </div>
 
       <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border stripe fit highlight-current-row style="width: 100%">
@@ -44,16 +47,16 @@
       <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
         <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="110px" style='width: 400px; margin-left:50px;'>
           <el-form-item label="名称" prop="title">
-            <el-input v-model="temp.name" placeholder="权限管理"></el-input>
+            <el-input v-model="temp.name" placeholder="搜索板块"></el-input>
           </el-form-item>
           <el-form-item label="上级目录" prop="title">
-            <el-input placeholder="系统管理" disabled></el-input>
+            <el-input placeholder="搜索板块" disabled></el-input>
           </el-form-item>
           <el-form-item label="排序" prop="title">
-            <el-input v-model="temp.sort" placeholder="数字越小排序越靠前"></el-input>
+            <el-input v-model="temp.sort" placeholder="搜索板块"></el-input>
           </el-form-item>
           <el-form-item label="访问白名单" prop="title">
-            <el-input v-model="temp.whitename" placeholder="多个用；隔开"></el-input>
+            <el-input v-model="temp.whitename" placeholder="搜索板块"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -66,7 +69,7 @@
 </template>
 
 <script>
-import { fetchList, updateArticle } from "@/api/article"
+import { fetchList, updateArticle, deleteArticle } from "@/api/article"
 import waves from "@/directive/waves" // 水波纹指令
 
 // var datas = require("../../mock/falseData/1_systemAdmin/permiss")
@@ -92,6 +95,7 @@ export default {
       },
       temp: {
         pageIndex: 1,
+        type: "create",
         sort: 0,
         name: "",
         whitename: ""
@@ -119,7 +123,9 @@ export default {
     }
   },
   created() {
-    this.getList()
+    this.$nextTick(function() {
+      this.getList()
+    })
   },
   methods: {
     getList() {
@@ -148,9 +154,20 @@ export default {
       this.listQuery.page = val
       this.getList()
     },
+    add() {
+      this.temp = {
+        pageIndex: 1,
+        type: "create",
+        sort: 0,
+        name: "",
+        whitename: ""
+      }
+      this.dialogStatus = "create"
+      this.dialogFormVisible = true
+    },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
+      this.temp = Object.assign({}, this.temp, row) // copy obj
+      this.temp.type = "update"
       this.dialogStatus = "update"
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -179,6 +196,26 @@ export default {
           })
         }
       })
+    },
+    handleDelete(row) {
+      const tempData = Object.assign({}, this.temp, row)
+      deleteArticle(tempData).then(() => {
+        for (const v of this.list) {
+          if (v.id === row.id) {
+            const index = this.list.indexOf(v)
+            this.list.splice(index, 1)
+            break;
+          }
+        }
+      })
+      this.$notify({
+        title: "成功",
+        message: "删除成功",
+        type: "success",
+        duration: 2000
+      })
+      const index = this.list.indexOf(row)
+      this.list.splice(index, 1)
     }
   }
 }

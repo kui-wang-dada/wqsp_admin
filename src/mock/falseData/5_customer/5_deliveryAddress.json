@@ -2,8 +2,7 @@
   "draw": 1,
   "recordsTotal": 19149,
   "recordsFiltered": 19149,
-  "data": [
-    {
+  "data": [{
       "areaId": null,
       "createUser": null,
       "updateId": null,
@@ -93,7 +92,7 @@
       "cityId": null,
       "contactNum": "18650328280",
       "updateDate": null,
-      "linkMan": "测试222",
+      "linkMan": "可以增删改查",
       "createDate": null,
       "provinceName": null,
       "cityName": null,
@@ -119,7 +118,7 @@
       "cityId": null,
       "contactNum": "13358282073",
       "updateDate": null,
-      "linkMan": "老板娘",
+      "linkMan": "可以增删改查",
       "createDate": null,
       "provinceName": null,
       "cityName": null,
@@ -127,10 +126,10 @@
       "longitude": null,
       "latitude": null,
       "isDefault": 1,
-      "customerName": "A闽清县大路林华批发",
+      "customerName": "可以增删改查",
       "models": null,
       "tag": null,
-      "address": "闽清县大路",
+      "address": "可以增删改查",
       "id": 32852
     },
     {
@@ -145,7 +144,7 @@
       "cityId": null,
       "contactNum": "13405910305",
       "updateDate": null,
-      "linkMan": "郑炜",
+      "linkMan": "可以增删改查",
       "createDate": null,
       "provinceName": null,
       "cityName": null,
@@ -153,10 +152,10 @@
       "longitude": null,
       "latitude": null,
       "isDefault": 1,
-      "customerName": "恒基伟业",
+      "customerName": "可以增删改查",
       "models": null,
       "tag": null,
-      "address": "宝龙万象东泰禾，万达苏宁五四北123456",
+      "address": "可以增删改查",
       "id": 32851
     },
     {
@@ -171,7 +170,7 @@
       "cityId": null,
       "contactNum": "13405910305",
       "updateDate": null,
-      "linkMan": "郑炜",
+      "linkMan": "可以增删改查",
       "createDate": null,
       "provinceName": null,
       "cityName": null,
@@ -179,10 +178,10 @@
       "longitude": null,
       "latitude": null,
       "isDefault": 1,
-      "customerName": "店铺1-自建",
+      "customerName": "可以增删改查",
       "models": null,
       "tag": null,
-      "address": "宝龙万象东泰禾，万达苏宁五四北22222222",
+      "address": "可以增删改查",
       "id": 32850
     },
     {
@@ -197,7 +196,7 @@
       "cityId": null,
       "contactNum": "13405910305",
       "updateDate": null,
-      "linkMan": "郑炜",
+      "linkMan": "可以增删改查",
       "createDate": null,
       "provinceName": null,
       "cityName": null,
@@ -205,10 +204,10 @@
       "longitude": null,
       "latitude": null,
       "isDefault": 0,
-      "customerName": "店铺1-自建",
+      "customerName": "可以增删改查",
       "models": null,
       "tag": null,
-      "address": "宝龙万象东泰禾，万达苏宁五四北99999",
+      "address": "可以增删改查",
       "id": 32849
     },
     {
@@ -223,7 +222,7 @@
       "cityId": null,
       "contactNum": "13405910305",
       "updateDate": null,
-      "linkMan": "郑炜",
+      "linkMan": "可以增删改查",
       "createDate": null,
       "provinceName": null,
       "cityName": null,
@@ -231,10 +230,10 @@
       "longitude": null,
       "latitude": null,
       "isDefault": 0,
-      "customerName": "店铺1-自建",
+      "customerName": "可以增删改查",
       "models": null,
       "tag": null,
-      "address": "宝龙万象东泰禾，万达苏宁五四北44444",
+      "address": "可以增删改查",
       "id": 32848
     },
     {
@@ -249,7 +248,7 @@
       "cityId": null,
       "contactNum": "111111111",
       "updateDate": null,
-      "linkMan": "肖1",
+      "linkMan": "可以增删改查",
       "createDate": null,
       "provinceName": null,
       "cityName": null,
@@ -257,10 +256,10 @@
       "longitude": null,
       "latitude": null,
       "isDefault": 0,
-      "customerName": "店铺1-自建",
+      "customerName": "可以增删改查",
       "models": null,
       "tag": null,
-      "address": "仓库1",
+      "address": "可以增删改查",
       "id": 32847
     }
   ]

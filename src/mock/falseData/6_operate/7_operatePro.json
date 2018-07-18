@@ -2,92 +2,91 @@
   "draw": 1,
   "recordsTotal": 124,
   "recordsFiltered": 124,
-  "data": [
-    {
+  "data": [{
       "promotion_type": 1,
       "id": 558,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 1,
       "bar_code": "6901584001299",
       "goods_no": 29790,
-      "goods_name": "张裕三星白兰地700ml*6瓶/件"
+      "goods_name": "可以增删改查*6瓶/件"
     },
     {
       "promotion_type": 1,
       "id": 559,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 1,
       "bar_code": "6911988018519",
       "goods_no": 27512,
-      "goods_name": "乐虎 250ml*24/件"
+      "goods_name": "可以增删改查 250ml*24/件"
     },
     {
       "promotion_type": 1,
       "id": 560,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 1,
       "bar_code": "6921294358681",
       "goods_no": 27509,
-      "goods_name": "康师傅经典奶茶香浓味 500ml*15/件"
+      "goods_name": "可以增删改查 500ml*15/件"
     },
     {
       "promotion_type": 1,
       "id": 561,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 1,
       "bar_code": "6920397000459",
       "goods_no": 29789,
-      "goods_name": "芯玉鸡蛋面1KG"
+      "goods_name": "可以增删改查"
     },
     {
       "promotion_type": 1,
       "id": 562,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 1,
       "bar_code": "6909931010116",
       "goods_no": 29793,
-      "goods_name": "多力五珍宝油5L/瓶"
+      "goods_name": "可以增删改查/瓶"
     },
     {
       "promotion_type": 1,
       "id": 563,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 1,
       "bar_code": "6911988011985",
       "goods_no": 29792,
-      "goods_name": "达利园桂圆莲子八宝粥360g*12/件"
+      "goods_name": "可以增删改查*12/件"
     },
     {
       "promotion_type": 1,
       "id": 564,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 1,
       "bar_code": "6944910318760",
       "goods_no": 29788,
-      "goods_name": "福临门油粘米5kg"
+      "goods_name": "可以增删改查"
     },
     {
       "promotion_type": 1,
       "id": 565,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 1,
       "bar_code": "6911988014276",
       "goods_no": 29791,
-      "goods_name": "和其正凉茶600ml*15/件"
+      "goods_name": "可以增删改查*15/件"
     },
     {
       "promotion_type": 1,
       "id": 483,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 100,
       "bar_code": "6901424334174",
       "goods_no": 28309,
-      "goods_name": "王老吉润喉糖(纸盒)28g*8/组"
+      "goods_name": "可以增删改查(纸盒)28g*8/组"
     },
     {
       "promotion_type": 1,
       "id": 619,
-      "oa_name": "厦门市",
+      "oa_name": "可以增删改查",
       "sort": 100,
       "bar_code": "1231",
       "goods_no": 32831,

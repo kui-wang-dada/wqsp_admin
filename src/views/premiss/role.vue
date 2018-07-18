@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="app-container calendar-list-container" v-show="addDialog">
+    <div class="app-container calendar-list-container">
       <div class="filter-container">
         <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" :placeholder="$t('premiss.filter.title_2')" v-model="listQuery.title">
         </el-input>
@@ -27,10 +27,10 @@
         </el-table-column>
         <el-table-column align="center" :label="$t('premiss.table.actions')" min-width="230" class-name="small-padding fixed-width">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="add">
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">
               {{$t('premiss.table.edit')}}
             </el-button>
-            <el-button size="mini" type="danger" @click="handleModifyStatus(scope.row,'deleted')">
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row)">
               {{$t('premiss.table.delete')}}
             </el-button>
           </template>
@@ -41,11 +41,28 @@
         <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
-
+      <el-dialog :title="删除" :visible.sync="deleteDialogVisible">
+        <div>确定删除该项？</div>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="deleteDialogVisible = false">{{$t('table.cancel')}}</el-button>
+          <el-button type="primary" @click="deleteData">确定</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+        <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="110px" style='width: 400px; margin-left:50px;'>
+          <el-form-item label="名称" prop="name">
+            <el-input v-model="temp.name" placeholder="名称"></el-input>
+          </el-form-item>
+          <el-form-item label="上级目录" prop="descript">
+            <el-input v-model="temp.descript" placeholder="说明"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">{{$t('table.cancel')}}</el-button>
+          <el-button type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
+        </div>
+      </el-dialog>
     </div>
-
-    <add-dialog :addContent="addContent" ref="addDialog"></add-dialog>
-
   </div>
 </template>
 
@@ -54,7 +71,7 @@
 import {
   fetchList,
   fetchPv,
-  createArticle,
+  deleteArticle,
   updateArticle
 } from "@/api/article";
 import waves from "@/directive/waves"; // 水波纹指令
@@ -74,7 +91,6 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
   return acc;
 }, {});
 
-var datas = require("../../mock/falseData/1_systemAdmin/role");
 export default {
   name: "complexTable",
   directives: {
@@ -83,7 +99,7 @@ export default {
   data() {
     return {
       tableKey: 0,
-      list: datas.data,
+      list: [],
       total: null,
       listLoading: false,
       listQuery: {
@@ -95,59 +111,43 @@ export default {
         type: undefined,
         sort: "+id"
       },
-      addDialog: true,
-      addContent: {
-        title: "新增用户信息",
-        width: "50%",
-        type: 0,
-        content: [
-          { type: 0, label: "姓名", placehold: "姓名" },
-          { type: 0, label: "账号", placehold: "账号" },
-          {
-            type: 2,
-            label: "角色",
-            placehold: "请选择角色",
-            select: "",
-            options: ["系统管理员", "录入员", "审核员", "测试员", "123"]
-          },
-          { type: 0, label: "联系电话", placehold: "联系电话" },
-          { type: 0, label: "邮箱", placehold: "邮箱" },
-          {
-            type: 1,
-            label: "用户类型",
-            placehold: "普通用户",
-            select: "",
-            options: ["普通用户", "商户用户"]
-          },
-          {
-            type: 2,
-            label: "运营区",
-            placehold: "请选择运营区",
-            select: "",
-            options: ["厦门市", "宁德区"]
-          }
-        ]
+      temp: {
+        pageIndex: 2,
+        type: "create",
+        name: "",
+        descript: ""
+      },
+      dialogFormVisible: false,
+      deleteDialogVisible: false,
+      dialogStatus: "",
+      textMap: {
+        update: "编辑权限管理",
+        create: "新增"
+      },
+      rules: {
+        name: [{ required: true, message: "这是必填项", trigger: "blur" }]
       }
     };
   },
-  // created() {
-  //   this.getList()
-  // },
+  created() {
+    this.getList();
+  },
   methods: {
-    add: function() {
-      this.dialogadd = true;
-      this.$refs.addDialog.add();
-    },
     getback: function(val) {
       this.addDialog = val;
     },
     getList() {
       this.listLoading = true;
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.data;
-        this.total = response.data.total;
-        this.listLoading = false;
-      });
+      fetchList(this.listQuery)
+        .then(response => {
+          this.list = response.data.data;
+          this.total = response.data.total;
+          this.listLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+          console.log(432);
+        });
     },
     handleFilter() {
       this.listQuery.page = 1;
@@ -161,15 +161,70 @@ export default {
       this.listQuery.page = val;
       this.getList();
     },
-    handleModifyStatus(row, status) {
-      this.$message({
-        message: "操作成功",
-        type: "success"
-      });
-      row.status = status;
+    add() {
+      this.temp = { pageIndex: 2, type: "create", name: "", descript: "" };
+      this.dialogStatus = "create";
+      this.dialogFormVisible = true;
     },
-    reload() {
-      this.addDialog = true;
+    handleUpdate(row) {
+      this.temp = Object.assign({}, this.temp, row); // copy obj
+      this.temp.type = "update";
+      this.dialogStatus = "update";
+      this.dialogFormVisible = true;
+    },
+    updateData() {
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          if (this.dialogStatus == "update") {
+            let tempData = Object.assign({}, this.temp);
+            updateArticle(tempData).then(() => {
+              for (const v of this.list) {
+                if (v.id === this.temp.id) {
+                  const index = this.list.indexOf(v);
+                  this.list.splice(index, 1, this.temp);
+                  break;
+                }
+              }
+            });
+          } else if (this.dialogStatus == "create") {
+            let tempData = Object.assign({}, this.list[0], this.temp);
+            updateArticle(tempData).then(() => {
+              this.list.push(tempData);
+            });
+          }
+          this.dialogFormVisible = false;
+          this.$notify({
+            title: "成功",
+            message: "更新成功",
+            type: "success",
+            duration: 2000
+          });
+        }
+      });
+    },
+
+    handleDelete(row) {
+      this.temp = Object.assign({}, this.temp, row); // copy obj
+      this.deleteDialogVisible = true;
+    },
+    deleteData() {
+      const tempData = Object.assign({}, this.temp);
+      deleteArticle(tempData).then(() => {
+        for (const v of this.list) {
+          if (v.id === tempData.id) {
+            const index = this.list.indexOf(v);
+            this.list.splice(index, 1);
+            break;
+          }
+        }
+      });
+      this.deleteDialogVisible = false;
+      this.$notify({
+        title: "成功",
+        message: "删除成功",
+        type: "success",
+        duration: 2000
+      });
     }
   },
   components: {

@@ -2,38 +2,37 @@
   "draw": 1,
   "recordsTotal": 4,
   "recordsFiltered": 4,
-  "data": [
-    {
+  "data": [{
       "goodClassIds": null,
       "goodClassifyId": null,
       "operateAreaId": 4,
-      "oaName": "福州市",
+      "oaName": "可以增删改查",
       "id": 25,
-      "className": "食品类-酒-国产啤酒-进口听/桶装啤酒"
+      "className": "可以增删改查/桶装啤酒"
     },
     {
       "goodClassIds": null,
       "goodClassifyId": null,
       "operateAreaId": 2,
-      "oaName": "厦门市",
+      "oaName": "可以增删改查",
       "id": 23,
-      "className": "食品类-特殊食品-精致商品-其他进口食品"
+      "className": "可以增删改查"
     },
     {
       "goodClassIds": null,
       "goodClassifyId": null,
       "operateAreaId": 4,
-      "oaName": "福州市",
+      "oaName": "可以增删改查",
       "id": 22,
-      "className": "用品类-美容护理品类-彩装品类-进口化妆品类"
+      "className": "可以增删改查"
     },
     {
       "goodClassIds": null,
       "goodClassifyId": null,
       "operateAreaId": 4,
-      "oaName": "福州市",
+      "oaName": "可以增删改查",
       "id": 21,
-      "className": "食品类-特殊食品-精致商品-其他进口食品"
+      "className": "可以增删改查"
     }
   ]
 }

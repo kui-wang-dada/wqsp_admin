@@ -2,8 +2,7 @@
   "draw": 1,
   "recordsTotal": 5793,
   "recordsFiltered": 5793,
-  "data": [
-    {
+  "data": [{
       "details": null,
       "squarePic": "1",
       "detailsPic": "1",
@@ -23,8 +22,8 @@
       "voucherPrice": null,
       "productTotalPrice": null,
       "sumPrice": null,
-      "createName": "admin",
-      "updateName": "admin",
+      "createName": "可以增删改查",
+      "updateName": "可以增删改查",
       "originalPrice": null,
       "goodsName": "1",
       "appOrderId": null,

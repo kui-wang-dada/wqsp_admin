@@ -2,8 +2,7 @@
   "draw": 1,
   "recordsTotal": 20,
   "recordsFiltered": 20,
-  "data": [
-    {
+  "data": [{
       "updateId": 1,
       "delFlag": "1",
       "createId": 1,
@@ -80,7 +79,7 @@
       "createName": "admin",
       "updateName": "admin",
       "merNum": 1,
-      "reason": "价格不对",
+      "reason": "可以增删改查",
       "id": 33
     },
     {

@@ -2,77 +2,76 @@
   "draw": 1,
   "recordsTotal": 5753,
   "recordsFiltered": 5753,
-  "data": [
-    {
+  "data": [{
       "id": 10324,
       "sort": -1,
       "bar_code": "6944649700058",
-      "goods_name": "景田纯净水 360ml*24/件",
-      "classify_name": "饼干/威化"
+      "goods_name": "可以增删改查 360ml*24/件",
+      "classify_name": "可以增删改查"
     },
     {
       "id": 10321,
       "sort": 0,
       "bar_code": "1231",
-      "goods_name": "1234",
-      "classify_name": "饮用水"
+      "goods_name": "可以增删改查",
+      "classify_name": "可以增删改查"
     },
     {
       "id": 10333,
       "sort": 0,
       "bar_code": "6918423050035",
-      "goods_name": "美年达橙味600ml*15/件",
-      "classify_name": "饮料牛奶"
+      "goods_name": "可以增删改查*15/件",
+      "classify_name": "可以增删改查"
     },
     {
       "id": 70,
       "sort": 1,
       "bar_code": "6922255451427",
       "goods_no": "AP0028",
-      "goods_name": "景田百岁山570ml",
+      "goods_name": "可以增删改查",
       "classify_name": "11111"
     },
     {
       "id": 72,
       "sort": 1,
       "bar_code": "4003363",
-      "goods_name": "三元 极致 脱脂巴氏杀菌鲜牛乳 鲜牛奶950ml/盒",
-      "classify_name": "蒙牛"
+      "goods_name": "可以增删改查",
+      "classify_name": "可以增删改查"
     },
     {
       "id": 2126,
       "sort": 1,
       "bar_code": "6941499101219",
-      "goods_name": "福临门压榨一级葵花籽油1.8L*6/箱",
-      "classify_name": "葵花油"
+      "goods_name": "可以增删改查.8L*6/箱",
+      "classify_name": "可以增删改查"
     },
     {
       "id": 2127,
       "sort": 1,
       "bar_code": "6902402186808",
-      "goods_name": "雅士利正味营养麦片 600g/包",
-      "classify_name": "冲调粥糊类"
+      "goods_name": "可以增删改查 600g/包",
+      "classify_name": "可以增删改查"
     },
     {
       "id": 2128,
       "sort": 1,
       "bar_code": "6902402500277",
-      "goods_name": "雅士利红枣枸杞燕麦片 600g/包",
-      "classify_name": "冲调粥糊类"
+      "goods_name": "可以增删改查 600g/包",
+      "classify_name": "可以增删改查"
     },
     {
       "id": 2129,
       "sort": 1,
       "bar_code": "6902402500284",
-      "goods_name": "雅士利真果仁燕麦片 600g/包",
-      "classify_name": "冲调粥糊类"
+      "goods_name": "可以增删改查 600g/包",
+      "classify_name": "可以增删改查"
     },
     {
       "id": 2130,
       "sort": 1,
       "bar_code": "6902402032105",
-      "goods_name": "雅士利核桃高钙燕麦片 600g/包",
-      "classify_name": "冲调粥糊类"
+      "goods_name": "可以增删改查 600g/包",
+      "classify_name": "可以增删改查"
     }
   ]
 }

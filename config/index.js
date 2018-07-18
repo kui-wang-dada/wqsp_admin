@@ -3,11 +3,11 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-      
+
 module.exports = {
   dev: {
 
-    // Paths      
+    // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},
@@ -54,10 +54,10 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: 'vueElement',
 
     // you can set by youself according to actual condition
-    assetsPublicPath: './',
+    assetsPublicPath: '/',
 
     /**
      * Source Maps

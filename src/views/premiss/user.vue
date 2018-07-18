@@ -39,10 +39,10 @@
         </el-table-column>
         <el-table-column align="center" :label="$t('premiss.table.actions')" min-width="230" class-name="small-padding fixed-width">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="add">
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleUpdate(scope.row)">
               {{$t('premiss.table.edit')}}
             </el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete" @click="handleModifyStatus(scope.row,'deleted')">
+            <el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.row)">
               {{$t('premiss.table.delete')}}
             </el-button>
           </template>
@@ -53,8 +53,34 @@
         <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
         </el-pagination>
       </div>
+      <el-dialog :title="删除" :visible.sync="deleteDialogVisible">
+        <div>确定删除该项？</div>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="deleteDialogVisible = false">{{$t('table.cancel')}}</el-button>
+          <el-button type="primary" @click="deleteData">确定</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+        <el-form :rules="rules" ref="dataForm" :model="temp" label-position="left" label-width="110px" style='width: 400px; margin-left:50px;'>
+          <el-form-item label="用户名" prop="name">
+            <el-input v-model="temp.name" placeholder="用户名"></el-input>
+          </el-form-item>
+          <el-form-item label="账号" prop="username">
+            <el-input v-model="temp.username" placeholder="账号"></el-input>
+          </el-form-item>
+          <el-form-item label="联系电话" prop="phone">
+            <el-input v-model="temp.phone" placeholder="联系电话"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="temp.email" placeholder="邮箱"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">{{$t('table.cancel')}}</el-button>
+          <el-button type="primary" @click="updateData">{{$t('table.confirm')}}</el-button>
+        </div>
+      </el-dialog>
     </div>
-    <add-dialog :addContent="addContent" ref="addDialog"></add-dialog>
   </div>
 </template>
 
@@ -62,12 +88,11 @@
 import {
   fetchList,
   fetchPv,
-  createArticle,
-  updateArticle
+  updateArticle,
+  deleteArticle
 } from "@/api/article"
 import waves from "@/directive/waves" // 水波纹指令
 import { parseTime } from "@/utils"
-import addDialog from "@/components/Dialog/addDialog"
 
 const calendarTypeOptions = [
   { key: "CN", display_name: "China" },
@@ -82,7 +107,6 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
   return acc
 }, {})
 
-var datas = require("../../mock/falseData/1_systemAdmin/user")
 export default {
   name: "complexTable",
   directives: {
@@ -91,7 +115,7 @@ export default {
   data() {
     return {
       tableKey: 0,
-      list: datas.data,
+      list: [],
       total: 20,
       listLoading: false,
       listQuery: {
@@ -112,15 +136,15 @@ export default {
       statusOptions: ["published", "draft", "deleted"],
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
-        remark: "",
-        timestamp: new Date(),
-        title: "",
+        pageIndex: 3,
         type: "",
-        status: "published"
+        name: "",
+        username: "",
+        phone: "",
+        email: ""
       },
       dialogFormVisible: false,
+      deleteDialogVisible: false,
       dialogadd: false,
       dialogStatus: "",
       textMap: {
@@ -130,55 +154,11 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [
-          { required: true, message: "type is required", trigger: "change" }
-        ],
-        timestamp: [
-          {
-            type: "date",
-            required: true,
-            message: "timestamp is required",
-            trigger: "change"
-          }
-        ],
-        title: [
+        name: [
           { required: true, message: "title is required", trigger: "blur" }
         ]
       },
-      downloadLoading: false,
-      addDialog: true,
-      addContent: {
-        title: "新增用户信息",
-        width: "50%",
-        type: 0,
-        content: [
-          { type: 0, label: "姓名", placehold: "姓名" },
-          { type: 0, label: "账号", placehold: "账号" },
-          {
-            type: 2,
-            label: "角色",
-            placehold: "请选择角色",
-            select: "",
-            options: ["系统管理员", "录入员", "审核员", "测试员", "123"]
-          },
-          { type: 0, label: "联系电话", placehold: "联系电话" },
-          { type: 0, label: "邮箱", placehold: "邮箱" },
-          {
-            type: 1,
-            label: "用户类型",
-            placehold: "普通用户",
-            select: "",
-            options: ["普通用户", "商户用户"]
-          },
-          {
-            type: 2,
-            label: "运营区",
-            placehold: "请选择运营区",
-            select: "",
-            options: ["厦门市", "宁德区"]
-          }
-        ]
-      }
+      downloadLoading: false
     }
   },
   filters: {
@@ -194,24 +174,26 @@ export default {
       return calendarTypeKeyValue[type]
     }
   },
-  // created() {
-  //   this.getList()
-  // },
+  created() {
+    this.getList()
+  },
   methods: {
-    add: function() {
-      this.dialogadd = true
-      this.$refs.addDialog.add()
-    },
     getback: function(val) {
       this.addDialog = val
     },
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-        this.listLoading = false
-      })
+      fetchList(this.listQuery)
+        .then(response => {
+          this.list = response.data.data
+          this.total = response.data.total
+          this.listLoading = false
+          console.log(this.list)
+        })
+        .catch(err => {
+          console.log(err)
+          console.log(432)
+        })
     },
     handleFilter() {
       this.listQuery.page = 1
@@ -225,92 +207,80 @@ export default {
       this.listQuery.page = val
       this.getList()
     },
-    handleModifyStatus(row, status) {
-      this.$message({
-        message: "操作成功",
-        type: "success"
-      })
-      row.status = status
-    },
+
     resetTemp() {
       this.temp = {
-        id: undefined,
-        importance: 1,
-        remark: "",
-        timestamp: new Date(),
-        title: "",
-        status: "published",
-        type: ""
+        pageIndex: 3,
+        type: "",
+        name: "",
+        username: "",
+        phone: "",
+        email: ""
       }
     },
-    handleCreate() {
+    add() {
       this.resetTemp()
       this.dialogStatus = "create"
       this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate()
-      })
-    },
-    createData() {
-      this.$refs["dataForm"].validate(valid => {
-        if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = "vue-element-admin"
-          createArticle(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: "成功",
-              message: "创建成功",
-              type: "success",
-              duration: 2000
-            })
-          })
-        }
-      })
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
+      this.temp = Object.assign({}, this.temp, row) // copy obj
+      this.temp.type = "update"
       this.dialogStatus = "update"
       this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate()
-      })
     },
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break;
+          if (this.dialogStatus === "update") {
+            const tempData = Object.assign({}, this.temp)
+            updateArticle(tempData).then(() => {
+              for (const v of this.list) {
+                if (v.id === this.temp.id) {
+                  const index = this.list.indexOf(v)
+                  this.list.splice(index, 1, this.temp)
+                  break;
+                }
               }
-            }
-            this.dialogFormVisible = false
-            this.$notify({
-              title: "成功",
-              message: "更新成功",
-              type: "success",
-              duration: 2000
             })
+          } else if (this.dialogStatus === "create") {
+            const tempData = Object.assign({}, this.list[0], this.temp)
+            updateArticle(tempData).then(() => {
+              this.list.unshift(tempData)
+            })
+          }
+          this.dialogFormVisible = false
+          this.$notify({
+            title: "成功",
+            message: "更新成功",
+            type: "success",
+            duration: 2000
           })
         }
       })
     },
     handleDelete(row) {
+      this.temp = Object.assign({}, this.temp, row) // copy obj
+      this.deleteDialogVisible = true
+    },
+    deleteData() {
+      const tempData = Object.assign({}, this.temp)
+      deleteArticle(tempData).then(() => {
+        for (const v of this.list) {
+          if (v.id === tempData.id) {
+            const index = this.list.indexOf(v)
+            this.list.splice(index, 1)
+            break;
+          }
+        }
+      })
+      this.deleteDialogVisible = false
       this.$notify({
         title: "成功",
         message: "删除成功",
         type: "success",
         duration: 2000
       })
-      const index = this.list.indexOf(row)
-      this.list.splice(index, 1)
     },
     handleFetchPv(pv) {
       fetchPv(pv).then(response => {
@@ -349,9 +319,7 @@ export default {
       this.addDialog = true
     }
   },
-  components: {
-    addDialog
-  },
+  components: {},
   watch: {
     $route: "reload"
   }
