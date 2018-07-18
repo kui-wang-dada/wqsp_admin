@@ -183,7 +183,7 @@ export default {
               if (v.id === this.temp.id) {
                 const index = this.list.indexOf(v)
                 this.list.splice(index, 1, this.temp)
-                break;
+                break
               }
             }
             this.dialogFormVisible = false
@@ -204,7 +204,7 @@ export default {
           if (v.id === row.id) {
             const index = this.list.indexOf(v)
             this.list.splice(index, 1)
-            break;
+            break
           }
         }
       })

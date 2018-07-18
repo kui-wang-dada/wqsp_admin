@@ -90,7 +90,7 @@ export default {
       }
     }
   },
-  created() {},
+  created() { },
   methods: {
     getProv(item, event) {
       var city = item.select.filter(o => {
@@ -130,7 +130,7 @@ export default {
         return (
           selection.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         )
-      };
+      }
     },
     handleFocus(item) {
       this.selection = item.options
@@ -158,7 +158,7 @@ export default {
               if (v.id === this.temp.id) {
                 const index = this.list.indexOf(v)
                 this.list.splice(index, 1, this.temp)
-                break;
+                break
               }
             }
             this.showDialog = false

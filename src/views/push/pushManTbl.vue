@@ -296,7 +296,7 @@ export default {
               if (v.id === this.temp.id) {
                 const index = this.list.indexOf(v)
                 this.list.splice(index, 1, this.temp)
-                break;
+                break
               }
             }
             this.dialogFormVisible = false
@@ -357,7 +357,7 @@ export default {
       const tempCity = []
       this.citys = []
       this.selectCity = ""
-      let allCity = [
+      const allCity = [
         {
           prov: "北京市",
           label: "北京市"
@@ -411,7 +411,7 @@ export default {
       const tempCountry = []
       this.countrys = []
       this.selectCountry = ""
-      let allCountry = [
+      const allCountry = [
         {
           city: "北京市",
           label: "朝阳区"

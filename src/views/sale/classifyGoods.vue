@@ -282,7 +282,7 @@ export default {
               if (v.id === this.temp.id) {
                 const index = this.list.indexOf(v)
                 this.list.splice(index, 1, this.temp)
-                break;
+                break
               }
             }
             this.dialogFormVisible = false

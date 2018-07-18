@@ -68,12 +68,11 @@
 <script>
 import {
   fetchList,
-  fetchPv,
+
   createArticle,
   updateArticle
 } from "@/api/article"
 import waves from "@/directive/waves" // 水波纹指令
-import { parseTime } from "@/utils"
 
 const calendarTypeOptions = [
   { key: "CN", display_name: "China" },
@@ -228,7 +227,7 @@ export default {
               if (v.id === this.temp.id) {
                 const index = this.list.indexOf(v)
                 this.list.splice(index, 1, this.temp)
-                break;
+                break
               }
             }
             this.dialogFormVisible = false
